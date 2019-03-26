@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.SequenceDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.Sequence">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="sequence_name" property="sequenceName" jdbcType="VARCHAR"/>
+        <result column="current_val" property="currentVal" jdbcType="BIGINT"/>
+        <result column="sequence_step" property="sequenceStep" jdbcType="INTEGER"/>
+        <result column="version" property="version" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, sequence_name, current_val, sequence_step, version, create_time, modify_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sequence
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pms_sequence
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.Sequence">
+        insert into pms_sequence (id, sequence_name, current_val,
+        sequence_step, version
+        )
+        values (#{id,jdbcType=BIGINT}, #{sequenceName,jdbcType=VARCHAR}, #{currentVal,jdbcType=BIGINT},
+        #{sequenceStep,jdbcType=INTEGER}, #{version,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.Sequence"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sequence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sequenceName != null">
+                sequence_name,
+            </if>
+            <if test="currentVal != null">
+                current_val,
+            </if>
+            <if test="sequenceStep != null">
+                sequence_step,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sequenceName != null">
+                #{sequenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="currentVal != null">
+                #{currentVal,jdbcType=BIGINT},
+            </if>
+            <if test="sequenceStep != null">
+                #{sequenceStep,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.zb.fincore.pms.service.dal.model.Sequence">
+        update pms_sequence
+        <set>
+            <if test="sequenceName != null">
+                sequence_name = #{sequenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="currentVal != null">
+                current_val = #{currentVal,jdbcType=BIGINT},
+            </if>
+            <if test="sequenceStep != null">
+                sequence_step = #{sequenceStep,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.Sequence">
+        update pms_sequence
+        set sequence_name = #{sequenceName,jdbcType=VARCHAR},
+        current_val = #{currentVal,jdbcType=BIGINT},
+        sequence_step = #{sequenceStep,jdbcType=INTEGER},
+        version = #{version,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectIdByName" parameterType="java.lang.String" resultType="java.lang.Long">
+        select id
+        from pms_sequence
+        where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sequence
+        where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateValWithLock" parameterType="com.zb.fincore.pms.service.dal.model.Sequence">
+        update pms_sequence
+        set current_val = #{currentVal,jdbcType=BIGINT},
+        version = version + 1
+        where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectForUpdateById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_sequence
+        where id = #{id,jdbcType=BIGINT} for update
+    </select>
+
+    <update id="updateVal" parameterType="com.zb.fincore.pms.service.dal.model.Sequence">
+        update pms_sequence
+        set current_val = #{currentVal,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

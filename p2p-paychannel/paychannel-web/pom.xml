@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zb.p2p</groupId>
+    <artifactId>p2p-paychannel</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <packaging>jar</packaging>  
+  <artifactId>paychannel-web</artifactId>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <p2p-paychannel.version>1.0.0-SNAPSHOT</p2p-paychannel.version>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.zb.p2p</groupId>
+      <artifactId>paychannel-service</artifactId>
+      <version>${p2p-paychannel.version}</version>
+    </dependency>
+	<dependency>
+		<groupId>com.zb.p2p</groupId>
+		<artifactId>paychannel-common</artifactId>
+		<version>${p2p-paychannel.version}</version>
+	</dependency>
+    <dependency>
+        <groupId>com.zb.p2p</groupId>
+        <artifactId>paychannel-api</artifactId>
+        <version>${p2p-paychannel.version}</version>
+    </dependency>
+	<dependency>
+		<groupId>org.yaml</groupId>
+	    <artifactId>snakeyaml</artifactId>
+	    <version>1.17</version>
+	    <scope>compile</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-configuration-processor</artifactId>
+		<optional>true</optional>
+	</dependency>
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-core</artifactId>
+		  <version>1.2.3</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-classic</artifactId>
+		  <version>1.2.3</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-aop</artifactId>
+	  </dependency>
+
+	  <!-- Test -->
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		  <scope>test</scope>
+	  </dependency>
+  </dependencies>
+  
+  <build>
+  		<finalName>p2p-paychannel</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.zb.p2p.paychannel.Application</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

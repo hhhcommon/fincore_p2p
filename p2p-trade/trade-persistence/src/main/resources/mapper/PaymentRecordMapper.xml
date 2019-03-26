@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.PaymentRecordMapper">
+    <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.PaymentRecordEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="trade_serial_no" property="tradeSerialNo" jdbcType="VARCHAR" />
+        <result column="org_trade_serial_no" property="orgTradeSerialNo" jdbcType="VARCHAR" />
+        <result column="ref_id" property="refId" jdbcType="VARCHAR" />
+        <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+        <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="pay_code" property="payCode" jdbcType="VARCHAR" />
+        <result column="pay_msg" property="payMsg" jdbcType="VARCHAR" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
+        <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+        <result column="trade_msg" property="tradeMsg" jdbcType="VARCHAR" />
+        <result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, trade_serial_no, org_trade_serial_no, ref_id, trade_type, member_id, amount, pay_code, pay_msg, start_time, end_time, pay_no, trade_status, trade_msg,
+        pay_channel, version, create_time, modify_time
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.PaymentRecordEntity">
+        insert into p2p_payment_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="refId != null">
+                ref_id,
+            </if>
+            <if test="tradeSerialNo != null">
+                trade_serial_no,
+            </if>
+            <if test="orgTradeSerialNo != null">
+                org_trade_serial_no,
+            </if>
+            <if test="tradeType != null">
+                trade_type,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="payCode != null">
+                pay_code,
+            </if>
+            <if test="payMsg != null">
+                pay_msg,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="tradeStatus != null">
+                trade_status,
+            </if>
+            <if test="tradeMsg != null">
+                trade_msg,
+            </if>
+            <if test="payNo != null">
+                pay_no,
+            </if>
+            <if test="payChannel != null">
+                pay_channel,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="refId != null">
+                #{refId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeSerialNo != null">
+                #{tradeSerialNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgTradeSerialNo != null">
+                #{orgTradeSerialNo,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeType != null">
+                #{tradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="payCode != null">
+                #{payCode,jdbcType=VARCHAR},
+            </if>
+            <if test="payMsg != null">
+                #{payMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tradeStatus != null">
+                #{tradeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeMsg != null">
+                #{tradeMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="payNo != null">
+                #{payNo,jdbcType=VARCHAR},
+            </if>
+            <if test="payChannel != null">
+                #{payChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into p2p_payment_record (trade_serial_no, org_trade_serial_no, ref_id, member_id, trade_type, amount, pay_code, pay_msg,start_time, pay_no,trade_status,pay_channel)
+        values
+        <foreach collection="recordList" item="record" index="index" separator=",">
+            (#{record.tradeSerialNo},#{record.orgTradeSerialNo},#{record.refId},#{record.tradeType},#{record.memberId},#{record.amount},#{record.payCode},#{record.payMsg},#{record.startTime},#{record.payNo},#{record.tradeStatus},#{record.payChannel})
+        </foreach>
+    </insert>
+
+    <update id="updatePaymentRecord" parameterType="com.zb.p2p.trade.persistence.entity.PaymentRecordEntity">
+        UPDATE p2p_payment_record
+        <set>
+            <if test="tradeStatus != null">
+                trade_status=#{tradeStatus},
+            </if>
+            <if test="tradeMsg != null">
+                trade_msg=#{tradeMsg},
+            </if>
+            <if test="payNo != null">
+                pay_no=#{payNo},
+            </if>
+            end_time=now()
+        </set>
+        WHERE trade_serial_no=#{tradeSerialNo}
+    </update>
+
+    <select id="queryFailAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p2p_payment_record
+        WHERE ref_id IN (
+        SELECT id FROM p2p_cash_plan WHERE product_code=#{productCode} )
+        AND trade_status = 'F'
+    </select>
+
+    <select id="queryBySerialNo" resultType="java.lang.String">
+        SELECT crd.loan_no from p2p_creditor_info crd left join p2p_payment_record d on crd.asset_no = d.ref_id
+         WHERE d.trade_serial_no = #{serialNo}
+    </select>
+
+    <select id="selectBySerialNo" resultMap="BaseResultMap">
+        SELECT
+          <include refid="Base_Column_List"/>
+          FROM p2p_payment_record
+        WHERE trade_serial_no = #{serialNo}
+         LIMIT 1
+    </select>
+
+    <select id="selectByRefAndType" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+         FROM p2p_payment_record
+        WHERE ref_id = #{refId}
+          and trade_status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+          order by modifyTime desc
+    </select>
+
+    <select id="selectWaitingClose" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from p2p_payment_record
+        where trade_status = #{tradeStatus,jdbcType=VARCHAR}
+        and start_time between #{beginTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        order by id
+        limit #{limitRows}
+    </select>
+
+    <select id="selectFinalFailed" resultMap="BaseResultMap">
+        select
+        id, trade_serial_no, org_trade_serial_no, ref_id, member_id, trade_type, amount, start_time, end_time, pay_no, trade_status,
+        trade_msg, pay_channel, version
+        from p2p_payment_record py
+        where trade_status = #{tradeStatus,jdbcType=VARCHAR}
+        and end_time between #{beginTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        and not exists (select 1 from p2p_payment_record pd where pd.org_trade_serial_no = py.trade_serial_no and pd.trade_status in ('S','P'))
+        order by id
+        limit #{limitRows}
+    </select>
+
+    <select id="selectByRefIdAndTradeTypeAndTradeStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p2p_payment_record
+        WHERE ref_id = #{refId}
+        and trade_status = #{tradeStatus}
+        and trade_type = #{tradeType}
+    </select>
+
+    <select id="selectByTradeSerialNo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p2p_payment_record
+        WHERE trade_serial_no = #{tradeSerialNo}
+    </select>
+
+    <select id="selectByOrgTradeSerialNoAndTradeType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p2p_payment_record
+        WHERE org_trade_serial_no = #{orgTradeSerialNo}
+        and trade_type = #{tradeType}
+        order by create_time DESC
+    </select>
+
+    <select id="countAlreadyLoanAmtTotal" resultType="java.math.BigDecimal">
+        SELECT
+            SUM(pr.amount)
+        FROM
+            p2p_creditor_info ci
+        LEFT JOIN p2p_payment_record pr ON ci.creditor_no = pr.ref_id
+        <where>
+              trade_status = #{tradeStatus}
+            and
+              trade_type = #{tradeType}
+        </where>
+
+    </select>
+</mapper>

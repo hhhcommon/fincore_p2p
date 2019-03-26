@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zb.p2p</groupId>
+    <artifactId>p2p-customer-service</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <packaging>jar</packaging>  
+  <artifactId>customer-service</artifactId>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <p2p-customer-service.version>1.0.0-SNAPSHOT</p2p-customer-service.version>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.zb.p2p</groupId>
+      <artifactId>customer-persistence</artifactId>
+      <version>${p2p-customer-service.version}</version>
+    </dependency>
+	<dependency>
+      <groupId>com.zb.p2p</groupId>
+      <artifactId>customer-api</artifactId>
+      <version>${p2p-customer-service.version}</version>
+    </dependency>    
+	<dependency>
+        <groupId>com.zb.qjs</groupId>
+        <artifactId>qjs-common-utils</artifactId>
+        <version>1.0.6-release</version>
+	</dependency>
+	<dependency>
+        <groupId>com.zb.p2p</groupId>
+        <artifactId>customer-client</artifactId>
+        <version>${p2p-customer-service.version}</version>
+	</dependency>
+	
+	   <!-- <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-gson</artifactId> 
+            <exclusions>
+                <exclusion>
+                    <artifactId>feign-core</artifactId>
+                    <groupId>com.netflix.feign</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-feign</artifactId>
+    </dependency>   -->
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
+  </dependencies>
+</project>

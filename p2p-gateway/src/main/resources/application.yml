@@ -1,0 +1,275 @@
+server:
+  # 端口  @NM
+  port: 16888
+  tomcat:
+      uri-encoding: UTF-8
+      max-threads: 400
+      min-spare-threads: 20
+
+spring:
+  application:
+    name: p2p-api
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    api-a:
+      serviceId: p2p-customer-service
+      path: /cust/**
+    api-b:
+      serviceId: p2p-trading
+      path: /trading/**
+
+  max:
+    host:
+      connections: 30000
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 60000
+                        ribbon:
+                            ReadTimeout: 60000
+                            ConnectTimeout: 60000
+
+
+
+
+env:
+  # 端口  @NM
+  cross:
+    allowOriginList:
+      - 'http://devp2pwx.txslicai.com'
+    #  - '*'
+  whitelist:
+    allowedNotNeedLoginUrl:
+      # 手机号是否已注册
+      - /cust/login/isRegister
+      # 获取图形验证码
+      - /cust/login/imgCaptcha
+      # 校验图形验证码
+      - /cust/login/validImgKaptcha
+      # 发送短信验证码
+      - /cust/login/smsCaptcha
+      # 注册
+      - /cust/login/register
+      # 登录
+      - /cust/login/login
+      # 获取clientId
+      - /cust/login/getClientId
+      # 重置登录密码
+      - /cust/login/resetLoginPwd
+
+      # 获取跳转地址
+      - /cust/Dispenser/urlDispenser
+      # 校验code
+      - /cust/Dispenser/checkCode
+      # 会员绑定
+      #- /cust/Dispenser/bind
+      # 授权注册
+      - /cust/Dispenser/authregister
+      # 激活-发短信验证码
+      #- /cust/Dispenser/sendSms
+      # 展示验证码
+      - /cust/otp/m1/s2ShowImgCaptcha/[0-9a-zA-Z]+
+      # 机构注册
+      - /cust/login/registerOrg
+      # 机构会员开户
+      - /cust/info/openAccount
+      #  机构实名认证
+      - /cust/info/verifyOrgMember
+      # 查询机构认证结果
+      - /cust/info/orgMemberVerifyInfo
+      # 运营台个人信息查询接口(脱敏)
+      - /cust/info/perDetailInfoSecret
+      # 查询企业/机构会员信息
+      - /cust/info/orgMemberInfo
+
+      ######订单服务######
+      # 订单支付回调
+      - /trading/p2p/trading/callBack/payNotifyOrder
+      # 交易通知
+      - /trading/p2p/trading/callBack/tradeNotifyOrder
+      # 日切售罄产品(天鼋产品调用)
+      - /trading/p2p/trading/callBack/soldSutProduct
+      # 昨日收益和网贷总额接口
+      - /trading/p2p/trading/investment/holdTotalAssets
+      # 前端查询交易记录接口(TXS后端)
+      - /trading/p2p/trading/investment/tradeRecord
+      # 运营台查询资金交易记录接口
+      - /trading/p2p/trading/investment/listPageRecord
+
+      # 查询产品资产关系
+      - /trading/p2p/trading/order/queryProductLoanRelationList
+      # 查询在售/售罄产品列表（第一页）缓存接口
+      - /trading/p2p/trading/order/queryCacheProductListForP2PApp
+      # 产品详情
+      - /trading/p2p/trading/order/queryProductInfo
+      # 在售/售罄产品列表查询（供唐小僧用）
+      - /trading/p2p/trading/order/queryProductListForP2PApp
+      # 前端查询出借人数接口
+      - /trading/p2p/trading/order/loanCount
+      # 独立理财段查询投资记录接口（投资人数点击进去）
+      - /trading/p2p/trading/order/investRecord
+
+      ######订单服务######
+    allowedUrl:
+      ####会员服务####
+      # 修改登录密码
+      - /cust/login/modifyLoginPwd
+      # 重置登录密码
+      - /cust/login/resetLoginPwd
+      # 登出
+      - /cust/login/logout
+
+      # 查询卡bin
+      - /cust/card/cardBin
+      # 查询支持的银行列表
+      - /cust/card/cardList
+      # 个人实名认证
+      - /cust/info/verifyMember
+
+
+      #  查询绑卡辅助信息
+      - /cust/card/bindCardHelp
+      # 绑卡
+      - /cust/card/confirmBindCard
+      # 会员绑卡发送验证码
+      - /cust/card/sendMsgByPreBind
+      # 会员绑定银行卡
+      - /cust/card/bindCard
+      # 发送解绑卡短信
+      - /cust/card/sendMsgByUnBind
+      # 解绑卡
+      - /cust/card/unBind
+      # 会员实名情况查询
+      - /cust/info/realNameInfo
+      # 会员绑卡信息查询
+      - /cust/info/bankCardBindInfo
+      # 机构会员详情查询
+      - /cust/info/orgDetailInfo
+      # 个人会员列表查询
+      - /cust/info/perList
+      # 查询登录设备
+      - /cust/info/queryLoginDevice
+      # 个人会员详情查询
+      - /cust/info/perDetailInfo
+      # 机构会员列表查询
+      - /cust/info/orgList
+      # ORC证件扫描接口
+      - /cust/info/certificateScanning
+      # 查询会员可用支付类型
+      - /cust/info/queryAvlPayTypes
+      # 查询会员活期余额
+      - /cust/balance/queryCustomerBalance
+      # 手机号是否已注册
+      - /cust/login/isRegister
+      # 获取图形验证码
+      - /cust/login/imgCaptcha
+      # 校验图形验证码
+      - /cust/login/validImgKaptcha
+      # 发送短信验证码
+      - /cust/login/smsCaptcha
+      # 注册
+      - /cust/login/register
+      # 机构注册
+      - /cust/login/registerOrg
+      # 机构会员开户
+      - /cust/info/openAccount
+      #  机构实名认证
+      - /cust/info/verifyOrgMember
+      # 查询机构认证结果
+      - /cust/info/orgMemberVerifyInfo
+      # 运营台个人信息查询接口(脱敏)
+      - /cust/info/perDetailInfoSecret
+      # 查询企业/机构会员信息
+      - /cust/info/orgMemberInfo
+
+      # 登录
+      - /cust/login/login
+      # 根据token获取customerId
+      - /cust/login/getCustomerId
+      # 获取clientId
+      - /cust/login/getClientId
+      # 获取跳转地址
+      - /cust/Dispenser/urlDispenser
+      # code校验
+      - /cust/Dispenser/checkCode
+      # 授权注册
+      - /cust/Dispenser/authregister
+      # 会员绑定
+      - /cust/Dispenser/bind
+      # 激活-发短信验证码
+      - /cust/Dispenser/sendSms
+      # v2.2 #
+      # 余额查询
+      - /cust/info/balanceInfo
+      # 生成验证码
+      - /cust/otp/m1/s1GenImgCaptcha
+      # 展示验证码
+      - /cust/otp/m1/s2ShowImgCaptcha/[0-9a-zA-Z]+
+      # 发送短信验证码
+      - /cust/otp/m1/s3SendSmsCaptcha
+      # 校验短信验证码
+      - /cust/otp/m1/s4CheckSmsCaptcha
+
+      ######订单服务##################################################################
+      # 确认投资
+      - /trading/p2p/trading/order/[0-9a-zA-Z]+
+      # 订单验证码
+      - /trading/p2p/trading/verify/verify
+      # 订单
+      - /trading/p2p/trading/order/order
+      # 查询用户的持仓列表
+      - /trading/p2p/trading/order/holdassetslist
+      # 交易记录查询MSD
+      - /trading/p2p/trading/order/orderList
+      # 前端查询投资详情接口
+      - /trading/p2p/trading/order/detail
+      # 前端查询资产详情接口
+      - /trading/p2p/trading/order/assetDetail
+      # 前端查询出借人数接口
+      - /trading/p2p/trading/order/loanCount
+      # 前端查询支付状态接口
+      - /trading/p2p/trading/order/getPayResult
+      # 查询产品资产关系
+      - /trading/p2p/trading/order/queryProductLoanRelationList
+      # 查询在售/售罄产品列表（第一页）缓存接口
+      - /trading/p2p/trading/order/queryCacheProductListForP2PApp
+      # 产品详情
+      - /trading/p2p/trading/order/queryProductInfo
+      # 在售/售罄产品列表查询（供唐小僧用）
+      - /trading/p2p/trading/order/queryProductListForP2PApp
+      # 前端查询用户分类资产信息
+      - /trading/p2p/trading/order/queryMemberCategoryInvestInfo
+      # 独立理财段查询投资记录接口（投资人数点击进去）
+      - /trading/p2p/trading/order/investRecord
+
+      # 订单支付回调
+      - /trading/p2p/trading/callBack/payNotifyOrder
+      # 交易通知
+      - /trading/p2p/trading/callBack/tradeNotifyOrder
+      # 日切售罄产品(天鼋产品调用)
+      - /trading/p2p/trading/callBack/soldSutProduct
+      # 昨日收益和网贷总额接口
+      - /trading/p2p/trading/investment/holdTotalAssets
+      # 前端查询交易记录接口(TXS后端)
+      - /trading/p2p/trading/investment/tradeRecord
+      # 运营台查询资金交易记录接口
+      - /trading/p2p/trading/investment/listPageRecord
+
+
+      ######订单服务#############################################################
+
+ 
+#是否对外的网关    true 对外   false  对内部服务
+#目前针对交易、唐小僧后端，不包含MSD后端
+canOutAccess: true
+ 
+ 

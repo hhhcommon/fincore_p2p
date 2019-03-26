@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+       default-autowire="byName"
+       default-lazy-init="false">
+
+    <!-- 数据源 -->
+    <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${datasource.master.url}"/>
+        <property name="username" value="${datasource.master.username}"/>
+        <property name="password" value="${datasource.master.password}"/>
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${datasource.master.initialSize}"/>
+
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="${datasource.master.maxActive}"/>
+
+        <!-- 连接池最小空闲连接数 -->
+        <property name="minIdle" value="${datasource.master.minIdle}"/>
+
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${datasource.master.maxWait}"/>
+
+        <!-- <property name="poolPreparedStatements" value="true" /> -->
+        <!-- <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+
+        <property name="validationQuery" value="${datasource.master.validationQuery}"/>
+        <property name="testOnBorrow" value="${datasource.master.testOnBorrow}"/>
+        <property name="testOnReturn" value="${datasource.master.testOnReturn}"/>
+        <property name="testWhileIdle" value="${datasource.master.testWhileIdle}"/>
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${datasource.master.timeBetweenEvictionRunsMillis}"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 ?? -->
+        <!-- property name="minEvictableIdleTimeMillis" value="25200000" /> -->
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="${datasource.master.removeAbandoned}"/>
+
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="${datasource.master.removeAbandonedTimeout}"/>
+
+        <!-- 关闭abandoned连接时输出错误日志 -->
+        <property name="logAbandoned" value="${datasource.master.logAbandoned}"/>
+
+        <!-- 监控数据库 -->
+        <!-- <property name="filters" value="stat" /> -->
+    </bean>
+
+    <!-- mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源 MyBatis定义数据源,同意加载配置 -->
+    <bean id="mgwSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.zb.cloud.logcenter.sql.mybatis.ZbMybatisIntercreptor">
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+        basePackage:指定sql映射文件/接口所在的包（自动扫描） -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zb.p2p.paychannel.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="mgwSqlSessionFactory"/>
+    </bean>
+
+    <!-- 事务配置 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 打开事务注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

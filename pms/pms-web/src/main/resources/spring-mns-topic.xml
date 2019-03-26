@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- 阿里云访问授权信息 -->
+    <bean id="cloudAccount" class="com.aliyun.mns.client.CloudAccount">
+        <constructor-arg index="0" value="LTAIsz0wLSgsBluZ"/>
+        <constructor-arg index="1" value="lQ74ZBAatZBlJcQSV3PoZaVKTFGy4P"/>
+        <constructor-arg index="2" value="http://1825752259489833.mns.cn-hangzhou.aliyuncs.com/"/>
+    </bean>
+
+    <!-- 阿里云主题消息发布者 -->
+    <bean id="mnsTopicPublisher" class="com.zb.fincore.common.topic.impl.aliyun.MnsTopicPublisher">
+        <property name="cloudAccount" ref="cloudAccount"/>
+        <!--<property name="topicName" value="DEV-FINCORE-TOPIC"/>-->
+    </bean>
+
+    <!-- 阿里云主题消息订阅者 -->
+    <bean id="mnsTopicSubscriber" class="com.zb.fincore.common.topic.impl.aliyun.MnsTopicSubscriber"
+          init-method="startup" destroy-method="shutdown">
+        <property name="cloudAccount" ref="cloudAccount"/>
+        <property name="queueName" value="DEV-FINCORE-TOPIC-RCV-QUEUE-PMS"/>
+        <property name="waitSeconds" value="10"/>
+        <!-- 队列消息处理线程池 -->
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+                <property name="queueCapacity" value="200"/>
+                <property name="corePoolSize" value="5"/>
+                <property name="maxPoolSize" value="50"/>
+            </bean>
+        </property>
+        <property name="topicTypeHandlerMap">
+            <map>
+                <entry key="PMS_PRODUCT_STATUS_CHANGED"
+                       value="com.zillionfortune.pms.test.TopicHandler"/>
+            </map>
+        </property>
+    </bean>
+</beans>

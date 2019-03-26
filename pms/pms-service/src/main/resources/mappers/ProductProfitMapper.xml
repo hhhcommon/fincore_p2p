@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductProfitDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductProfit">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="min_invest_amount" property="minInvestAmount" jdbcType="DECIMAL"/>
+        <result column="single_max_invest_amount" property="singleMaxInvestAmount" jdbcType="DECIMAL"/>
+        <result column="max_invest_amount" property="maxInvestAmount" jdbcType="DECIMAL"/>
+        <result column="min_hold_amount" property="minHoldAmount" jdbcType="DECIMAL"/>
+        <result column="increase_amount" property="increaseAmount" jdbcType="DECIMAL"/>
+        <result column="basic_interests_period" property="basicInterestsPeriod" jdbcType="INTEGER"/>
+        <result column="establish_condition" property="establishCondition" jdbcType="VARCHAR"/>
+        <result column="unit" property="unit" jdbcType="TINYINT"/>
+        <result column="profit_type" property="profitType" jdbcType="TINYINT"/>
+        <result column="calculate_invest_type" property="calculateInvestType" jdbcType="TINYINT"/>
+        <result column="min_yield_rate" property="minYieldRate" jdbcType="DECIMAL"/>
+        <result column="max_yield_rate" property="maxYieldRate" jdbcType="DECIMAL"/>
+        <result column="current_yield_rate" property="currentYieldRate" jdbcType="DECIMAL"/>
+        <result column="add_yield_rate" property="addYieldRate" jdbcType="DECIMAL"/>
+        <result column="floating_yield_rate" property="floatingYieldRate" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, product_id, product_code, min_invest_amount, single_max_invest_amount, max_invest_amount, min_hold_amount,
+        increase_amount, basic_interests_period, establish_condition, unit, profit_type,
+        calculate_invest_type, min_yield_rate, max_yield_rate, current_yield_rate,
+        add_yield_rate, floating_yield_rate, create_time, create_by, modify_time, modify_by
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_profit
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectProductProfitInfoByProductCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_profit
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectProductProfitInfoByProductId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_profit
+        where product_id = #{productId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from pms_product_profit
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductProfit">
+        insert into pms_product_profit (id, product_id, product_code,
+          min_invest_amount, single_max_invest_amount,
+          max_invest_amount, min_hold_amount, increase_amount, basic_interests_period,
+          establish_condition, unit, profit_type,
+          calculate_invest_type, min_yield_rate, max_yield_rate,
+          current_yield_rate,
+          add_yield_rate, floating_yield_rate, create_time, create_by,
+          modify_time, modify_by)
+        values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR},
+          #{minInvestAmount,jdbcType=DECIMAL}, #{singleMaxInvestAmount,jdbcType=DECIMAL},
+          #{maxInvestAmount,jdbcType=DECIMAL}, #{minHoldAmount,jdbcType=DECIMAL}, #{increaseAmount,jdbcType=DECIMAL}, #{basicInterestsPeriod,jdbcType=INTEGER},
+          #{establishCondition,jdbcType=VARCHAR}, #{unit,jdbcType=TINYINT}, #{profitType,jdbcType=TINYINT},
+          #{calculateInvestType,jdbcType=TINYINT}, #{minYieldRate,jdbcType=DECIMAL}, #{maxYieldRate,jdbcType=DECIMAL},
+          #{currentYieldRate,jdbcType=DECIMAL},
+          #{addYieldRate,jdbcType=DECIMAL}, #{floatingYieldRate,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+          #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductProfit"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_profit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="minInvestAmount != null">
+                min_invest_amount,
+            </if>
+            <if test="singleMaxInvestAmount != null">
+                single_max_invest_amount,
+            </if>
+            <if test="maxInvestAmount != null">
+                max_invest_amount,
+            </if>
+            <if test="minHoldAmount != null">
+                min_hold_amount,
+            </if>
+            <if test="increaseAmount != null">
+                increase_amount,
+            </if>
+            <if test="basicInterestsPeriod != null">
+                basic_interests_period,
+            </if>
+            <if test="establishCondition != null">
+                establish_condition,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="profitType != null">
+                profit_type,
+            </if>
+            <if test="calculateInvestType != null">
+                calculate_invest_type,
+            </if>
+            <if test="minYieldRate != null">
+                min_yield_rate,
+            </if>
+            <if test="maxYieldRate != null">
+                max_yield_rate,
+            </if>
+            <if test="currentYieldRate != null">
+                current_yield_rate,
+            </if>
+            <if test="addYieldRate != null">
+                add_yield_rate,
+            </if>
+            <if test="floatingYieldRate != null">
+                floating_yield_rate,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="minInvestAmount != null">
+                #{minInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="singleMaxInvestAmount != null">
+                #{singleMaxInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="maxInvestAmount != null">
+                #{maxInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="minHoldAmount != null">
+                #{minHoldAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="increaseAmount != null">
+                #{increaseAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="basicInterestsPeriod != null">
+                #{basicInterestsPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="establishCondition != null">
+                #{establishCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=TINYINT},
+            </if>
+            <if test="profitType != null">
+                #{profitType,jdbcType=TINYINT},
+            </if>
+            <if test="calculateInvestType != null">
+                #{calculateInvestType,jdbcType=TINYINT},
+            </if>
+            <if test="minYieldRate != null">
+                #{minYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="maxYieldRate != null">
+                #{maxYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="currentYieldRate != null">
+                #{currentYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="addYieldRate != null">
+                #{addYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="floatingYieldRate != null">
+                #{floatingYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductProfit">
+        update pms_product_profit
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="minInvestAmount != null">
+                min_invest_amount = #{minInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="singleMaxInvestAmount != null">
+                single_max_invest_amount = #{singleMaxInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="maxInvestAmount != null">
+                max_invest_amount = #{maxInvestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="increaseAmount != null">
+                increase_amount = #{increaseAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="basicInterestsPeriod != null">
+                basic_interests_period = #{basicInterestsPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="establishCondition != null">
+                establish_condition = #{establishCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=TINYINT},
+            </if>
+            <if test="profitType != null">
+                profit_type = #{profitType,jdbcType=TINYINT},
+            </if>
+            <if test="calculateInvestType != null">
+                calculate_invest_type = #{calculateInvestType,jdbcType=TINYINT},
+            </if>
+            <if test="minYieldRate != null">
+                min_yield_rate = #{minYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="maxYieldRate != null">
+                max_yield_rate = #{maxYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="currentYieldRate != null">
+                current_yield_rate = #{currentYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="addYieldRate != null">
+                add_yield_rate = #{addYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="floatingYieldRate != null">
+                floating_yield_rate = #{floatingYieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductProfit">
+        update pms_product_profit
+        set product_id = #{productId,jdbcType=BIGINT},
+          product_code = #{productCode,jdbcType=VARCHAR},
+          min_invest_amount = #{minInvestAmount,jdbcType=DECIMAL},
+          single_max_invest_amount = #{singleMaxInvestAmount,jdbcType=DECIMAL},
+          max_invest_amount = #{maxInvestAmount,jdbcType=DECIMAL},
+          increase_amount = #{increaseAmount,jdbcType=DECIMAL},
+          basic_interests_period = #{basicInterestsPeriod,jdbcType=INTEGER},
+          establish_condition = #{establishCondition,jdbcType=VARCHAR},
+          unit = #{unit,jdbcType=TINYINT},
+          profit_type = #{profitType,jdbcType=TINYINT},
+          calculate_invest_type = #{calculateInvestType,jdbcType=TINYINT},
+          min_yield_rate = #{minYieldRate,jdbcType=DECIMAL},
+          max_yield_rate = #{maxYieldRate,jdbcType=DECIMAL},
+          current_yield_rate = #{currentYieldRate,jdbcType=DECIMAL},
+          add_yield_rate = #{addYieldRate,jdbcType=DECIMAL},
+          floating_yield_rate = #{floatingYieldRate,jdbcType=DECIMAL},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          create_by = #{createBy,jdbcType=VARCHAR},
+          modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+          modify_by = #{modifyBy,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

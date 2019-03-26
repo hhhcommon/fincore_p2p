@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.RepayBillPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.RepayBillPlanEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="asset_code" property="assetCode" jdbcType="VARCHAR" />
+    <result column="org_asset_code" property="orgAssetCode" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="stage_count" property="stageCount" jdbcType="INTEGER" />
+    <result column="bill_start_date" property="billStartDate" jdbcType="TIMESTAMP" />
+    <result column="bill_end_date" property="billEndDate" jdbcType="TIMESTAMP" />
+    <result column="stage_seq" property="stageSeq" jdbcType="INTEGER" />
+    <result column="expect_principle" property="expectPrinciple" jdbcType="DECIMAL" />
+    <result column="expect_interest" property="expectInterest" jdbcType="DECIMAL" />
+    <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+    <result column="actual_principle" property="actualPrinciple" jdbcType="DECIMAL" />
+    <result column="actual_interest" property="actualInterest" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="repayment_fee" property="repaymentFee" jdbcType="DECIMAL" />
+    <result column="actual_repayment_fee" property="actualRepaymentFee" jdbcType="DECIMAL" />
+    <result column="repayment_fee_status" property="repaymentFeeStatus" jdbcType="VARCHAR" />
+    <result column="remain_amount" property="remainAmount" jdbcType="DECIMAL" />
+    <result column="platform_id" property="platformId" jdbcType="VARCHAR" />
+    <result column="sale_channel" property="saleChannel" jdbcType="VARCHAR"/>
+    <result column="pay_channel" property="payChannel" jdbcType="VARCHAR"/>
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, product_code, asset_code, org_asset_code, member_id, stage_count, bill_start_date, bill_end_date,
+    stage_seq, expect_principle, expect_interest, repayment_time, actual_principle, actual_interest, 
+    status, repayment_fee, actual_repayment_fee, remain_amount, platform_id, sale_channel, pay_channel,
+    version, create_time, modify_time
+  </sql>
+  <resultMap id="RepayAmountMap" type="com.zb.p2p.trade.persistence.dto.RepayAmountDTO">
+    <result column="asset_code" property="assetCode" jdbcType="VARCHAR"/>
+    <result column="stage_seq" property="stageSeq" jdbcType="INTEGER"/>
+    <result column="bill_start_date" property="billStartDate" jdbcType="TIMESTAMP" />
+    <result column="bill_end_date" property="billEndDate" jdbcType="TIMESTAMP" />
+    <result column="principle" property="principle" jdbcType="DECIMAL"/>
+    <result column="income" property="income" jdbcType="DECIMAL"/>
+    <result column="loan_charge" property="loanCharge" jdbcType="DECIMAL"/>
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_repay_bill_plan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p2p_repay_bill_plan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.RepayBillPlanEntity" >
+    insert into p2p_repay_bill_plan (id, loan_no, product_code, 
+      asset_code, org_asset_code, member_id, stage_count,
+      bill_start_date, bill_end_date, stage_seq, 
+      expect_principle, expect_interest, repayment_time, 
+      actual_principle, actual_interest, status, 
+      repayment_fee, actual_repayment_fee, remain_amount,
+      platform_id, sale_channel, pay_channel, version,
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{loanNo,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+      #{assetCode,jdbcType=VARCHAR}, #{orgAssetCode,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{stageCount,jdbcType=INTEGER},
+      #{billStartDate,jdbcType=TIMESTAMP}, #{billEndDate,jdbcType=TIMESTAMP}, #{stageSeq,jdbcType=INTEGER}, 
+      #{expectPrinciple,jdbcType=DECIMAL}, #{expectInterest,jdbcType=DECIMAL}, #{repaymentTime,jdbcType=TIMESTAMP}, 
+      #{actualPrinciple,jdbcType=DECIMAL}, #{actualInterest,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{repaymentFee,jdbcType=DECIMAL}, #{actualRepaymentFee,jdbcType=DECIMAL}, #{remainAmount,jdbcType=DECIMAL},
+      #{platformId,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{saleChannel,jdbcType=VARCHAR}, #{payChannel,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.RepayBillPlanEntity" >
+    update p2p_repay_bill_plan
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="assetCode != null" >
+        asset_code = #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="stageCount != null" >
+        stage_count = #{stageCount,jdbcType=INTEGER},
+      </if>
+      <if test="billStartDate != null" >
+        bill_start_date = #{billStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billEndDate != null" >
+        bill_end_date = #{billEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stageSeq != null" >
+        stage_seq = #{stageSeq,jdbcType=INTEGER},
+      </if>
+      <if test="expectPrinciple != null" >
+        expect_principle = #{expectPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="expectInterest != null" >
+        expect_interest = #{expectInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentTime != null" >
+        repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualPrinciple != null" >
+        actual_principle = #{actualPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="actualInterest != null" >
+        actual_interest = #{actualInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentFee != null" >
+        repayment_fee = #{repaymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="actualRepaymentFee != null" >
+        actual_repayment_fee = #{actualRepaymentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="remainAmount != null" >
+        remain_amount = #{remainAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="platformId != null" >
+        platform_id = #{platformId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByAssetNoStage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p2p_repay_bill_plan
+    where asset_code = #{assetCode,jdbcType=VARCHAR}
+      and stage_seq = #{stageSeq,jdbcType=INTEGER}
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.ArrayList">
+    insert into p2p_repay_bill_plan (
+      loan_no, product_code, asset_code,
+      org_asset_code, member_id, stage_count,
+      bill_start_date, bill_end_date, stage_seq,
+      expect_principle, expect_interest, repayment_time,
+      actual_principle, actual_interest, status,
+      repayment_fee, actual_repayment_fee, remain_amount,
+      platform_id, sale_channel, pay_channel, version )
+    SELECT T.*
+    FROM (
+    <foreach collection="billList" item="bill" index="index" separator="union all">
+      select
+      #{bill.loanNo,jdbcType=VARCHAR} as loanNo,
+      #{bill.productCode,jdbcType=VARCHAR} as productCode,
+      #{bill.assetCode,jdbcType=VARCHAR} as assetCode,
+      #{bill.orgAssetCode,jdbcType=VARCHAR} as orgAssetCode,
+      #{bill.memberId,jdbcType=VARCHAR} as memberId,
+      #{bill.stageCount,jdbcType=INTEGER} as stageCount,
+      #{bill.billStartDate,jdbcType=DATE} as billStartDate,
+      #{bill.billEndDate,jdbcType=DATE} as billEndDate,
+      #{bill.stageSeq,jdbcType=INTEGER} as stageSeq,
+      #{bill.expectPrinciple,jdbcType=DECIMAL} as expectPrinciple,
+      #{bill.expectInterest,jdbcType=DECIMAL} as expectInterest,
+      #{bill.repaymentTime,jdbcType=DATE} as repaymentTime,
+      #{bill.actualPrinciple,jdbcType=DECIMAL} as actualPrinciple,
+      #{bill.actualInterest,jdbcType=DECIMAL} as actualInterest,
+      #{bill.status,jdbcType=VARCHAR} as status,
+      #{bill.repaymentFee,jdbcType=DECIMAL} as repaymentFee,
+      #{bill.actualRepaymentFee,jdbcType=DECIMAL} as actualRepaymentFee,
+      #{bill.remainAmount,jdbcType=DECIMAL} as remainAmount,
+      #{bill.platformId,jdbcType=VARCHAR} as platformId,
+      #{bill.saleChannel,jdbcType=VARCHAR} as saleChannel,
+      #{bill.payChannel,jdbcType=VARCHAR} as payChannel,
+      #{bill.version,jdbcType=INTEGER} as version
+      from dual
+    </foreach>
+    ) T
+  </insert>
+
+  <select id="selectByLoanNoStatus" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p2p_repay_bill_plan
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+      and status in
+    <foreach item="item" index="index" collection="statusList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectRepayAmountList" resultMap="RepayAmountMap">
+    select asset_code as asset_code, bill_start_date, bill_end_date, stage_seq,
+    expect_principle as principle, expect_interest as income , COALESCE(repayment_fee,0) as loanCharge
+    from p2p_repay_bill_plan
+    where asset_code in
+    <foreach item="item" index="index" collection="assetNoList" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+</mapper>

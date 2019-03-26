@@ -1,0 +1,98 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+
+server:
+  port: 8999
+  tomcat:
+    max-threads: 400
+    min-spare-threads: 10
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 15000
+
+ribbon:
+  MaxAutoRetries: 1 # Max number of retries on the same server (excluding the first try)
+  MaxAutoRetriesNextServer: 2 # Max number of next servers to retry (excluding the first server)
+  OkToRetryOnAllOperations: false # Whether all operations can be retried for this client
+  eureka:
+    enabled: true
+
+ptop:
+  datasource:
+    config:
+      url: jdbc:mysql:loadbalance://192.168.0.76:3306/p2p_order?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false&allowMultiQueries=true
+      #      url: jdbc:mysql:loadbalance://10.25.4.237:8066,10.47.94.55:8066,10.47.91.32:8066/p2p_order?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false&allowMultiQueries=true
+      username: root
+      password: qylc@123
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: com.mysql.jdbc.Driver
+      maxActive: 100
+      initialSize: 50
+      maxWait: 60000
+      minIdle: 50
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      validationQuery: SELECT 1
+
+job:
+  reg-center:
+    server-lists: 192.168.0.65:2181
+    namespace: p2p-trading-job
+    max-retries: 5
+  simples:
+#    pendingPaying:
+#      classname: com.zb.txs.p2p.order.job.OrderPendingPayingScanJob
+#      cron: 0 0/15 * * * ?
+#      shardingTotalCount: 1
+#      shardingItemParameters: 0=pendingPay
+#      failover: true
+    paying:
+      classname: com.zb.txs.p2p.order.job.OrderPayingScanJob
+      cron: 0 5/15 * * * ?
+      shardingTotalCount: 1
+      shardingItemParameters: 0=paying
+      failover: true
+    orderFailure:
+      classname: com.zb.txs.p2p.order.job.OrderFailureScanJob
+      cron: 0 10/15 * * * ?
+      shardingTotalCount: 1
+      shardingItemParameters: 0=1|2
+      failover: true
+
+
+id:
+  genrenate:
+    zkAddress: 192.168.0.65:2181
+    path: /sequence/p2p-order
+    seq: seq
+
+#天鼋交易
+financial:
+  domain: http://192.168.9.121:8080/
+#天鼋资管
+financialAms:
+    domain: http://139.196.9.236/ams/
+#天鼋支付
+pay:
+  domain: http://10.174.56.203:48080/msd/cashier/
+#天鼋产品
+pms:
+  domain: http://192.168.0.74:8080/pms/
+#天鼋会员
+member:
+  domain: http://192.168.0.74:8080/pms/
+#txs产品
+txsProduct:
+  domain: http://139.196.7.49:8006/
+

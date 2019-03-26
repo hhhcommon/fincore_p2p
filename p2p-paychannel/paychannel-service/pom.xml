@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zb.p2p</groupId>
+    <artifactId>p2p-paychannel</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <packaging>jar</packaging>  
+  <artifactId>paychannel-service</artifactId>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <p2p-paychannel.version>1.0.0-SNAPSHOT</p2p-paychannel.version>
+  </properties>
+  
+  <dependencies>
+      <dependency>
+          <groupId>com.zb.p2p</groupId>
+          <artifactId>paychannel-common</artifactId>
+          <version>${p2p-paychannel.version}</version>
+      </dependency>
+    <dependency>
+      <groupId>com.zb.p2p</groupId>
+      <artifactId>paychannel-persistence</artifactId>
+      <version>${p2p-paychannel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.zb.p2p</groupId>
+      <artifactId>paychannel-api</artifactId>
+      <version>${p2p-paychannel.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.zb.p2p</groupId>
+        <artifactId>paychannel-client</artifactId>
+        <version>${p2p-paychannel.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
+
+      <dependency>
+          <groupId>org.apache.curator</groupId>
+          <artifactId>curator-recipes</artifactId>
+          <version>2.7.0</version>
+          <exclusions>
+              <exclusion>
+                  <artifactId>slf4j-log4j12</artifactId>
+                  <groupId>org.slf4j</groupId>
+              </exclusion>
+              <exclusion>
+                  <artifactId>slf4j-api</artifactId>
+                  <groupId>org.slf4j</groupId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+
+  </dependencies>
+</project>

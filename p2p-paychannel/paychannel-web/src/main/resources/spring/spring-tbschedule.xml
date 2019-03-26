@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="scheduleManagerFactory" class="com.taobao.pamirs.schedule.strategy.TBScheduleManagerFactory"
+          init-method="init">
+        <property name="zkConfig">
+            <map>
+                <entry key="zkConnectString" value="${tbSchedule.zkConnectString}" />
+                <entry key="rootPath" value="${tbSchedule.rootPath}" />
+                <entry key="zkSessionTimeout" value="${tbSchedule.zkSessionTimeout}" />
+                <entry key="userName" value="${tbSchedule.userName}" />
+                <entry key="password" value="${tbSchedule.password}" />
+                <entry key="isCheckParentPath" value="${tbSchedule.isCheckParentPath}" />
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- 阿里云访问授权信息 -->
+    <bean id="cloudAccount" class="com.aliyun.mns.client.CloudAccount">
+        <constructor-arg index="0" value="${mns.ali.accessId}"/>
+        <constructor-arg index="1" value="${mns.ali.accessKey}"/>
+        <constructor-arg index="2" value="${mns.ali.accountEndpoint}"/>
+    </bean>
+
+    <!-- 阿里云主题消息生产者 -->
+    <bean id="mnsTopicPublisher" class="com.zb.p2p.match.common.queue.MnsMsgProducer">
+        <property name="cloudAccount" ref="cloudAccount"/>
+    </bean>
+</beans>

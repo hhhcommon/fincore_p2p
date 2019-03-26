@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: p2p-trading
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.65:8761/eureka
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+#logging:
+#  config: "classpath:logback.xml"
+
+

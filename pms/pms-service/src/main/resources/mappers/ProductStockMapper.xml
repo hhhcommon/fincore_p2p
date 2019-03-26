@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductStockDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductStock">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="frozen_amount" property="frozenAmount" jdbcType="DECIMAL"/>
+        <result column="sale_amount" property="saleAmount" jdbcType="DECIMAL"/>
+        <result column="stock_amount" property="stockAmount" jdbcType="DECIMAL"/>
+        <result column="redeem_amount" property="redeemAmount" jdbcType="DECIMAL"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, product_code, frozen_amount, sale_amount, stock_amount, redeem_amount, version,
+    create_time, create_by, modify_time, modify_by
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_stock
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product_stock
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock">
+    insert into pms_product_stock (id, product_id, product_code, 
+      frozen_amount, sale_amount, stock_amount, 
+      redeem_amount, create_by, modify_by)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, 
+      #{frozenAmount,jdbcType=DECIMAL}, #{saleAmount,jdbcType=DECIMAL}, #{stockAmount,jdbcType=DECIMAL}, 
+      #{redeemAmount,jdbcType=DECIMAL}, #{createBy,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="frozenAmount != null">
+                frozen_amount,
+            </if>
+            <if test="saleAmount != null">
+                sale_amount,
+            </if>
+            <if test="stockAmount != null">
+                stock_amount,
+            </if>
+            <if test="redeemAmount != null">
+                redeem_amount,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="frozenAmount != null">
+                #{frozenAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmount != null">
+                #{saleAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmount != null">
+                #{stockAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmount != null">
+                #{redeemAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock">
+        update pms_product_stock
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="frozenAmount != null">
+                frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmount != null">
+                sale_amount = #{saleAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmount != null">
+                stock_amount = #{stockAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmount != null">
+                redeem_amount = #{redeemAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            version = version + 1
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock">
+        update pms_product_stock
+        set product_id = #{productId,jdbcType=BIGINT},
+          product_code = #{productCode,jdbcType=VARCHAR},
+          frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+          sale_amount = #{saleAmount,jdbcType=DECIMAL},
+          stock_amount = #{stockAmount,jdbcType=DECIMAL},
+          redeem_amount = #{redeemAmount,jdbcType=DECIMAL},
+        version = version + 1,
+          create_by = #{createBy,jdbcType=VARCHAR},
+          modify_by = #{modifyBy,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 使用乐观锁更新产品库存 -->
+    <update id="updateStockWithLock" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock">
+        update pms_product_stock
+        <set>
+            <if test="frozenAmount != null">
+                frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmount != null">
+                sale_amount = #{saleAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmount != null">
+                stock_amount = #{stockAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmount != null">
+                redeem_amount = #{redeemAmount,jdbcType=DECIMAL},
+            </if>
+            version = version + 1
+        </set>
+        where id = #{id,jdbcType=BIGINT} and version = #{version,jdbcType=INTEGER}
+    </update>
+
+    <!--根据产品编号查询库存-->
+    <select id="selectProductStockByProductCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_stock
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 根据产品code更新 -->
+    <update id="updateByProductCode" parameterType="com.zb.fincore.pms.service.dal.model.ProductStock">
+        update pms_product_stock
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="frozenAmount != null">
+                frozen_amount = #{frozenAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmount != null">
+                sale_amount = #{saleAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmount != null">
+                stock_amount = #{stockAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmount != null">
+                redeem_amount = #{redeemAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            version = version + 1
+        </set>
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </update>
+</mapper>

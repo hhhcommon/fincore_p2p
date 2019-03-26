@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- 阿里云访问授权信息 -->
+    <bean id="cloudAccount" class="com.aliyun.mns.client.CloudAccount">
+        <constructor-arg index="0" value="${config.mns.accessId}"/>
+        <constructor-arg index="1" value="${config.mns.accessKey}"/>
+        <constructor-arg index="2" value="${config.mns.accountEndpoint}"/>
+    </bean>
+
+    <!-- 阿里云主题消息生产者 -->
+    <bean id="mnsTopicPublisher" class="com.zb.p2p.queue.MnsMsgProducer">
+        <property name="cloudAccount" ref="cloudAccount"/>
+    </bean>
+
+    <!-- 阿里云主题消息消费者 -->
+    <bean id="mnsTopicSubscriber" class="com.zb.p2p.queue.MnsMsgConsumer"
+          init-method="startup" destroy-method="shutdown">
+        <property name="cloudAccount" ref="cloudAccount"/>
+        <property name="waitSeconds" value="10"/>
+        <property name="weakConsumer" value="${queue.weakConsumer.mode}"/>
+        <!-- 队列消息处理线程池 -->
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+                <property name="queueCapacity" value="1000"/>
+                <property name="corePoolSize" value="10"/>
+                <property name="maxPoolSize" value="50"/>
+            </bean>
+        </property>
+        <property name="topicListenerMap">
+            <map>
+                <entry key="${QUEUE-ZB-P2P-ORDER-COMPLETE}" value-ref="assetMatchCompleteNotifyListener"></entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="assetMatchCompleteNotifyListener" class="com.zb.p2p.service.topic.listener.AssetMatchCompleteNotifyListener"/>
+    
+    
+</beans>

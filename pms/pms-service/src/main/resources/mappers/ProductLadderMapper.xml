@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductLadderDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductLadder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="invest_period" property="investPeriod" jdbcType="INTEGER"/>
+        <result column="invest_period_loop_unit" property="investPeriodLoopUnit" jdbcType="INTEGER"/>
+        <result column="invest_period_loop_count" property="investPeriodLoopCount" jdbcType="INTEGER"/>
+        <result column="invest_period_loop_index" property="investPeriodLoopIndex" jdbcType="INTEGER"/>
+        <result column="yield_rate" property="yieldRate" jdbcType="DECIMAL"/>
+        <result column="poundage" property="poundage" jdbcType="DECIMAL"/>
+        <result column="value_start_time" property="valueStartTime" jdbcType="TIMESTAMP"/>
+        <result column="value_end_time" property="valueEndTime" jdbcType="TIMESTAMP"/>
+        <result column="next_redeem_time" property="nextRedeemTime" jdbcType="TIMESTAMP"/>
+        <result column="next_repay_time" property="nextRepayTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, product_id, product_code, invest_period, invest_period_loop_unit, invest_period_loop_count, 
+    invest_period_loop_index, yield_rate, poundage, value_start_time, value_end_time, next_redeem_time,
+    next_repay_time, create_time, create_by
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_ladder
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product_ladder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductLadder">
+    insert into pms_product_ladder (id, product_id, product_code, 
+      invest_period, invest_period_loop_unit, invest_period_loop_count, 
+      invest_period_loop_index, yield_rate, poundage, value_start_time,
+      value_end_time, next_redeem_time, next_repay_time, 
+      create_time, create_by)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, 
+      #{investPeriod,jdbcType=INTEGER}, #{investPeriodLoopUnit,jdbcType=INTEGER}, #{investPeriodLoopCount,jdbcType=INTEGER}, 
+      #{investPeriodLoopIndex,jdbcType=INTEGER}, #{yieldRate,jdbcType=DECIMAL}, #{poundage,jdbcType=DECIMAL}, #{valueStartTime,jdbcType=TIMESTAMP},
+      #{valueEndTime,jdbcType=TIMESTAMP}, #{nextRedeemTime,jdbcType=TIMESTAMP}, #{nextRepayTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductLadder"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_ladder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="investPeriod != null">
+                invest_period,
+            </if>
+            <if test="investPeriodLoopUnit != null">
+                invest_period_loop_unit,
+            </if>
+            <if test="investPeriodLoopCount != null">
+                invest_period_loop_count,
+            </if>
+            <if test="investPeriodLoopIndex != null">
+                invest_period_loop_index,
+            </if>
+            <if test="yieldRate != null">
+                yield_rate,
+            </if>
+            <if test="poundage != null">
+                poundage,
+            </if>
+            <if test="valueStartTime != null">
+                value_start_time,
+            </if>
+            <if test="valueEndTime != null">
+                value_end_time,
+            </if>
+            <if test="nextRedeemTime != null">
+                next_redeem_time,
+            </if>
+            <if test="nextRepayTime != null">
+                next_repay_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="investPeriod != null">
+                #{investPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopUnit != null">
+                #{investPeriodLoopUnit,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopCount != null">
+                #{investPeriodLoopCount,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopIndex != null">
+                #{investPeriodLoopIndex,jdbcType=INTEGER},
+            </if>
+            <if test="yieldRate != null">
+                #{yieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="poundage != null">
+                #{poundage,jdbcType=DECIMAL},
+            </if>
+            <if test="valueStartTime != null">
+                #{valueStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valueEndTime != null">
+                #{valueEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextRedeemTime != null">
+                #{nextRedeemTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextRepayTime != null">
+                #{nextRepayTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductLadder">
+        update pms_product_ladder
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="investPeriod != null">
+                invest_period = #{investPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopUnit != null">
+                invest_period_loop_unit = #{investPeriodLoopUnit,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopCount != null">
+                invest_period_loop_count = #{investPeriodLoopCount,jdbcType=INTEGER},
+            </if>
+            <if test="investPeriodLoopIndex != null">
+                invest_period_loop_index = #{investPeriodLoopIndex,jdbcType=INTEGER},
+            </if>
+            <if test="yieldRate != null">
+                yield_rate = #{yieldRate,jdbcType=DECIMAL},
+            </if>
+            <if test="poundage != null">
+                poundage = #{poundage,jdbcType=DECIMAL},
+            </if>
+            <if test="valueStartTime != null">
+                value_start_time = #{valueStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valueEndTime != null">
+                value_end_time = #{valueEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextRedeemTime != null">
+                next_redeem_time = #{nextRedeemTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nextRepayTime != null">
+                next_repay_time = #{nextRepayTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductLadder">
+        update pms_product_ladder
+        set product_id = #{productId,jdbcType=BIGINT},
+          product_code = #{productCode,jdbcType=VARCHAR},
+          invest_period = #{investPeriod,jdbcType=INTEGER},
+          invest_period_loop_unit = #{investPeriodLoopUnit,jdbcType=INTEGER},
+          invest_period_loop_count = #{investPeriodLoopCount,jdbcType=INTEGER},
+          invest_period_loop_index = #{investPeriodLoopIndex,jdbcType=INTEGER},
+          yield_rate = #{yieldRate,jdbcType=DECIMAL},
+          poundage = #{poundage,jdbcType=DECIMAL},
+          value_start_time = #{valueStartTime,jdbcType=TIMESTAMP},
+          value_end_time = #{valueEndTime,jdbcType=TIMESTAMP},
+          next_redeem_time = #{nextRedeemTime,jdbcType=TIMESTAMP},
+          next_repay_time = #{nextRepayTime,jdbcType=TIMESTAMP},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          create_by = #{createBy,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--查询有下一阶梯的阶梯信息-->
+    <select id="selectNextLadderList" resultMap="BaseResultMap" parameterType="com.zb.fincore.pms.service.dal.model.ProductLadder" >
+        select
+        <include refid="Base_Column_List" />
+        from pms_product_ladder ladder
+        where DATE_FORMAT(SYSDATE(),'%Y%m%d') = DATE_FORMAT(ladder.value_start_time,'%Y%m%d')
+            and (select period.invest_period_loop_index + 1 from pms_product_period period
+                  where period.product_id = ladder.product_id) = ladder.invest_period_loop_index
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      		http://www.springframework.org/schema/beans/spring-beans.xsd
+      		http://code.alibabatech.com/schema/dubbo
+      		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 消费方应用信息 -->
+    <dubbo:consumer timeout="${dubbo.timeout}" retries="${dubbo.retries}"/>
+    <!-- 产品 -->
+    <dubbo:reference id="productServiceForP2PFacade"
+                     interface="com.zb.fincore.pms.facade.product.ProductServiceForP2PFacade"
+                     check="false"/>
+
+    <dubbo:reference id="debtRightInfoFacade"
+                     interface="com.zb.fincore.ams.facade.DebtRightInfoFacade"
+                     check="false"/>
+
+    <dubbo:reference id="productCacheServiceFacade"
+                     interface="com.zb.fincore.pms.facade.product.ProductCacheServiceFacade"
+                     check="false"/>
+
+    <dubbo:reference id="productCacheServiceForP2PFacade"
+                     interface="com.zb.fincore.pms.facade.product.ProductCacheServiceForP2PFacade"
+                     check="false"/>
+
+    <!-- 资管 -->
+    <dubbo:reference id="loanRepayPlanFacade" interface="com.zb.fincore.ams.facade.LoanRepayPlanServiceFacade"
+                     check="false"/>
+
+    <dubbo:reference id="borrowerInfoFacade" interface="com.zb.fincore.ams.facade.BorrowerInfoFacade"
+                     check="false"/>
+
+    <dubbo:reference id="productServiceFacade" interface="com.zb.fincore.pms.facade.product.ProductServiceFacade"
+                     check="false"/>
+
+    <dubbo:reference id="assetForP2PFacade" interface="com.zb.fincore.ams.facade.AssetForP2PFacade" check="false"/>
+
+    <!-- 支付 -->
+    <dubbo:reference id="tradeFacade" interface="com.zb.payment.msd.cashier.facade.TradeFacade" check="false"/>
+    <dubbo:reference id="queryFacade" interface="com.zb.payment.msd.cashier.facade.QueryFacade" check="false"/>
+
+
+</beans>

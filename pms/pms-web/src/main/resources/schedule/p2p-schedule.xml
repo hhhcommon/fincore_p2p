@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Application context definition. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName">
+	<context:annotation-config />
+	
+	<!-- 产品募集期开始JOB start -->
+	<bean id="productRaisePeriodStartJob" class="com.zb.fincore.pms.web.controller.p2p.job.ProductRaisePeriodStartJob"></bean>
+	<bean id="productRaisePeriodStartTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="productRaisePeriodStartJob" />
+		<property name="targetMethod" value="doProductRaisePeriodStartJob" />
+        <property name="concurrent" value="false"/>
+	</bean>
+	<bean id="productRaisePeriodStartTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="productRaisePeriodStartTask" />
+		<property name="cronExpression" value="${PRODUCT_RAISE_PERIOD_START}" />
+	</bean>
+    <!-- 产品募集期开始JOB end -->
+    
+
+    <!-- p2p产品募集期结束JOB start -->
+    <bean id="productRaisePeriodEndJob" class="com.zb.fincore.pms.web.controller.p2p.job.ProductRaisePeriodEndJob"></bean>
+    <bean id="productRaisePeriodEndTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productRaisePeriodEndJob" />
+        <property name="targetMethod" value="doProductRaisePeriodEndForP2PJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productRaisePeriodEndTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productRaisePeriodEndTask" />
+        <property name="cronExpression" value="${PRODUCT_RAISE_PERIOD_END}" />
+    </bean>
+    <!-- p2p产品募集期结束JOB end -->
+
+    <!-- p2p产品通知重试JOB start -->
+    <bean id="notifyRetryJob" class="com.zb.fincore.pms.web.controller.p2p.job.NotifyRetryJob"></bean>
+    <bean id="notifyRetryTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="notifyRetryJob" />
+        <property name="targetMethod" value="doNotifyRetryJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="notifyRetryTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="notifyRetryTask" />
+        <property name="cronExpression" value="${NOTIFY_RETRY}" />
+    </bean>
+    <!-- p2p产品通知重试JOB end -->
+
+
+	<bean id="quartzCronBean" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="productRaisePeriodStartTrigger" />
+                <ref bean="productRaisePeriodEndTrigger" />
+                <ref bean="notifyRetryTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

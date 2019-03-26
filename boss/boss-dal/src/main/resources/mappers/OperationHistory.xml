@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zillionfortune.boss.dal.dao.OperationHistoryDao" >
+  <resultMap id="BaseResultMap" type="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="operation_type" property="operationType" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="refer_id" property="referId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, create_by, modify_time, modify_by, user_id, operation_type, content, 
+    refer_id
+  </sql>
+  
+  <sql id="whereSql" >   
+  	<where>     
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createBy != null and createBy != ''" >
+        and create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="modifyTime != null" >
+        and modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modifyBy != null and modifyBy != ''" >
+        and modify_by = #{modifyBy,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="operationType != null and operationType != ''" >
+        and operation_type = #{operationType,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null and content != ''" >
+        and content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="referId != null and referId != ''" >
+        and refer_id = #{referId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql> 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySelective" resultMap="BaseResultMap" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_history
+    <include refid="whereSql" />
+    order by create_time desc
+    <if test="pageStart != null and pageSize != null" >
+       limit ${pageStart},${pageSize}
+     </if>
+  </select>
+  
+  <resultMap id="HistoryQueryByPageConvertMap" type="com.zillionfortune.boss.dal.entity.HistoryQueryByPageConvert" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="operation_type" property="operationType" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="refer_id" property="referId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryByPage" resultMap="HistoryQueryByPageConvertMap" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    select 
+    h.id as id, h.user_id as userId, h.operation_type as operationType, h.content as content, h.refer_id as referId, h.create_time as createTime, 
+    u.name as name, u.password as password, u.email as email, u.mobile as mobile, u.real_name as realName
+    from operation_history h
+    left join user u
+    on h.user_id = u.id
+    <trim prefix="WHERE" prefixOverrides="and">
+      <if test="id != null" >
+        and h.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="userId != null" >
+        and h.user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="operationType != null" >
+        and h.operation_type = #{operationType,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null" >
+        and h.content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="referId != null" >
+        and h.refer_id = #{referId,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null" >
+        and h.create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="modifyBy != null" >
+        and h.modify_by = #{modifyBy,jdbcType=VARCHAR}
+      </if>
+    </trim>
+    order by h.create_time desc 
+    <if test="pageStart != null and pageSize != null" >
+       limit ${pageStart},${pageSize}
+     </if>
+  </select>
+  <select id="selectBySelectiveCount" resultType="java.lang.Integer" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    select 
+   	 count(h.id)
+    from operation_history h 
+    left join user u
+    on h.user_id = u.id
+    <trim prefix="WHERE" prefixOverrides="and">
+      <if test="id != null" >
+        and h.id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="userId != null" >
+        and h.user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="operationType != null" >
+        and h.operation_type = #{operationType,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null" >
+        and h.content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="referId != null" >
+        and h.refer_id = #{referId,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null" >
+        and h.create_by = #{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="modifyBy != null" >
+        and h.modify_by = #{modifyBy,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operation_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    insert into operation_history (id, create_time, create_by, 
+      modify_time, modify_by, user_id, 
+      operation_type, content, refer_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{operationType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{referId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    insert into operation_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="operationType != null" >
+        operation_type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="referId != null" >
+        refer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="operationType != null" >
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="referId != null" >
+        #{referId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    update operation_history
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="operationType != null" >
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="referId != null" >
+        refer_id = #{referId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zillionfortune.boss.dal.entity.OperationHistory" >
+    update operation_history
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      refer_id = #{referId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>

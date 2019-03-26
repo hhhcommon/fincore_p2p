@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.CreditorInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="creditor_no" property="creditorNo" jdbcType="VARCHAR" />
+    <result column="match_id" property="matchId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="loan_member_id" property="loanMemberId" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="from_order_no" property="fromOrderNo" jdbcType="VARCHAR" />
+    <result column="org_order_no" property="orgOrderNo" jdbcType="VARCHAR" />
+    <result column="asset_no" property="assetNo" jdbcType="VARCHAR" />
+    <result column="org_asset_no" property="orgAssetNo" jdbcType="VARCHAR" />
+    <result column="transfer_trade_no" property="transferTradeNo" jdbcType="VARCHAR" />
+    <result column="transfer_asset_code" property="transferAssetCode" jdbcType="VARCHAR" />
+    <result column="invest_amount" property="investAmount" jdbcType="DECIMAL" />
+    <result column="paying_principle" property="payingPrinciple" jdbcType="DECIMAL" />
+    <result column="paying_interest" property="payingInterest" jdbcType="DECIMAL" />
+    <result column="latest_cash_date" property="latestCashDate" jdbcType="TIMESTAMP" />
+    <result column="latest_principle" property="latestPrinciple" jdbcType="DECIMAL" />
+    <result column="latest_interest" property="latestInterest" jdbcType="DECIMAL" />
+    <result column="paid_principle" property="paidPrinciple" jdbcType="DECIMAL" />
+    <result column="paid_interest" property="paidInterest" jdbcType="DECIMAL" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="Amount_ResultMap" type="com.zb.p2p.trade.persistence.dto.CashSumAmountEntity">
+    <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="total_portion" property="totalPortion" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, creditor_no, match_id, member_id, loan_member_id, loan_no, order_no, from_order_no, org_order_no,
+    asset_no, org_asset_no, transfer_trade_no, transfer_asset_code, invest_amount,paying_principle, paying_interest, latest_cash_date,
+    latest_principle, latest_interest, paid_principle, paid_interest, service_fee, status,
+    memo, version, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from p2p_creditor_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p2p_creditor_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    insert into p2p_creditor_info (id, creditor_no,  match_id,
+      member_id, loan_member_id, loan_no, order_no,
+      from_order_no, org_order_no, asset_no, org_asset_no,
+      transfer_trade_no, transfer_asset_code, invest_amount, paying_principle,
+      paying_interest, latest_cash_date, latest_principle,
+      latest_interest, paid_principle, paid_interest,
+      service_fee, status, memo,
+      version, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{creditorNo,jdbcType=VARCHAR}, #{matchId,jdbcType=BIGINT},
+      #{memberId,jdbcType=VARCHAR}, #{loanMemberId,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR},
+      #{fromOrderNo,jdbcType=VARCHAR}, #{orgOrderNo,jdbcType=VARCHAR}, #{assetNo,jdbcType=VARCHAR}, #{orgAssetNo,jdbcType=VARCHAR},
+      #{transferTradeNo,jdbcType=VARCHAR},#{transferAssetCode,jdbcType=VARCHAR},#{investAmount,jdbcType=DECIMAL}, #{payingPrinciple,jdbcType=DECIMAL},
+      #{payingInterest,jdbcType=DECIMAL}, #{latestCashDate,jdbcType=TIMESTAMP}, #{latestPrinciple,jdbcType=DECIMAL},
+      #{latestInterest,jdbcType=DECIMAL}, #{paidPrinciple,jdbcType=DECIMAL}, #{paidInterest,jdbcType=DECIMAL},
+      #{serviceFee,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR},
+      #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    insert into p2p_creditor_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="creditorNo != null" >
+          creditor_no,
+      </if>
+      <if test="matchId != null" >
+        match_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="loanMemberId != null" >
+        loan_member_id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="fromOrderNo != null" >
+        from_order_no,
+      </if>
+      <if test="orgOrderNo != null" >
+        org_order_no,
+      </if>
+      <if test="assetNo != null" >
+        asset_no,
+      </if>
+      <if test="orgAssetNo != null" >
+        org_asset_no,
+      </if>
+      <if test="transferTradeNo != null" >
+        transfer_trade_no,
+      </if>
+      <if test="transferAssetCode != null" >
+        transfer_asset_code,
+      </if>
+      <if test="investAmount != null">
+        invest_amount ,
+      </if>
+      <if test="payingPrinciple != null" >
+        paying_principle,
+      </if>
+      <if test="payingInterest != null" >
+        paying_interest,
+      </if>
+      <if test="latestCashDate != null" >
+        latest_cash_date,
+      </if>
+      <if test="latestPrinciple != null" >
+        latest_principle,
+      </if>
+      <if test="latestInterest != null" >
+        latest_interest,
+      </if>
+      <if test="paidPrinciple != null" >
+        paid_principle,
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest,
+      </if>
+      <if test="serviceFee != null" >
+        service_fee,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="creditorNo != null" >
+          #{creditorNo,jdbcType=BIGINT},
+      </if>
+      <if test="matchId != null" >
+        #{matchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanMemberId != null" >
+        #{loanMemberId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fromOrderNo != null" >
+        #{fromOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOrderNo != null" >
+        #{orgOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assetNo != null" >
+        #{assetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAssetNo != null" >
+        #{orgAssetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferTradeNo != null" >
+        #{transferTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAssetCode != null" >
+        #{transferAssetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="investAmount != null">
+        #{investAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payingPrinciple != null" >
+        #{payingPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="payingInterest != null" >
+        #{payingInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="latestCashDate != null" >
+        #{latestCashDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestPrinciple != null" >
+        #{latestPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="latestInterest != null" >
+        #{latestInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="paidPrinciple != null" >
+        #{paidPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="paidInterest != null" >
+        #{paidInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null" >
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    update p2p_creditor_info
+    <set >
+      <if test="creditorNo != null" >
+          creditor_no = #{creditorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="matchId != null" >
+        match_id = #{matchId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanMemberId != null" >
+        loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fromOrderNo != null" >
+        from_order_no = #{fromOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOrderNo != null" >
+        org_order_no = #{orgOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assetNo != null" >
+        asset_no = #{assetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAssetNo != null" >
+        org_asset_no = #{orgAssetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferTradeNo != null" >
+        transfer_trade_no = #{transferTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAssetCode != null" >
+        transfer_asset_code = #{transferAssetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="investAmount != null">
+        invest_amount = #{investAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="payingPrinciple != null" >
+        paying_principle = #{payingPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="payingInterest != null" >
+        paying_interest = #{payingInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="latestCashDate != null" >
+        latest_cash_date = #{latestCashDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestPrinciple != null" >
+        latest_principle = #{latestPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="latestInterest != null" >
+        latest_interest = #{latestInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="paidPrinciple != null" >
+        paid_principle = #{paidPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest = #{paidInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    update p2p_creditor_info
+    set creditor_no = #{creditorNo,jdbcType=VARCHAR},
+      match_id = #{matchId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      from_order_no = #{fromOrderNo,jdbcType=VARCHAR},
+      org_order_no = #{orgOrderNo,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
+      org_asset_no = #{orgAssetNo,jdbcType=VARCHAR},
+      transfer_trade_no = #{transferTradeNo,jdbcType=VARCHAR},
+      transfer_asset_code = #{transferAssetCode,jdbcType=VARCHAR},
+      paying_principle = #{payingPrinciple,jdbcType=DECIMAL},
+      paying_interest = #{payingInterest,jdbcType=DECIMAL},
+      latest_cash_date = #{latestCashDate,jdbcType=TIMESTAMP},
+      latest_principle = #{latestPrinciple,jdbcType=DECIMAL},
+      latest_interest = #{latestInterest,jdbcType=DECIMAL},
+      paid_principle = #{paidPrinciple,jdbcType=DECIMAL},
+      paid_interest = #{paidInterest,jdbcType=DECIMAL},
+      service_fee = #{serviceFee,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByOrderAndAsset" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from p2p_creditor_info
+    where order_no = #{orderNo,jdbcType=VARCHAR} AND asset_no = #{assetNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOrderAndTransferAsset" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from p2p_creditor_info
+    where order_no = #{orderNo,jdbcType=VARCHAR} AND transfer_asset_code = #{transferAssetNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAssetNoStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from p2p_creditor_info
+    where asset_no = #{assetNo,jdbcType=VARCHAR}
+      and status = #{status,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectTotalInvestedAmount" resultType="java.math.BigDecimal">
+    SELECT sum(invest_amount) as amount
+    FROM p2p_creditor_info
+    WHERE asset_no = #{assetNo,jdbcType=VARCHAR}
+    and status in
+    <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+      #{status}
+    </foreach>
+  </select>
+
+  <select id="selectMemberTotalAmount" resultMap="Amount_ResultMap">
+    SELECT member_id, sum(invest_amount) as amount
+         FROM p2p_creditor_info
+        WHERE asset_no = #{assetNo,jdbcType=VARCHAR}
+          and status in
+          <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+            #{status}
+          </foreach>
+          <if test="memberIds != null">
+             and member_id in
+             <foreach item="item" index="index" collection="memberIds" open="(" separator="," close=")">
+               #{item}
+             </foreach>
+           </if>
+        GROUP BY member_id
+  </select>
+
+  <select id="selectOrderMatchedTotalAmount" resultMap="Amount_ResultMap">
+    SELECT order_no as member_id, sum(invest_amount) as amount
+    FROM p2p_creditor_info
+    WHERE asset_no = #{assetNo,jdbcType=VARCHAR}
+    <if test="orderIds != null">
+      and order_no in
+      <foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    and status in
+    <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+      #{status}
+    </foreach>
+    GROUP BY order_no
+  </select>
+
+  <select id="queryLoanNoListByAssetNo" resultType="java.lang.String">
+    SELECT distinct loan_no FROM p2p_creditor_info WHERE asset_no = #{assetNo,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateAccountByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.CreditorInfoEntity" >
+    update p2p_creditor_info
+    <set >
+      <if test="transferTradeNo != null" >
+        transfer_trade_no = #{transferTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payingPrinciple != null" >
+        paying_principle = #{payingPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="payingInterest != null" >
+        paying_interest = #{payingInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="latestCashDate != null" >
+        latest_cash_date = #{latestCashDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestPrinciple != null" >
+        latest_principle = #{latestPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="latestInterest != null" >
+        latest_interest = #{latestInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="paidPrinciple != null" >
+        paid_principle = #{paidPrinciple,jdbcType=DECIMAL},
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest = #{paidInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+        version = version + 1
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectCreditorIdzByMatchIdz" resultType="java.lang.String">
+    SELECT id as creditor_id
+    FROM p2p_creditor_info
+    WHERE match_id in
+      <foreach item="item" index="index" collection="matchIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+  </select>
+
+    <select id="selectByMatchId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_creditor_info
+        where match_id = #{matchId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCreditorNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_creditor_info
+        where creditor_no = #{creditorNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByAssetNo" resultMap="BaseResultMap">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM p2p_creditor_info
+        WHERE asset_no = #{assetNo,jdbcType=VARCHAR}
+    </select>
+</mapper>

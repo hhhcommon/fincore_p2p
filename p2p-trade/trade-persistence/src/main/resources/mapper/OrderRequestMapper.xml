@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.OrderRequestMapper">
+    <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="ext_order_no" property="extOrderNo" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="sale_channel" property="saleChannel" jdbcType="VARCHAR"/>
+        <result column="invest_amount" property="investAmount" jdbcType="DECIMAL"/>
+        <result column="matched_amount" property="matchedAmount" jdbcType="DECIMAL"/>
+        <result column="total_income" property="totalIncome" jdbcType="DECIMAL"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="loanNo" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="cert_no" property="certNo" jdbcType="VARCHAR"/>
+        <result column="tel_no" property="telNo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, member_id, ext_order_no, order_no, product_code, sale_channel, invest_amount,
+        matched_amount, order_time, status, version, create_time, modify_time, create_by,
+        modify_by, name, cert_no, tel_no,total_income
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_order_request
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from p2p_order_request
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        insert into p2p_order_request (id, member_id, ext_order_no,
+        order_no, product_code, sale_channel,
+        invest_amount, matched_amount, order_time,
+        status, version, create_time,
+        modify_time, create_by, modify_by,
+        name, cert_no, tel_no
+        )
+        values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=VARCHAR}, #{extOrderNo,jdbcType=VARCHAR},
+        #{orderNo,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{saleChannel,jdbcType=VARCHAR},
+        #{investAmount,jdbcType=DECIMAL}, #{matchedAmount,jdbcType=DECIMAL}, #{orderTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{certNo,jdbcType=VARCHAR}, #{telNo,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        insert into p2p_order_request
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="extOrderNo != null">
+                ext_order_no,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="saleChannel != null">
+                sale_channel,
+            </if>
+            <if test="investAmount != null">
+                invest_amount,
+            </if>
+            <if test="matchedAmount != null">
+                matched_amount,
+            </if>
+            <if test="orderTime != null">
+                order_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="certNo != null">
+                cert_no,
+            </if>
+            <if test="telNo != null">
+                tel_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="extOrderNo != null">
+                #{extOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannel != null">
+                #{saleChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="investAmount != null">
+                #{investAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="matchedAmount != null">
+                #{matchedAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderTime != null">
+                #{orderTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="certNo != null">
+                #{certNo,jdbcType=VARCHAR},
+            </if>
+            <if test="telNo != null">
+                #{telNo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        update p2p_order_request
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="extOrderNo != null">
+                ext_order_no = #{extOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannel != null">
+                sale_channel = #{saleChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="investAmount != null">
+                invest_amount = #{investAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="matchedAmount != null">
+                matched_amount = #{matchedAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderTime != null">
+                order_time = #{orderTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="certNo != null">
+                cert_no = #{certNo,jdbcType=VARCHAR},
+            </if>
+            <if test="telNo != null">
+                tel_no = #{telNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        update p2p_order_request
+        set member_id = #{memberId,jdbcType=VARCHAR},
+        ext_order_no = #{extOrderNo,jdbcType=VARCHAR},
+        order_no = #{orderNo,jdbcType=VARCHAR},
+        product_code = #{productCode,jdbcType=VARCHAR},
+        sale_channel = #{saleChannel,jdbcType=VARCHAR},
+        invest_amount = #{investAmount,jdbcType=DECIMAL},
+        matched_amount = #{matchedAmount,jdbcType=DECIMAL},
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=VARCHAR},
+        version = #{version,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        cert_no = #{certNo,jdbcType=VARCHAR},
+        tel_no = #{telNo,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryOrderListByProductCodeForMatch" resultMap="BaseResultMap"
+            parameterType="com.zb.p2p.trade.persistence.entity.OrderRequestEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_order_request
+        where status in ('WAIT_UNMATCHED','PARTLY_MATCH_SUCCESS','MATCH_FAIL')
+        <if test="productCode != null and productCode != ''">
+            AND product_code = #{productCode,jdbcType=VARCHAR}
+        </if>
+        ORDER BY order_time ASC
+    </select>
+
+    <select id="selectListForIncomeCalc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_order_request
+        where product_code = #{productNo,jdbcType=VARCHAR}
+          and total_income &lt;= 0 and status = 'MATCH_SUCCESS'
+    </select>
+
+    <update id="updateIncome">
+        update p2p_order_request
+        set
+        total_income = #{totalIncome,jdbcType=DECIMAL}
+        where ext_order_no = #{orderNo,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByOrderNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_order_request
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryOrderListByParams" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_order_request
+        where 1=1
+        <if test="productCodeList != null and productCodeList.size()>0">
+            and product_code in
+            <foreach collection="productCodeList" item="productCode" index="index" open="(" close=")" separator=",">
+                #{productCode}
+            </foreach>
+        </if>
+        ORDER BY order_time ASC
+    </select>
+</mapper>

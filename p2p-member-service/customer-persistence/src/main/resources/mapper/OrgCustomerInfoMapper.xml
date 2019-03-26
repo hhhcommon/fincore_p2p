@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.customer.dao.OrgCustomerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.customer.dao.domain.OrgCustomerInfo" >
+    <id column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="channel_member_id" property="channelMemberId" jdbcType="VARCHAR" />
+    <result column="id_card_type" property="idCardType" jdbcType="VARCHAR" />
+    <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_id_card_type" property="ownerIdCardType" jdbcType="VARCHAR" />
+    <result column="owner_id_card_no" property="ownerIdCardNo" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+    <result column="is_real" property="isReal" jdbcType="TINYINT" />
+    <result column="source_id" property="sourceId" jdbcType="VARCHAR" />
+    <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+    <result column="fund_collect_account_no" property="fundCollectAccountNo" jdbcType="VARCHAR" />
+    <result column="security_account_no" property="securityAccountNo" jdbcType="VARCHAR" />
+    <result column="general_account_no" property="generalAccountNo" jdbcType="VARCHAR" />
+    <result column="risk_reserve_account_no" property="riskReserveAccountNo" jdbcType="VARCHAR" />
+    <result column="auth_repay_account_no" property="authRepayAccountNo" jdbcType="VARCHAR" />
+    <result column="channel_fee_account_no" property="channelFeeAccountNo" jdbcType="VARCHAR" />
+    <result column="repay_admin_account_no" property="repayAdminAccountNo" jdbcType="VARCHAR" />
+    
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    org_id, org_name, channel_member_id, id_card_type, id_card_no, owner_name, owner_id_card_type, owner_id_card_no,
+    telephone, channel_code, is_real, source_id, account_no, fund_collect_account_no, security_account_no, general_account_no,
+    risk_reserve_account_no, auth_repay_account_no, channel_fee_account_no, repay_admin_account_no, create_time, update_time
+  </sql>
+
+  <sql id="Account_Column_List" >
+    org_id, org_name, channel_member_id, is_real, source_id, account_no, fund_collect_account_no, security_account_no, general_account_no,
+    risk_reserve_account_no, auth_repay_account_no, channel_fee_account_no, repay_admin_account_no, create_time, update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_member_org_customer_info
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <select id="listPageOrgAcc" parameterType="page" resultType="pd">
+    SELECT oci.`org_id`,oci.`org_name`,oci.`id_card_type`,oci.`id_card_no`,oci.`owner_name`,
+     oci.`owner_id_card_type`,oci.`owner_id_card_no`,oci.`telephone`,oci.`is_real`,oci.`account_no`
+	FROM `p2p_member_org_customer_info` oci
+    where 1 = 1
+    <if test="orgId != null" >
+       and oci.`org_id` = #{orgId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p2p_member_org_customer_info
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.p2p.customer.dao.domain.OrgCustomerInfo" >
+    insert into p2p_member_org_customer_info (org_id, org_name, id_card_type, 
+      id_card_no, owner_name, owner_id_card_type, owner_id_card_no, telephone, channel_code, is_real,
+      source_id, account_no,  create_time,
+      update_time)
+    values (#{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, #{idCardType,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR},
+      #{ownerName,jdbcType=VARCHAR}, #{ownerIdCardType,jdbcType=VARCHAR}, #{ownerIdCardNo,jdbcType=VARCHAR},
+      #{telephone,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{isReal,jdbcType=TINYINT}, #{sourceId,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="orgId" resultType="java.lang.Long">
+      select LAST_INSERT_ID() as orgId
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.zb.p2p.customer.dao.domain.OrgCustomerInfo" >
+    insert into p2p_member_org_customer_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="idCardType != null" >
+        id_card_type,
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="ownerIdCardType != null" >
+        owner_id_card_type,
+      </if>
+      <if test="ownerIdCardNo != null" >
+        owner_id_card_no,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="channelCode != null" >
+        channel_code,
+      </if>
+      <if test="isReal != null">
+        is_real,
+      </if>
+      <if test="sourceId != null">
+        source_id,
+      </if>
+      <if test="accountNo != null">
+        account_no,
+      </if>
+
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardType != null" >
+        #{idCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null" >
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdCardType != null" >
+        #{ownerIdCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdCardNo != null" >
+        #{ownerIdCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        channelCode,
+      </if>
+      <if test="isReal != null" >
+        #{isReal,jdbcType=TINYINT},
+      </if>
+      <if test="sourceId != null" >
+        #{sourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.customer.dao.domain.OrgCustomerInfo" >
+    update p2p_member_org_customer_info
+    <set >
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardType != null" >
+        id_card_type = #{idCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdCardType != null" >
+        owner_id_card_type = #{ownerIdCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerIdCardNo != null" >
+        owner_id_card_no = #{ownerIdCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="isReal != null" >
+        is_real = #{isReal,jdbcType=TINYINT},
+      </if>
+      <if test="sourceId != null" >
+        source_id = #{sourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null" >
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="securityAccountNo != null" >
+        security_account_no = #{securityAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="generalAccountNo != null" >
+        general_account_no = #{generalAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="riskReserveAccountNo != null" >
+        risk_reserve_account_no = #{riskReserveAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="authRepayAccountNo != null" >
+        auth_repay_account_no = #{authRepayAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="channelFeeAccountNo != null" >
+        channel_fee_account_no = #{channelFeeAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fundCollectAccountNo != null" >
+        fund_collect_account_no = #{fundCollectAccountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="repayAdminAccountNo != null" >
+        repay_admin_account_no = #{repayAdminAccountNo,jdbcType=VARCHAR},
+      </if>
+
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zb.p2p.customer.dao.domain.OrgCustomerInfo" >
+    update p2p_member_org_customer_info
+    set org_name = #{orgName,jdbcType=VARCHAR},
+      id_card_type = #{idCardType,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_id_card_type = #{ownerIdCardType,jdbcType=VARCHAR},
+      owner_id_card_no = #{ownerIdCardNo,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      is_real = #{isReal,jdbcType=TINYINT},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByUkIdCardNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from p2p_member_org_customer_info
+    where id_card_no = #{idCardNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySourceId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Account_Column_List"/>
+    from p2p_member_org_customer_info
+    where source_id = #{sourceId,jdbcType=VARCHAR} limit 1
+  </select>
+  <select id="selectByChannelMemberId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from p2p_member_org_customer_info
+    where channel_member_id = #{channelMemberId,jdbcType=VARCHAR} limit 1
+  </select>
+
+  <insert id="batchInsert" parameterType="com.zb.p2p.customer.dao.domain.OrgCustomerInfo">
+    insert into p2p_member_org_customer_info (
+    <include refid="Base_Column_List"/>
+    )
+    SELECT T.* FROM (
+      <foreach collection="customerList" item="info" index="index" separator="union all">
+        select
+        #{info.orgId,jdbcType=BIGINT} AS orgId, #{info.orgName,jdbcType=VARCHAR} AS orgName, #{info.channelMemberId,jdbcType=VARCHAR} AS channelMemberId,
+        #{info.idCardType,jdbcType=VARCHAR} AS idCardType, #{info.idCardNo,jdbcType=VARCHAR} AS idCardNo, #{info.ownerName,jdbcType=VARCHAR} AS ownerName, #{info.ownerIdCardType,jdbcType=VARCHAR} AS ownerIdCardType,
+        #{info.ownerIdCardNo,jdbcType=VARCHAR} AS ownerIdCardNo, #{info.telephone,jdbcType=VARCHAR} AS telephone, #{info.channelCode,jdbcType=VARCHAR} AS channelCode,
+        #{info.isReal,jdbcType=TINYINT} AS isReal, #{info.sourceId,jdbcType=VARCHAR} AS sourceId, #{info.accountNo,jdbcType=VARCHAR} AS accountNo,
+        #{info.fundCollectAccountNo,jdbcType=VARCHAR} AS fundCollectAccountNo, #{info.securityAccountNo,jdbcType=VARCHAR} AS securityAccountNo,#{info.generalAccountNo,jdbcType=VARCHAR} AS generalAccountNo,
+        #{info.riskReserveAccountNo,jdbcType=VARCHAR} AS riskReserveAccountNo, #{info.authRepayAccountNo,jdbcType=VARCHAR} AS authRepayAccountNo,
+        #{info.channelFeeAccountNo,jdbcType=VARCHAR} AS channelFeeAccountNo, #{info.repayAdminAccountNo,jdbcType=VARCHAR} AS repayAdminAccount_no,
+        #{info.createTime,jdbcType=TIMESTAMP} AS createTime , #{info.updateTime,jdbcType=TIMESTAMP} AS updateTime
+        from dual
+      </foreach>
+    ) T
+  </insert>
+</mapper>

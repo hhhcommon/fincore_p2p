@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductContractDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductContract">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="contract_type" property="contractType" jdbcType="TINYINT"/>
+        <result column="contract_name" property="contractName" jdbcType="VARCHAR"/>
+        <result column="contract_display_name" property="contractDisplayName" jdbcType="VARCHAR"/>
+        <result column="contract_file_url" property="contractFileUrl" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, product_id, product_code, contract_type, contract_name, contract_display_name, 
+    contract_file_url, create_time, create_by, modify_time, modify_by
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_contract
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductContract">
+    insert into pms_product_contract (id, product_id, product_code, 
+      contract_type, contract_name, contract_display_name, 
+      contract_file_url, create_time, create_by, 
+      modify_time, modify_by)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, 
+      #{contractType,jdbcType=TINYINT}, #{contractName,jdbcType=VARCHAR}, #{contractDisplayName,jdbcType=VARCHAR}, 
+      #{contractFileUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductContract"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="contractType != null">
+                contract_type,
+            </if>
+            <if test="contractName != null">
+                contract_name,
+            </if>
+            <if test="contractDisplayName != null">
+                contract_display_name,
+            </if>
+            <if test="contractFileUrl != null">
+                contract_file_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contractType != null">
+                #{contractType,jdbcType=TINYINT},
+            </if>
+            <if test="contractName != null">
+                #{contractName,jdbcType=VARCHAR},
+            </if>
+            <if test="contractDisplayName != null">
+                #{contractDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="contractFileUrl != null">
+                #{contractFileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductContract">
+        update pms_product_contract
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contractType != null">
+                contract_type = #{contractType,jdbcType=TINYINT},
+            </if>
+            <if test="contractName != null">
+                contract_name = #{contractName,jdbcType=VARCHAR},
+            </if>
+            <if test="contractDisplayName != null">
+                contract_display_name = #{contractDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="contractFileUrl != null">
+                contract_file_url = #{contractFileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductContract">
+        update pms_product_contract
+        set product_id = #{productId,jdbcType=BIGINT},
+          product_code = #{productCode,jdbcType=VARCHAR},
+          contract_type = #{contractType,jdbcType=TINYINT},
+          contract_name = #{contractName,jdbcType=VARCHAR},
+          contract_display_name = #{contractDisplayName,jdbcType=VARCHAR},
+          contract_file_url = #{contractFileUrl,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          create_by = #{createBy,jdbcType=VARCHAR},
+          modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+          modify_by = #{modifyBy,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--根据产品编号查询合同列表-->
+    <select id="selectContractListByProductCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from pms_product_contract
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

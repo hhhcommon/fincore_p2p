@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.GlobalConfigDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.GlobalConfig">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="group_name_desc" property="groupName" jdbcType="VARCHAR"/>
+        <result column="property_name" property="propertyName" jdbcType="VARCHAR"/>
+        <result column="property_value" property="propertyValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, group_name, group_name_desc, property_name, property_value
+    </sql>
+
+    <select id="selectByPropertyName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_global_config
+        where property_name = #{propertyName,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

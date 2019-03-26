@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zb.fincore</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>pms-parent-pom</artifactId>
+    <version>1.3.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <zb.fincore.pms.facade.version>1.3.0-SNAPSHOT</zb.fincore.pms.facade.version>
+        <zb.fincore.pms.service.version>1.3.0-SNAPSHOT</zb.fincore.pms.service.version>
+        <zb.fincore.pms.web.version>1.3.0-SNAPSHOT</zb.fincore.pms.web.version>
+    </properties>
+
+    <modules>
+        <module>pms-facade</module>
+        <module>pms-service</module>
+        <module>pms-web</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zb.fincore</groupId>
+                <artifactId>pms-facade</artifactId>
+                <version>${zb.fincore.pms.facade.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zb.fincore</groupId>
+                <artifactId>pms-service</artifactId>
+                <version>${zb.fincore.pms.service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zb.fincore</groupId>
+                <artifactId>pms-web</artifactId>
+                <version>${zb.fincore.pms.web.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+		 <distributionManagement>
+	        <repository>
+				<id>deployRelease</id>
+				<name>Nexus Release Repository</name>
+				<url>http://192.168.223.7:8081/nexus/content/repositories/fincore_releases/</url>
+			</repository>
+	
+			<snapshotRepository>
+				<id>deploySnapshot</id>
+				<name>Nexus Snapshots Repository</name>
+				<url>http://192.168.223.7:8081/nexus/content/repositories/fincore_snapshots/</url>
+			</snapshotRepository>
+	    </distributionManagement>
+</project>

@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.CashRecordMapper">
+    <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="bill_plan_id" property="billPlanId" jdbcType="BIGINT"/>
+        <result column="req_no" property="reqNo" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="ext_order_no" property="extOrderNo" jdbcType="VARCHAR"/>
+        <result column="asset_no" property="assetNo" jdbcType="VARCHAR"/>
+        <result column="org_asset_no" property="orgAssetNo" jdbcType="VARCHAR"/>
+        <result column="expect_principle" property="expectPrinciple" jdbcType="DECIMAL"/>
+        <result column="paying_interest" property="payingInterest" jdbcType="DECIMAL"/>
+        <result column="lock_tag" property="lockTag" jdbcType="INTEGER"/>
+        <result column="expect_interest" property="expectInterest" jdbcType="DECIMAL"/>
+        <result column="ref_no" property="refNo" jdbcType="VARCHAR"/>
+        <result column="loan_member_id" property="loanMemberId" jdbcType="VARCHAR"/>
+        <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="sale_channel" property="saleChannel" jdbcType="VARCHAR"/>
+        <result column="cash_amount" property="cashAmount" jdbcType="DECIMAL"/>
+        <result column="cash_income" property="cashIncome" jdbcType="DECIMAL"/>
+        <result column="stage_seq" property="stageSeq" jdbcType="INTEGER"/>
+        <result column="expect_date" property="expectDate" jdbcType="DATE"/>
+        <result column="cash_date" property="cashDate" jdbcType="DATE"/>
+        <result column="repay_type" property="repayType" jdbcType="VARCHAR"/>
+        <result column="cash_status" property="cashStatus" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="pay_channel" property="payChannel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="MemberAmountResultMap" type="com.zb.p2p.trade.persistence.dto.CashSumAmountEntity">
+        <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="expect_principle" property="expectPrincipal" jdbcType="DECIMAL"/>
+        <result column="expect_interest" property="expectInterest" jdbcType="DECIMAL"/>
+        <result column="cash_amount" property="actualPrincipal" jdbcType="DECIMAL"/>
+        <result column="cash_income" property="actualInterest" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, bill_plan_id, req_no, product_code, ext_order_no, asset_no, org_asset_no, expect_principle,
+        paying_interest, lock_tag, expect_interest, ref_no, loan_member_id, member_id, sale_channel,
+        cash_amount, cash_income, stage_seq, expect_date, cash_date, repay_type, cash_status,
+        status, version, create_time, create_by, modify_time, modify_by, pay_channel
+    </sql>
+
+    <sql id="Key_All_Column_List">
+        p.id, p.bill_plan_id, req_no, p.product_code, p.ext_order_no, p.asset_no, p.org_asset_no, p.expect_principle,
+        p.paying_interest, p.lock_tag, p.expect_interest, p.ref_no, p.loan_member_id, p.member_id, p.sale_channel,
+        p.cash_amount, p.cash_income, p.stage_seq, p.expect_date, p.cash_date, p.repay_type, p.cash_status,
+        p.status, p.version, p.create_time, p.modify_time, p.pay_channel
+    </sql>
+
+    <sql id="Member_Amount_Column_list">
+        member_id, sum(expect_principle) as expect_principle, sum(expect_interest) as expect_interest,
+         sum(cash_amount) as cash_amount, sum(cash_income) as cash_income
+    </sql>
+
+    <sql id="Order_Amount_Column_list">
+        ext_order_no as member_id, sum(expect_principle) as expect_principle, sum(expect_interest) as expect_interest,
+        sum(cash_amount) as cash_amount, sum(cash_income) as cash_income
+    </sql>
+
+    <sql id="Creditor_Amount_Column_list">
+        ref_no as member_id, sum(expect_principle) as expect_principle, sum(expect_interest) as expect_interest,
+        sum(cash_amount) as cash_amount, sum(cash_income) as cash_income
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from p2p_cash_plan
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        insert into p2p_cash_plan (id, bill_plan_id, req_no,
+        product_code, ext_order_no, asset_no,
+        org_asset_no, expect_principle, paying_interest,
+        lock_tag, expect_interest, ref_no,
+        loan_member_id, member_id, sale_channel,
+        cash_amount, cash_income, stage_seq,
+        expect_date, cash_date, repay_type,
+        cash_status, status, version,
+        create_time, create_by, modify_time,
+        modify_by)
+        values (#{id,jdbcType=BIGINT}, #{billPlanId,jdbcType=BIGINT}, #{reqNo,jdbcType=VARCHAR},
+        #{productCode,jdbcType=VARCHAR}, #{extOrderNo,jdbcType=VARCHAR}, #{assetNo,jdbcType=VARCHAR},
+        #{orgAssetNo,jdbcType=VARCHAR}, #{expectPrinciple,jdbcType=DECIMAL}, #{payingInterest,jdbcType=DECIMAL},
+        #{lockTag,jdbcType=INTEGER}, #{expectInterest,jdbcType=DECIMAL}, #{refNo,jdbcType=VARCHAR},
+        #{loanMemberId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{saleChannel,jdbcType=VARCHAR},
+        #{cashAmount,jdbcType=DECIMAL}, #{cashIncome,jdbcType=DECIMAL}, #{stageSeq,jdbcType=INTEGER},
+        #{expectDate,jdbcType=DATE}, #{cashDate,jdbcType=DATE}, #{repayType,jdbcType=VARCHAR},
+        #{cashStatus,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        insert into p2p_cash_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="billPlanId != null">
+                bill_plan_id,
+            </if>
+            <if test="reqNo != null">
+                req_no,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="extOrderNo != null">
+                ext_order_no,
+            </if>
+            <if test="assetNo != null">
+                asset_no,
+            </if>
+            <if test="orgAssetNo != null">
+                org_asset_no,
+            </if>
+            <if test="expectPrinciple != null">
+                expect_principle,
+            </if>
+            <if test="payingInterest != null">
+                paying_interest,
+            </if>
+            <if test="lockTag != null">
+                lock_tag,
+            </if>
+            <if test="expectInterest != null">
+                expect_interest,
+            </if>
+            <if test="refNo != null">
+                ref_no,
+            </if>
+            <if test="loanMemberId != null">
+                loan_member_id,
+            </if>
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="saleChannel != null">
+                sale_channel,
+            </if>
+            <if test="cashAmount != null">
+                cash_amount,
+            </if>
+            <if test="cashIncome != null">
+                cash_income,
+            </if>
+            <if test="stageSeq != null">
+                stage_seq,
+            </if>
+            <if test="expectDate != null">
+                expect_date,
+            </if>
+            <if test="cashDate != null">
+                cash_date,
+            </if>
+            <if test="repayType != null">
+                repay_type,
+            </if>
+            <if test="cashStatus != null">
+                cash_status,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="billPlanId != null">
+                #{billPlanId,jdbcType=BIGINT},
+            </if>
+            <if test="reqNo != null">
+                #{reqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="extOrderNo != null">
+                #{extOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="assetNo != null">
+                #{assetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAssetNo != null">
+                #{orgAssetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="expectPrinciple != null">
+                #{expectPrinciple,jdbcType=DECIMAL},
+            </if>
+            <if test="payingInterest != null">
+                #{payingInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="lockTag != null">
+                #{lockTag,jdbcType=INTEGER},
+            </if>
+            <if test="expectInterest != null">
+                #{expectInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="refNo != null">
+                #{refNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMemberId != null">
+                #{loanMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannel != null">
+                #{saleChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="cashAmount != null">
+                #{cashAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="cashIncome != null">
+                #{cashIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="stageSeq != null">
+                #{stageSeq,jdbcType=INTEGER},
+            </if>
+            <if test="expectDate != null">
+                #{expectDate,jdbcType=DATE},
+            </if>
+            <if test="cashDate != null">
+                #{cashDate,jdbcType=DATE},
+            </if>
+            <if test="repayType != null">
+                #{repayType,jdbcType=VARCHAR},
+            </if>
+            <if test="cashStatus != null">
+                #{cashStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        update p2p_cash_plan
+        <set>
+            <if test="billPlanId != null">
+                bill_plan_id = #{billPlanId,jdbcType=BIGINT},
+            </if>
+            <if test="reqNo != null">
+                req_no = #{reqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="extOrderNo != null">
+                ext_order_no = #{extOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="assetNo != null">
+                asset_no = #{assetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAssetNo != null">
+                org_asset_no = #{orgAssetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="expectPrinciple != null">
+                expect_principle = #{expectPrinciple,jdbcType=DECIMAL},
+            </if>
+            <if test="payingInterest != null">
+                paying_interest = #{payingInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="lockTag != null">
+                lock_tag = #{lockTag,jdbcType=INTEGER},
+            </if>
+            <if test="expectInterest != null">
+                expect_interest = #{expectInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="refNo != null">
+                ref_no = #{refNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMemberId != null">
+                loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannel != null">
+                sale_channel = #{saleChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="cashAmount != null">
+                cash_amount = #{cashAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="cashIncome != null">
+                cash_income = #{cashIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="stageSeq != null">
+                stage_seq = #{stageSeq,jdbcType=INTEGER},
+            </if>
+            <if test="expectDate != null">
+                expect_date = #{expectDate,jdbcType=DATE},
+            </if>
+            <if test="cashDate != null">
+                cash_date = #{cashDate,jdbcType=DATE},
+            </if>
+            <if test="repayType != null">
+                repay_type = #{repayType,jdbcType=VARCHAR},
+            </if>
+            <if test="cashStatus != null">
+                cash_status = #{cashStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+    update p2p_cash_plan
+    set bill_plan_id = #{billPlanId,jdbcType=BIGINT},
+      req_no = #{reqNo,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      ext_order_no = #{extOrderNo,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
+      org_asset_no = #{orgAssetNo,jdbcType=VARCHAR},
+      expect_principle = #{expectPrinciple,jdbcType=DECIMAL},
+      paying_interest = #{payingInterest,jdbcType=DECIMAL},
+      lock_tag = #{lockTag,jdbcType=INTEGER},
+      expect_interest = #{expectInterest,jdbcType=DECIMAL},
+      ref_no = #{refNo,jdbcType=VARCHAR},
+      loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      sale_channel = #{saleChannel,jdbcType=VARCHAR},
+      cash_amount = #{cashAmount,jdbcType=DECIMAL},
+      cash_income = #{cashIncome,jdbcType=DECIMAL},
+      stage_seq = #{stageSeq,jdbcType=INTEGER},
+      expect_date = #{expectDate,jdbcType=DATE},
+      cash_date = #{cashDate,jdbcType=DATE},
+      repay_type = #{repayType,jdbcType=VARCHAR},
+      cash_status = #{cashStatus,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="listCashRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan p
+        where product_code = #{productCode,jdbcType=VARCHAR} /*AND cash_date = DATE(NOW()) */AND status IN
+        ('INIT','CASH_EXCEPTION')
+        AND ref_no IN (
+        SELECT creditor_no FROM p2p_match_record
+        WHERE loan_no IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <select id="selectWaitingPerform" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan
+        where status = #{status,jdbcType=VARCHAR}
+        and modify_time between #{beginTime} and #{endTime}
+        order by expect_date
+        limit #{limitRows}
+    </select>
+
+    <select id="countCashRecord" resultType="java.lang.Integer">
+        select count(id)
+        from p2p_cash_plan
+        where product_code = #{productCode,jdbcType=VARCHAR} AND status != 'CASH_SUCCESS'
+    </select>
+
+    <update id="updateStatusByReqNo" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        update p2p_cash_plan
+        set status = #{status,jdbcType=VARCHAR},
+        version = IFNULL(version,1) + 1
+        where req_no = #{reqNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateStatusByPCodeAndMemId" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        update p2p_cash_plan
+        set status = #{status,jdbcType=VARCHAR}
+        where product_code = #{productCode} and member_id = #{memberId}
+    </update>
+
+    <insert id="batchInsertByBillPlan" parameterType="com.zb.p2p.trade.persistence.entity.CashBillPlanEntity">
+        insert into p2p_cash_plan (
+        bill_plan_id, product_code, ext_order_no, asset_no, org_asset_no,
+        expect_principle,expect_interest, cash_amount, cash_income, stage_seq,
+        ref_no, member_id, loan_member_id, sale_channel, pay_channel, expect_date,
+        repay_type, cash_status, status, version
+        )
+        select #{billPlan.id,jdbcType=BIGINT}, #{billPlan.productCode,jdbcType=VARCHAR}, tb.order_no,
+        #{billPlan.assetNo,jdbcType=VARCHAR},#{billPlan.orgAssetNo,jdbcType=VARCHAR},
+        0, 0, 0, 0, #{billPlan.stageSeq,jdbcType=INTEGER},tb.ref_no,tb.member_id,#{billPlan.loanMemberId,jdbcType=VARCHAR},
+        #{billPlan.saleChannel,jdbcType=VARCHAR}, #{billPlan.payChannel,jdbcType=VARCHAR}, #{billPlan.expectDate,jdbcType=DATE},
+        #{billPlan.repayType,jdbcType=VARCHAR},#{billPlan.cashStatus,jdbcType=VARCHAR}, #{billPlan.status,jdbcType=VARCHAR}, 1
+        from (
+            select crd.id as ref_no, crd.member_id as member_id,crd.order_no as order_no
+            from p2p_creditor_info crd
+            where asset_no = #{billPlan.assetNo,jdbcType=VARCHAR}
+            and status in
+            <foreach collection="statusList" item="status" index="index" separator="," open="(" close=")">
+                #{status}
+            </foreach>
+            order by member_id
+            ) tb
+    </insert>
+
+    <sql id="Update_Content">
+        update p2p_cash_plan
+        <set>
+            version = (version + 1),
+            <if test="plan.status != null">
+                status = #{plan.status,jdbcType=VARCHAR},
+            </if>
+            <if test="plan.expectPrinciple != null">
+              expect_principle = #{plan.expectPrinciple,jdbcType=DECIMAL},
+            </if>
+            <if test="plan.expectInterest != null">
+              expect_interest = #{plan.expectInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="plan.payingInterest != null">
+                paying_interest = #{plan.payingInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="plan.lockTag != null">
+                lock_tag = #{plan.lockTag,jdbcType=INTEGER},
+            </if>
+            <if test="plan.cashAmount != null">
+              cash_amount = #{plan.cashAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="plan.cashIncome != null">
+              cash_income = #{plan.cashIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="plan.cashDate != null">
+              cash_date = #{plan.cashDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{plan.id,jdbcType=BIGINT}
+          and stage_seq = #{plan.stageSeq,jdbcType=BIGINT}
+            <if test="preStatus != null">
+                and status = #{preStatus,jdbcType=VARCHAR}
+            </if>
+    </sql>
+
+    <update id="updateByKey" parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        <include refid="Update_Content"/>
+    </update>
+
+    <select id="getSumCashAmount" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select COALESCE(sum(cash_amount),0) + COALESCE(sum(cash_income),0) as totalAmount
+        from p2p_cash_plan
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryCashRecord" resultMap="BaseResultMap"
+            parameterType="com.zb.p2p.trade.persistence.entity.CashRecordEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan
+        where product_code = #{productCode,jdbcType=VARCHAR}
+        AND member_id = #{memberId,jdbcType=VARCHAR}
+        AND sale_channel = #{saleChannel,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByReqNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan
+        where req_no = #{reqNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByWithdrawlStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Key_All_Column_List"/>
+        FROM p2p_cash_plan p
+        where p.status = #{status,jdbcType=VARCHAR}
+          and p.pay_channel = #{payChannel, jdbcType=VARCHAR}
+          and p.cash_date between #{beginTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        ORDER BY cash_date ASC
+        limit #{limit}
+
+    </select>
+
+    <select id="queryAssetsByCashEnd" resultType="com.zb.p2p.trade.persistence.dto.CashNotify">
+        SELECT
+        m.loan_no AS loanNo
+        FROM p2p_cash_plan p
+        INNER JOIN p2p_match_record m
+        ON p.ref_no = m.creditor_no
+        GROUP BY m.loan_no
+        HAVING(SUM(IF (p.`status` = 'CASHED_CARD_SUCCESS',1,0)) = count(m.id));
+    </select>
+
+    <select id="notifyAssetPartyCashFail" resultType="java.lang.String">
+        SELECT m.loan_no
+        FROM p2p_match_record m
+        WHERE creditor_no IN (SELECT ref_no FROM p2p_cash_plan WHERE `status` = 'CASH_EXCEPTION' AND DATE_SUB(now(),
+        INTERVAL 1 HOUR) > modify_time)
+        GROUP BY m.loan_no
+    </select>
+
+    <select id="queryOrdersByCashEnd" resultType="com.zb.p2p.trade.persistence.dto.CashNotify">
+        SELECT
+        p.ext_order_no AS extOrderNo,sum(cash_amount) AS cashAmount, sum(cash_income) as cashIncome
+        FROM
+        p2p_cash_plan p
+        INNER JOIN p2p_match_record m ON p.ref_no = m.creditor_no
+        GROUP BY
+        p.ext_order_no
+        HAVING
+        (SUM(IF (p.`status` = 'CASHED_CARD_SUCCESS',1,0)) = count(m.id));
+    </select>
+
+    <select id="queryOrdersByCashing" resultType="com.zb.p2p.trade.persistence.dto.CashNotify">
+        SELECT
+        p.ext_order_no AS extOrderNo,sum(cash_amount) AS cashAmount, sum(cash_income) as cashIncome
+        FROM
+        p2p_cash_plan p
+        INNER JOIN p2p_match_record m ON p.ref_no = m.creditor_no
+        GROUP BY
+        p.ext_order_no
+        HAVING
+        (SUM(IF (p.`status` = 'CASHING',1,0)) = count(m.id));
+    </select>
+
+    <select id="updateCashByCashCard">
+        UPDATE p2p_cash_plan
+        SET `status` = 'CASHED_CARD_NOTIFY'
+        WHERE `status` = 'CASHED_CARD_SUCCESS'
+    </select>
+
+    <update id="updateByPreStatus">
+        UPDATE p2p_cash_plan SET
+        cash_amount = #{plan.cashAmount,jdbcType=DECIMAL},
+        cash_income = #{plan.cashIncome,jdbcType=DECIMAL},
+        cash_date = #{plan.cashDate,jdbcType=DATE},
+        status = #{plan.status,jdbcType=VARCHAR},
+        version = version + 1,
+        cash_status = #{plan.cashStatus,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+         and status = #{preStatus,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByBillPlanId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_cash_plan
+        where bill_plan_id = #{billPlanId,jdbcType=BIGINT}
+          and status = #{status,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectStatByBillPlanId" resultType="com.zb.p2p.trade.persistence.dto.CashKeyState">
+        select status as strKey , count(1) as total
+         from p2p_cash_plan
+         where bill_plan_id = #{billPlanId,jdbcType=BIGINT}
+         group by status
+    </select>
+    
+    <select id="selectByKey" resultMap="BaseResultMap">
+        select
+        <include refid="Key_All_Column_List"/>
+        from p2p_cash_plan p left join p2p_creditor_info crd on ref_no = crd.id
+        where p.asset_no = #{assetNo,jdbcType=VARCHAR}
+          and p.stage_seq = #{stageNo,jdbcType=INTEGER}
+          and p.repay_type = #{repayType,jdbcType=VARCHAR}
+         order by crd.invest_amount asc
+    </select>
+
+    <select id="selectMemberTotalAmount" resultMap="MemberAmountResultMap">
+        select
+          <include refid="Member_Amount_Column_list"/>
+        from p2p_cash_plan
+        where asset_no = #{assetNo,jdbcType=VARCHAR}
+          and member_id in
+            <foreach collection="memberIds" item="memberId" index="index" separator="," open="(" close=")">
+                #{memberId}
+            </foreach>
+          and repay_type = #{repayType,jdbcType=VARCHAR}
+        group by member_id
+    </select>
+
+    <select id="selectOrderTotalAmount" resultMap="MemberAmountResultMap">
+        select
+        <include refid="Order_Amount_Column_list"/>
+        from p2p_cash_plan
+        where asset_no = #{assetNo,jdbcType=VARCHAR}
+        and ext_order_no in
+        <foreach collection="orderIds" item="orderNo" index="index" separator="," open="(" close=")">
+            #{orderNo}
+        </foreach>
+        and repay_type = #{repayType,jdbcType=VARCHAR}
+        group by ext_order_no
+    </select>
+
+    <select id="selectByAttornCreditor" resultMap="BaseResultMap">
+        select
+        <include refid="Key_All_Column_List"/>
+        from p2p_cash_plan
+        where member_id = #{memberId,jdbcType=VARCHAR}
+        and ref_no = #{creditorId,jdbcType=VARCHAR}
+        order by stage_seq asc
+    </select>
+
+    <select id="selectCreditorTotalAmount" resultMap="MemberAmountResultMap">
+        select
+        <include refid="Creditor_Amount_Column_list"/>
+        from p2p_cash_plan
+        where ref_no in
+        <foreach collection="creditorIdList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        group by ref_no
+    </select>
+
+    <select id="selectByAssetOrderNo" resultType="java.math.BigDecimal">
+        select sum(expect_interest) AS total_interest
+        from p2p_cash_plan
+        where asset_no = #{assetNo,jdbcType=VARCHAR}
+          and ext_order_no = #{extOrderNo,jdbcType=VARCHAR}
+         group by asset_no,ext_order_no
+    </select>
+</mapper>

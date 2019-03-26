@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- SMS配置 -->
+	<!-- <bean id="etConfig" class="com.zb.qjs.common.sms.ETConfig">
+		<property name="mlinkHost" value="${sms.et.mlinkHost}"/>
+		<property name="mlinkSPId" value="${sms.et.mlinkSPId}"/>
+		<property name="mlinkSPPwd" value="${sms.et.mlinkSPPwd}"/>		
+		<property name="mlinkMarketingHost" value="${sms.et.mlinkMarketingHost}"/>
+		<property name="mlinkMarketingSPId" value="${sms.et.mlinkMarketingSPId}"/>
+		<property name="mlinkMarketingSPPwd" value="${sms.et.mlinkMarketingSPPwd}"/>
+		<property name="batchSize" value="${sms.et.batchSize}"/>
+		<property name="isSend" value="${sms.et.isSend}"/>
+	</bean> -->
+	
+    <!-- 阿里云访问授权信息 -->
+    <bean id="cloudAccount" class="com.aliyun.mns.client.CloudAccount">
+        <constructor-arg index="0" value="${config.mns.accessId}"/>
+        <constructor-arg index="1" value="${config.mns.accessKey}"/>
+        <constructor-arg index="2" value="${config.mns.accountEndpoint}"/>
+    </bean>
+    <!-- 阿里云主题消息生产者 -->
+    <bean id="mnsTopicPublisher" class="com.zb.p2p.trade.common.queue.MnsMsgProducer">
+        <property name="cloudAccount" ref="cloudAccount"/>
+    </bean>
+    <!-- 阿里云主题消息消费者 -->
+    <bean id="mnsTopicSubscriber" class="com.zb.p2p.trade.common.queue.MnsMsgConsumer"
+          init-method="startup" destroy-method="shutdown">
+        <property name="cloudAccount" ref="cloudAccount"/>
+        <property name="waitSeconds" value="10"/>
+        <property name="weakConsumer" value="${queue.weakConsumer.mode}"/>
+        <!-- 队列消息处理线程池 -->
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+                <property name="queueCapacity" value="1000"/>
+                <property name="corePoolSize" value="10"/>
+                <property name="maxPoolSize" value="50"/>
+            </bean>
+        </property>
+        <property name="topicListenerMap">
+            <map>
+                <entry key="${QUEUE-ZB-P2P-ORDER-COMPLETE}" value-ref="assetMatchCompleteNotifyListener"></entry>
+            </map>
+        </property>
+    </bean>
+    <!-- 匹配结果主题消息监听执行者 -->
+    <bean id="assetMatchCompleteNotifyListener" class="com.zb.p2p.trade.service.topic.AssetMatchCompleteNotifyListener">
+        <property name="processorMap">
+            <map>
+                <entry key="YSZC" value-ref="defaultMatchResultProcessor"/>
+                <entry key="ZZZC" value-ref="transferMatchResultProcessor"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 兑付计算处理配置 Start -->
+    <bean id="cashPlanPerformFactory" class="com.zb.p2p.trade.service.process.impl.CashPlanProcessorFactoryImpl">
+        <property name="processorMap">
+            <map>
+                <entry key="INIT" value-ref="expectCashAssignProcessor"/>
+                <entry key="CASH_WAIT_ACTUAL" value-ref="actualCashAssignProcessor"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="cashPlanAssignerFactory" class="com.zb.p2p.trade.service.assigner.impl.CashPlanAssignerFactoryImpl">
+        <property name="cashAssignerMap">
+            <map>
+                <entry key="ONE_OFF_CREDITOR" value-ref="oneOffCreditorAssigner"/>
+                <entry key="RATIO_SHARE" value-ref="ratioShareCashAssigner"/>
+                <entry key="FULL_TRANSFER" value-ref="fullTransferCashAssigner"/>
+            </map>
+        </property>
+        <property name="billAssignerMap">
+            <map>
+                <entry key="CREDITOR" value-ref="oneOffBillAssigner"/>
+            </map>
+        </property>
+    </bean>
+    <!-- 兑付计算处理配置 End -->
+
+</beans>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductApprovalDao" >
+  <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="approval_status" property="approvalStatus" jdbcType="TINYINT" />
+    <result column="approval_suggestion" property="approvalSuggestion" jdbcType="VARCHAR" />
+    <result column="approval_by" property="approvalBy" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_id, product_code, sign, approval_status, approval_suggestion, approval_by, 
+    approval_time, create_time, create_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from pms_product_approval
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pms_product_approval
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+    insert into pms_product_approval (id, product_id, product_code, 
+      sign, approval_status, approval_suggestion, 
+      approval_by, approval_time, create_time, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, 
+      #{sign,jdbcType=VARCHAR}, #{approvalStatus,jdbcType=TINYINT}, #{approvalSuggestion,jdbcType=VARCHAR}, 
+      #{approvalBy,jdbcType=VARCHAR}, #{approvalTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into pms_product_approval
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="approvalStatus != null" >
+        approval_status,
+      </if>
+      <if test="approvalSuggestion != null" >
+        approval_suggestion,
+      </if>
+      <if test="approvalBy != null" >
+        approval_by,
+      </if>
+      <if test="approvalTime != null" >
+        approval_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatus != null" >
+        #{approvalStatus,jdbcType=TINYINT},
+      </if>
+      <if test="approvalSuggestion != null" >
+        #{approvalSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalBy != null" >
+        #{approvalBy,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null" >
+        #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+    update pms_product_approval
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStatus != null" >
+        approval_status = #{approvalStatus,jdbcType=TINYINT},
+      </if>
+      <if test="approvalSuggestion != null" >
+        approval_suggestion = #{approvalSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalBy != null" >
+        approval_by = #{approvalBy,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalTime != null" >
+        approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+    update pms_product_approval
+    set product_id = #{productId,jdbcType=BIGINT},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      approval_status = #{approvalStatus,jdbcType=TINYINT},
+      approval_suggestion = #{approvalSuggestion,jdbcType=VARCHAR},
+      approval_by = #{approvalBy,jdbcType=VARCHAR},
+      approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="filterSql">
+        <where>
+            <if test="productCode != null and productCode != ''">
+                AND product_code = #{productCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <!--库存流水列表-->
+    <select id="queryProductApprovalList" resultMap="BaseResultMap"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+        select
+        <include refid="Base_Column_List" />
+        from pms_product_approval
+        <include refid="filterSql"/>
+        order by create_time desc
+    </select>
+
+    <!--库存流水数量-->
+    <select id="queryProductApprovalListCount" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductApproval" >
+        select count(1)
+        from pms_product_approval
+        <include refid="filterSql"/>
+    </select>
+</mapper>

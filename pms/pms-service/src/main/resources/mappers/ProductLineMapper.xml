@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductLineDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductLine">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="line_code" property="lineCode" jdbcType="VARCHAR"/>
+        <result column="line_name" property="lineName" jdbcType="VARCHAR"/>
+        <result column="line_display_name" property="lineDisplayName" jdbcType="VARCHAR"/>
+        <result column="pattern_code" property="patternCode" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="display_status" property="displayStatus" jdbcType="TINYINT"/>
+        <result column="sale_channel_code" property="saleChannelCode" jdbcType="VARCHAR"/>
+        <result column="risk_level" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, line_code, line_name, line_display_name, pattern_code, status,
+        display_status, sale_channel_code, risk_level, description,
+        create_time, modify_time, create_by, modify_by
+    </sql>
+
+    <sql id="filterSql">
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="lineCode != null and lineCode != ''">
+                and line_code = #{lineCode,jdbcType=VARCHAR}
+            </if>
+            <if test="lineName != null and lineName != ''">
+                and line_name = #{lineName,jdbcType=VARCHAR}
+            </if>
+            <if test="lineDisplayName != null and lineDisplayName != ''">
+                and line_display_name = #{lineDisplayName,jdbcType=VARCHAR}
+            </if>
+            <if test="patternCode != null and patternCode != ''">
+                and pattern_code = #{patternCode,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="displayStatus != null">
+                and display_status = #{displayStatus,jdbcType=INTEGER}
+            </if>
+            <if test="saleChannelCode != null and saleChannelCode != ''">
+                and sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR}
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                and risk_level = #{riskLevel,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_line
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_line
+        where line_code = #{0,jdbcType=VARCHAR}
+    </select>
+
+    <select id="select" resultMap="BaseResultMap" parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_line
+        <include refid="filterSql"/>
+    </select>
+
+    <!--产品线总数-->
+    <select id="selectCount" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        select count(1)
+        from pms_product_line
+        <include refid="filterSql"/>
+    </select>
+
+    <!--产品线分页查询-->
+    <select id="selectListByPage" resultMap="BaseResultMap"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_line
+        <include refid="filterSql"/>
+        order by create_time desc
+    </select>
+
+    <!--产品线分页查询-->
+    <select id="selectList" resultMap="BaseResultMap"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_line
+        <include refid="filterSql"/>
+    </select>
+
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        insert into pms_product_line (id, line_code, line_name,
+        line_display_name, sale_channel_code, pattern_code,
+        status, display_status, risk_level, description,
+        create_by)
+        values (#{id,jdbcType=BIGINT}, #{lineCode,jdbcType=VARCHAR}, #{lineName,jdbcType=VARCHAR},
+        #{lineDisplayName,jdbcType=VARCHAR}, #{saleChannelCode,jdbcType=VARCHAR}, #{patternCode,jdbcType=VARCHAR},
+        #{status,jdbcType=TINYINT}, #{displayStatus,jdbcType=TINYINT}, #{riskLevel,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR},
+        #{createBy,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductLine"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_line
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="lineCode != null">
+                line_code,
+            </if>
+            <if test="lineName != null">
+                line_name,
+            </if>
+            <if test="lineDisplayName != null">
+                line_display_name,
+            </if>
+            <if test="saleChannelCode != null">
+                sale_channel_code,
+            </if>
+            <if test="patternCode != null">
+                pattern_code,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="displayStatus != null">
+                display_status,
+            </if>
+            <if test="riskLevel != null">
+                risk_level,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="lineCode != null">
+                #{lineCode,jdbcType=VARCHAR},
+            </if>
+            <if test="lineName != null">
+                #{lineName,jdbcType=VARCHAR},
+            </if>
+            <if test="lineDisplayName != null">
+                #{lineDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannelCode != null">
+                #{saleChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="patternCode != null">
+                #{patternCode,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="riskLevel != null">
+                #{riskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        update pms_product_line
+        <set>
+            <if test="lineCode != null">
+                line_code = #{lineCode,jdbcType=VARCHAR},
+            </if>
+            <if test="lineName != null">
+                line_name = #{lineName,jdbcType=VARCHAR},
+            </if>
+            <if test="lineDisplayName != null">
+                line_display_name = #{lineDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannelCode != null">
+                sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="patternCode != null">
+                pattern_code = #{patternCode,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                display_status = #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="riskLevel != null">
+                risk_level = #{riskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectProductLineCountByNames" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductLine">
+        select count(1)
+        from pms_product_line where line_name = #{lineName, jdbcType=VARCHAR} or line_display_name =
+        #{lineDisplayName, jdbcType=VARCHAR}
+    </select>
+
+    <!--根据产品线展示名查询产品线-->
+    <select id="selectProductLineCountByDisplayName" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        select count(1)
+        from pms_product_line where line_display_name = #{lineDisplayName, jdbcType=VARCHAR}
+    </select>
+</mapper>

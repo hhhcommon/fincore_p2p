@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+<generatorConfiguration>
+
+   <!-- 引入配置文件 -->  
+   <properties resource="generator.properties"/>
+   
+   <!-- 数据库驱动 -->
+    <!-- 由于在pom.xml中加入插件时已经配置数据库驱动包，所以此处不必配置了-->
+    <!--<classPathEntry  location="${classPath}"/>-->
+   
+   <context id="mysqlTables"  targetRuntime="MyBatis3">  
+   		<!-- 注释 -->
+        <commentGenerator>  
+            <!-- 是否去除自动生成的注释 true：是 , false:否 -->
+            <property name="suppressAllComments" value="false"/>  
+            <!-- 是否生成注释代时间戳 -->
+            <property name="suppressDate" value="false"/>  
+        </commentGenerator>  
+        
+      	<!-- jdbc连接 -->
+        <jdbcConnection driverClass="${driver_class}" connectionURL="${jdbc_url}" userId="${jdbc_user}" password="${jdbc_password}">  
+        </jdbcConnection>  
+        
+        <javaTypeResolver>  
+            <property name="forceBigDecimals" value="false"/>  
+        </javaTypeResolver>  
+     	
+     	<!-- model配置 -->
+        <javaModelGenerator targetPackage="com.zb.fincore.pms.service.dal.model" targetProject="${model_dao_target_project}">
+            <property name="enableSubPackages" value="true"/>  
+            <property name="trimStrings" value="true"/>  
+        </javaModelGenerator>  
+        
+        <!-- mapping配置 -->
+        <sqlMapGenerator targetPackage="com.zb.fincore.pms.service.dal.mapping" targetProject="${mapping_target_project}">
+            <property name="enableSubPackages" value="true"/>  
+        </sqlMapGenerator>  
+         
+        <!-- dao配置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zb.fincore.pms.service.dal.dao" targetProject="${model_dao_target_project}">
+            <property name="enableSubPackages" value="true"/>  
+        </javaClientGenerator>  
+        
+        <!-- 要生成的表,根据自己需要配置-->
+<!--
+        <table schema="${jdbc_user}" tableName="pms_product_create_plan" domainObjectName="ProductCreatePlan" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+-->
+
+    	
+    </context>  
+</generatorConfiguration>  

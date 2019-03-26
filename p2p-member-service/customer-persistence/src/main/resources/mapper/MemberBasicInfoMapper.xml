@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.customer.dao.MemberBasicInfoMapper">
+    <resultMap id="BaseResultMap" type="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+        <id column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="CHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="is_real" property="isReal" jdbcType="TINYINT"/>
+        <result column="id_card_type" property="idCardType" jdbcType="VARCHAR"/>
+        <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR"/>
+        <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR"/>
+        <result column="register_time" property="registerTime" jdbcType="TIMESTAMP"/>
+        <result column="channel_customer_id" property="channelCustomerId" jdbcType="VARCHAR"/>
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    member_id, mobile, real_name, is_real, id_card_type, id_card_no, login_pwd, register_time,
+    channel_customer_id, channel_code, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where member_id = #{memberId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryMobile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where mobile = #{mobile,jdbcType=CHAR}
+
+        <if test="channelCode != null">
+            and channel_code = #{channelCode,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+    <select id="selectByPrimaryIden" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where id_card_no = #{idCardNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryIdenAndMobile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where id_card_no = #{idCardNo,jdbcType=VARCHAR}
+        and mobile=#{mobile,jdbcType=VARCHAR}
+        and channel_code=#{channelCode,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+      delete from p2p_member_basic_info where member_id = #{memberId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+    insert into p2p_member_basic_info (member_id, mobile, real_name,
+      is_real, id_card_type, id_card_no,
+      login_pwd,
+      register_time, channel_customer_id, channel_code,
+      create_time, update_time)
+    values (#{memberId,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{realName,jdbcType=VARCHAR},
+      #{isReal,jdbcType=TINYINT}, #{idCardType,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR},
+      #{loginPwd,jdbcType=VARCHAR},
+      #{registerTime,jdbcType=TIMESTAMP}, #{channelCustomerId,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zb.p2p.customer.dao.domain.MemberBasicInfo" useGeneratedKeys="true"
+            keyProperty="memberId">
+        insert into p2p_member_basic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="isReal != null">
+                is_real,
+            </if>
+            <if test="idCardType != null">
+                id_card_type,
+            </if>
+            <if test="idCardNo != null">
+                id_card_no,
+            </if>
+            <if test="loginPwd != null">
+                login_pwd,
+            </if>
+            <if test="registerTime != null">
+                register_time,
+            </if>
+            <if test="channelCustomerId != null">
+                channel_customer_id,
+            </if>
+            <if test="channelCode != null">
+                channel_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=CHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="isReal != null">
+                #{isReal,jdbcType=TINYINT},
+            </if>
+            <if test="idCardType != null">
+                #{idCardType,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNo != null">
+                #{idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null">
+                #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="registerTime != null">
+                #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="channelCustomerId != null">
+                #{channelCustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelCode != null">
+                #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+        update p2p_member_basic_info
+        <set>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=CHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="isReal != null">
+                is_real = #{isReal,jdbcType=TINYINT},
+            </if>
+            <if test="idCardType != null">
+                id_card_type = #{idCardType,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNo != null">
+                id_card_no = #{idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null">
+                login_pwd = #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="registerTime != null">
+                register_time = #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="channelCustomerId != null">
+                channel_customer_id = #{channelCustomerId,jdbcType=VARCHAR},
+            </if>
+            <if test="channelCode != null">
+                channel_code = #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNo != null">
+                account_no = #{accountNo,jdbcType=VARCHAR},
+            </if>
+            <if test="isDepositManage != null">
+                is_deposit_manage = #{isDepositManage,jdbcType=TINYINT},
+            </if>
+            <if test="eBankAccount != null">
+                e_bank_account = #{eBankAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where member_id = #{memberId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+    update p2p_member_basic_info
+    set mobile = #{mobile,jdbcType=CHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      is_real = #{isReal,jdbcType=TINYINT},
+      id_card_type = #{idCardType,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      channel_customer_id = #{channelCustomerId,jdbcType=VARCHAR},
+      channel_code = #{channelCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where member_id = #{memberId,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateByMobile" parameterType="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+    update p2p_member_basic_info
+    set login_pwd = #{loginPwd,jdbcType=VARCHAR}
+    where mobile = #{mobile,jdbcType=CHAR}
+  </update>
+
+    <select id="selectByUkMobile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where mobile = #{mobile,jdbcType=CHAR}
+    </select>
+    <select id="queryBySelected" resultType="com.zb.p2p.customer.dao.domain.MemberBasicInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM p2p_member_basic_info
+        <where>
+
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=CHAR},
+            </if>
+            <if test="idCardType != null">
+                id_card_type = #{idCardType,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNo != null">
+                id_card_no = #{idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null">
+                login_pwd = #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                member_id in ( SELECT member_id FROM p2p_member_customer_info WHERE customer_id=#{customerId} )
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into p2p_member_basic_info (
+        member_id,
+        mobile,
+        real_name,
+        is_real,
+        id_card_type,
+        id_card_no,
+        register_time,
+        channel_customer_id,
+        channel_code,
+        create_time
+        )
+        values
+
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.memberId},
+            #{item.mobile},
+            #{item.realName},
+            #{item.isReal},
+            #{item.idCardType},
+            #{item.idCardNo},
+            #{item.registerTime},
+            #{item.channelCustomerId},
+            #{item.channelCode},
+            #{item.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <select id="listPage" parameterType="page" resultType="pd">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where 1 = 1
+        <if test="customerId != null">
+            member_id in (select member_id from p2p_member_customer_info where customer_id = #{customerId,jdbcType=BIGINT})
+        </if>
+        <if test="mobile != null">
+            and mobile = #{mobile,jdbcType=CHAR}
+        </if>
+        <if test="idCardType != null">
+            and id_card_type = #{idCardType,jdbcType=VARCHAR}
+        </if>
+        <if test="idCardNo != null">
+            and id_card_no = #{idCardNo,jdbcType=VARCHAR}
+        </if>
+        <if test="channelCode != null">
+            AND channel_code = #{channelCode,jdbcType=VARCHAR}
+        </if>
+        <if test="loginPwd != null">
+            AND login_pwd = #{loginPwd,jdbcType=VARCHAR}
+        </if>
+        order by register_time desc
+    </select>
+
+    <select id="selectByTxsAccountId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_member_basic_info
+        where channel_customer_id = #{channelCustomerId,jdbcType=VARCHAR}
+
+        <if test="channelCode != null">
+            and channel_code = #{channelCode,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="tradeProcess"/>
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"/>
+    <dubbo:provider retries="${dubbo.retries}" timeout="${dubbo.timeout}"/>
+
+    <!-- 订单接口 -->
+    <bean id="orderFacade" class="com.zb.p2p.service.order.facade.impl.OrderFacadeServiceImpl"/>
+    <dubbo:service interface="com.zb.p2p.facade.service.OrderFacade" ref="orderFacade"/>
+
+    <bean id="interestFacade" class="com.zb.p2p.facade.impl.InterestFacadeImpl"/>
+    <dubbo:service interface="com.zb.p2p.facade.service.InterestFacade" ref="interestFacade"/>
+
+    <bean id="cashFacadeService" class="com.zb.p2p.facade.impl.CashFacadeImpl"/>
+    <dubbo:service interface="com.zb.p2p.facade.service.CashFacade" ref="cashFacadeService"/>
+
+    <bean id="matchRecordFacade" class="com.zb.p2p.service.match.facade.impl.MatchRecordFacadeImpl"/>
+    <dubbo:service interface="com.zb.p2p.facade.service.MatchRecordFacade" ref="matchRecordFacade"/>
+
+    <bean id="callBackService" class="com.zb.p2p.service.callback.DubboCallBackService"/>
+    <dubbo:service interface="com.zb.p2p.facade.service.PaymentCallBackFacade" ref="callBackService"/>
+</beans>

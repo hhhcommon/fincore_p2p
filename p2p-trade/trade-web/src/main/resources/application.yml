@@ -1,0 +1,169 @@
+env:
+  # 资管服务
+  amsHost: http://139.196.9.236/ams
+  #会员网关地址
+  member:
+    host: http://10.174.65.75:16888/cust/
+  #电子合同地址
+  signStamper:
+    host: http://114.55.56.222/
+  # 唐小僧订单地址
+  txsOrder:
+    host: http://10.174.65.75:16888/order/
+
+  #报文是否加密
+  aes:
+    decode: false
+  #加密密钥
+    key: 9999
+
+  #######设置过期时间#######
+  smsSendExpireTime: 55
+  noLiveTime: 1728000
+
+  #活期开关
+  #isBalanceOpen: 1
+###### Server信息 #####
+server:
+  port: 8863
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+spring:
+  application:
+    name: p2p-trade
+  #中间件缓存
+  redis:
+    hostName: 192.168.224.64
+    port: 6379
+    timeout: 20000
+    password: 123456
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+  #本地缓存
+  cache:
+    type: guava
+  #NM
+datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
+  master:
+    name: dev01
+    url: jdbc:mysql://192.168.0.76:3306/p2p_new?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+    username: root
+    password: qylc@123
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  slave:
+    name: dev02
+    url: jdbc:mysql://192.168.0.76:3306/p2p_new?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+    username: root
+    password: qylc@123
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+#日志配置
+logging:
+ config: ${spring.config.location}/logback.xml
+
+#短信服务
+message:
+  host: http://120.26.6.42:80/
+  sign:
+    key: msdwx
+#短信开关   (开open  关close)
+  switch: open
+#还款通知短信发送提前日期(天)
+  notice:
+      preDays: 2
+ 
+#tbSchedule配置
+tbSchedule:
+  zkConnectString: 192.168.0.67:2181
+  rootPath: /tbSchedule/p2p-trade
+  zkSessionTimeout: 60000
+  userName: admin
+  password: admin
+  isCheckParentPath: true
+
+#MNS消息服务配置
+config:
+  mns:
+    accessId: LTAIEO4G3kTXeUG1
+    accessKey: ldb4WBMT1DFx2u6R2N2p3tT35gkLSG
+    accountEndpoint: http://1349099325804775.mns.cn-hangzhou.aliyuncs.com/
+#队列消费模式:false（出现异常后不会删，会继续等待下一次消费）
+queue:
+  weakConsumer:
+    mode: false
+#匹配完成后通知（借款单维度）queue
+QUEUE-ZB-P2P-ORDER-COMPLETE: DEV-QUEUE-ZB-P2P-ORDER-COMPLETE
+#id生成器配置
+id:
+  genrenate:
+    zkAddress: 192.168.0.65:2181
+    path: /sequence/p2p
+    seq: seq
+# ZK注册中心(锁)配置
+zk:
+  registry:
+    address: 192.168.0.65:2181
+  retries: 0
+  timeout: 10000
+  lock:
+    node: /p2pTradeProcess/
+    pool:
+      max: 8
+
+#还款日截止时间点
+repay:
+  deadline: 24:00
+#预期每日罚息
+overdue:
+  interest:
+    rate: 0.5%
+#超过n日逾期还款，解除合同
+  days:
+    for:
+      terminate:
+        contract: 3
+
+#担保户账户
+guarantee:
+  accountNo: 123213
+  sinaAccountNo: 123213
+#手续费账户
+fee:
+  accountNo: 221223
+  sinaAccountNo: 321223

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductStockChangeFlowDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_id" property="productId" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="ref_no" property="refNo" jdbcType="VARCHAR"/>
+        <result column="change_type" property="changeType" jdbcType="TINYINT"/>
+        <result column="change_amount" property="changeAmount" jdbcType="DECIMAL"/>
+        <result column="frozen_amount_before" property="frozenAmountBefore" jdbcType="DECIMAL"/>
+        <result column="frozen_amount_after" property="frozenAmountAfter" jdbcType="DECIMAL"/>
+        <result column="sale_amount_before" property="saleAmountBefore" jdbcType="DECIMAL"/>
+        <result column="sale_amount_after" property="saleAmountAfter" jdbcType="DECIMAL"/>
+        <result column="stock_amount_before" property="stockAmountBefore" jdbcType="DECIMAL"/>
+        <result column="stock_amount_after" property="stockAmountAfter" jdbcType="DECIMAL"/>
+        <result column="redeem_amount_before" property="redeemAmountBefore" jdbcType="DECIMAL"/>
+        <result column="redeem_amount_after" property="redeemAmountAfter" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, product_code, ref_no, change_type, change_amount, frozen_amount_before,
+        frozen_amount_after, sale_amount_before, sale_amount_after, stock_amount_before,
+        stock_amount_after, redeem_amount_before, redeem_amount_after, create_time, create_by
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product_stock_change_flow
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product_stock_change_flow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow">
+    insert into pms_product_stock_change_flow (id, product_id, product_code, 
+      ref_no, change_type, change_amount, 
+      frozen_amount_before, frozen_amount_after, 
+      sale_amount_before, sale_amount_after, stock_amount_before, 
+      stock_amount_after, redeem_amount_before, redeem_amount_after, 
+      create_time, create_by)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, 
+      #{refNo,jdbcType=VARCHAR}, #{changeType,jdbcType=TINYINT}, #{changeAmount,jdbcType=DECIMAL}, 
+      #{frozenAmountBefore,jdbcType=DECIMAL}, #{frozenAmountAfter,jdbcType=DECIMAL}, 
+      #{saleAmountBefore,jdbcType=DECIMAL}, #{saleAmountAfter,jdbcType=DECIMAL}, #{stockAmountBefore,jdbcType=DECIMAL}, 
+      #{stockAmountAfter,jdbcType=DECIMAL}, #{redeemAmountBefore,jdbcType=DECIMAL}, #{redeemAmountAfter,jdbcType=DECIMAL}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product_stock_change_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="refNo != null">
+                ref_no,
+            </if>
+            <if test="changeType != null">
+                change_type,
+            </if>
+            <if test="changeAmount != null">
+                change_amount,
+            </if>
+            <if test="frozenAmountBefore != null">
+                frozen_amount_before,
+            </if>
+            <if test="frozenAmountAfter != null">
+                frozen_amount_after,
+            </if>
+            <if test="saleAmountBefore != null">
+                sale_amount_before,
+            </if>
+            <if test="saleAmountAfter != null">
+                sale_amount_after,
+            </if>
+            <if test="stockAmountBefore != null">
+                stock_amount_before,
+            </if>
+            <if test="stockAmountAfter != null">
+                stock_amount_after,
+            </if>
+            <if test="redeemAmountBefore != null">
+                redeem_amount_before,
+            </if>
+            <if test="redeemAmountAfter != null">
+                redeem_amount_after,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="refNo != null">
+                #{refNo,jdbcType=VARCHAR},
+            </if>
+            <if test="changeType != null">
+                #{changeType,jdbcType=TINYINT},
+            </if>
+            <if test="changeAmount != null">
+                #{changeAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="frozenAmountBefore != null">
+                #{frozenAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="frozenAmountAfter != null">
+                #{frozenAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmountBefore != null">
+                #{saleAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmountAfter != null">
+                #{saleAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmountBefore != null">
+                #{stockAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmountAfter != null">
+                #{stockAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmountBefore != null">
+                #{redeemAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmountAfter != null">
+                #{redeemAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow">
+        update pms_product_stock_change_flow
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="refNo != null">
+                ref_no = #{refNo,jdbcType=VARCHAR},
+            </if>
+            <if test="changeType != null">
+                change_type = #{changeType,jdbcType=TINYINT},
+            </if>
+            <if test="changeAmount != null">
+                change_amount = #{changeAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="frozenAmountBefore != null">
+                frozen_amount_before = #{frozenAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="frozenAmountAfter != null">
+                frozen_amount_after = #{frozenAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmountBefore != null">
+                sale_amount_before = #{saleAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="saleAmountAfter != null">
+                sale_amount_after = #{saleAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmountBefore != null">
+                stock_amount_before = #{stockAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="stockAmountAfter != null">
+                stock_amount_after = #{stockAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmountBefore != null">
+                redeem_amount_before = #{redeemAmountBefore,jdbcType=DECIMAL},
+            </if>
+            <if test="redeemAmountAfter != null">
+                redeem_amount_after = #{redeemAmountAfter,jdbcType=DECIMAL},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow">
+    update pms_product_stock_change_flow
+    set product_id = #{productId,jdbcType=BIGINT},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      ref_no = #{refNo,jdbcType=VARCHAR},
+      change_type = #{changeType,jdbcType=TINYINT},
+      change_amount = #{changeAmount,jdbcType=DECIMAL},
+      frozen_amount_before = #{frozenAmountBefore,jdbcType=DECIMAL},
+      frozen_amount_after = #{frozenAmountAfter,jdbcType=DECIMAL},
+      sale_amount_before = #{saleAmountBefore,jdbcType=DECIMAL},
+      sale_amount_after = #{saleAmountAfter,jdbcType=DECIMAL},
+      stock_amount_before = #{stockAmountBefore,jdbcType=DECIMAL},
+      stock_amount_after = #{stockAmountAfter,jdbcType=DECIMAL},
+      redeem_amount_before = #{redeemAmountBefore,jdbcType=DECIMAL},
+      redeem_amount_after = #{redeemAmountAfter,jdbcType=DECIMAL},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="filterSql">
+        <where>
+            <if test="productCode != null and productCode != ''">
+                AND product_code = #{productCode,jdbcType=VARCHAR}
+            </if>
+            <if test="refNo != null and refNo != ''">
+                AND ref_no = #{refNo, jdbcType=BIGINT}
+            </if>
+            <if test="changeType != null and changeType != ''">
+                AND change_type = #{changeType, jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <!--库存流水列表-->
+    <select id="queryProductStockChangeFlowList" resultMap="BaseResultMap"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow" >
+        select
+        <include refid="Base_Column_List" />
+        from pms_product_stock_change_flow
+        <include refid="filterSql"/>
+        order by create_time desc
+    </select>
+
+    <!--库存流水数量-->
+    <select id="queryProductStockChangeFlowCount" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.ProductStockChangeFlow" >
+        select count(1)
+        from pms_product_stock_change_flow
+        <include refid="filterSql"/>
+    </select>
+</mapper>

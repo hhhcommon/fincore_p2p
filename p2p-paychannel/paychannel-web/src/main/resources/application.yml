@@ -1,0 +1,73 @@
+env:
+  #NM 支付
+  paymentHost: http://139.196.9.236/msd/cashier
+  # MSD实名host
+  msdHost: http://120.26.94.233/msd-finance
+  # AMS实名host
+  pmsHost: http://192.168.61.223:8080/pms-web
+  # PMS实名host
+  amsHost: http://192.168.61.223:8080/ams
+
+server:
+  port: 8162
+spring:
+  application:
+    name: p2p-match-service
+
+datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
+  master:
+    name: dev01
+    url: jdbc:mysql://192.168.0.76:3306/p2p_new?Unicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: qylc@123
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    removeAbandoned: true
+    removeAbandonedTimeout: 180
+    logAbandoned: true
+
+mns:
+   ali:
+      accessId: LTAIEO4G3kTXeUG1
+      accessKey: ldb4WBMT1DFx2u6R2N2p3tT35gkLSG
+      accountEndpoint: http://1349099325804775.mns.cn-hangzhou.aliyuncs.com/
+      topic: DEV-QUEUE-ZB-P2P-ORDER-COMPLETE
+
+zkid:
+   zkAddress: 192.168.0.65:2181
+   path: /sequence/p2p
+   seq: seq
+
+logging:
+  config: ${spring.config.location}/logback.xml
+
+#tbSchedule配置
+tbSchedule:
+  zkConnectString: 192.168.0.67:2181
+  rootPath: /tbSchedule/p2p-match
+  zkSessionTimeout: 60000
+  userName: admin
+  password: admin
+  isCheckParentPath: true
+
+zkLock:
+  poolMax: 8
+
+ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000

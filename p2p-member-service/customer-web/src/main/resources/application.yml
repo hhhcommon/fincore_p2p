@@ -1,0 +1,167 @@
+env:
+  #NM 支付
+  paymentHost: http://139.196.9.236/msd/cashier
+  #NM 唐小僧
+  txsHost: http://txsserver
+  # MSD实名host
+  msdHost: http://120.26.94.233/msd-finance
+  signStamperHost: http://192.168.0.74:8088/signStamper
+
+  #######设置过期时间#######
+  imgCaptchaExpireTime: 120
+  imgCaptchaResultExpireTime: 1800
+  smsCaptchaExpireTime: 1800
+  smsSendExpireTime: 55
+  loginTokenExpireTime: 1800
+  noLiveTime: 1728000
+
+
+  #验证码是否写死，0表示不写死，1表示写死
+  isFixImgCap: 1
+  #短信验证码
+  isFixSmsCap: 1
+  isSmsCaptcha: 1
+  # 唐小僧获取url  (网贷的loading页面)
+  dispatchUrl: http://devp2pwx.txslicai.com/zdhtml/p2p_loading.html
+
+  #会员信息同步唐小僧-cron
+  #synTxsInfoTime: 0 0/5 * * * ?
+  #会员信息同步唐小僧-每次扫描**秒之前未通知成功的数据
+  delayTime: 180
+  accessKey: LTAIYQDwnRchKWNn
+  accessSecret: UT0BXfuwOEswbPqL4QZFdBEbOfXAwR
+  ossEndPoint: http://oss-cn-hangzhou.aliyuncs.com/
+  ossBucketName: zbqjs02-oss-test05
+  ossDir: test_orc
+  #活期开关  
+  #isBalanceOpen: 1
+  ######v2.2#####
+  otp:
+    # 每日最大免口令次数
+    maxFreeTimeInOneDay: 20
+    minSendSmsDiffSecond: 58
+    sendSameSmsInSecond: 600
+    # 01-注册,02-登录,03-激活,04-绑卡,05-解绑,06-充值,07-提现,08-活期申购,09-活期赎回,10-定期申购,11-申请转让,12-购买转让
+    # 01-注册手机号,02-绑卡预留手机号,90-会员录入手机号
+    smsMessageMap:
+      #'01':
+      #  mobileType: '90'
+      #  message: ''
+      #'02':
+      #  mobileType: '90'
+      #  message: ''
+      #'03':
+      #  mobileType: '90'
+      #  message: ''
+      # 04-绑卡  
+      '04':
+       mobileType: '90'
+       message: '您正在进行绑卡操作，短信验证码为：#smsCaptchaVal#。打死也不要告诉别人'
+      # 05-解绑
+      '05':
+        mobileType: '01'
+        message: ''
+      # 06-充值
+      #'06':
+      # mobileType: '01'
+      # message: '您正在进行充值操作，短信验证码为：#smsCaptchaVal#。打死也不要告诉别人'
+      
+    # 图片验证码配置
+    imgCaptcha:
+      # 长度
+      length: 4
+      # 随机数的类型： '0':表示仅获得数字随机数；'1'：表示仅获得字符随机数； '2'：表示获得数字字符混合随机数
+      type: 0
+      # 超时时间（s） 
+      timeoutSecond: 300
+      # 图片验证码前缀
+      preUrl: http://127.0.0.1:8761/m1/s2ShowImgCaptcha
+    # 手机验证码配置
+    smsCaptcha:
+      # 长度
+      length: 6
+      # 随机数的类型： '0':表示仅获得数字随机数；'1'：表示仅获得字符随机数； '2'：表示获得数字字符混合随机数
+      type: 0
+      # 超时时间（s） 
+      timeoutSecond: 300
+    # 免图口令配置
+    freeImgToken:
+      # 超时时间（s） 
+      timeoutSecond: 300
+######v2.2#####
+spring:
+  application:
+    name: p2p-customer-service
+  #NM
+  redis:
+    hostName: 192.168.224.64
+    port: 6379
+    timeout: 20000
+    password: 123456
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+  #NM
+datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
+  master:
+    name: dev01
+    url: jdbc:mysql://192.168.0.76:3306/p2p_member?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+    username: root
+    password: qylc@123
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  slave:
+    name: dev02
+    url: jdbc:mysql://192.168.0.76:3306/p2p_member?Unicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=round&allowMultiQueries=true
+    username: root
+    password: qylc@123
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+ons:
+  ali:
+      producerId: PID_P2P_CUSTOMER_DEV
+      consumerId: CID_P2P_CUSTOMER_DEV
+      accessKey: LTAIkp3byzUDREWD
+      secretKey: PGnCrRttc2jcX3AGvwVf8pLY6y5Mlv
+      onsAddr: http://onsaddr-internet.aliyun.com/rocketmq/nsaddr4client-internet
+      topic: P2P_CUSTOMER_DEV
+  
+#短信服务
+message.host: http://120.26.6.42:80/
+#短信签名key
+message.sign.key: msdwx
+#短信开关   (开open  关close)
+message.switch: open
+ 

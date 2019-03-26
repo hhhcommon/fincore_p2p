@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zb.p2p</groupId>
+		<artifactId>p2p-trade</artifactId>
+		<version>1.3.0-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>	
+	<artifactId>trade-client</artifactId>
+	
+	<dependencies>
+		<dependency>
+            <groupId>com.zb.p2p</groupId>
+            <artifactId>trade-api</artifactId>
+            <version>${p2p-trade.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>com.zb.fincore</groupId>
+			<artifactId>pms-facade</artifactId>
+			<version>${pms.facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zb.fincore</groupId>
+			<artifactId>ams-facade</artifactId>
+			<version>${ams.facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zb.p2p</groupId>
+			<artifactId>trading-api</artifactId>
+			<version>${order.orderApi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zb.p2p</groupId>
+			<artifactId>match-common</artifactId>
+			<version>${match.facade.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zb.p2p</groupId>
+			<artifactId>paychannel-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

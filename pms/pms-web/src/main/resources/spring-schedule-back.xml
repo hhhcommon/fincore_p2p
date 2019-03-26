@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Application context definition. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName">
+	<context:annotation-config />
+
+	
+	<!-- 产品募集期开始JOB start -->
+	<bean id="productRaisePeriodStartJob" class="com.zb.fincore.pms.web.controller.job.ProductRaisePeriodStartJob"></bean>
+	<bean id="productRaisePeriodStartTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="productRaisePeriodStartJob" />
+		<property name="targetMethod" value="doProductRaisePeriodStartJob" />
+        <property name="concurrent" value="false"/>
+	</bean>
+	<bean id="productRaisePeriodStartTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="productRaisePeriodStartTask" />
+		<property name="cronExpression" value="${PRODUCT_RAISE_PERIOD_START_YW_ZD}" />
+	</bean>
+    <!-- 产品募集期开始JOB end -->
+
+
+    <!-- yw产品募集期结束JOB start -->
+    <bean id="productRaisePeriodEndJob" class="com.zb.fincore.pms.web.controller.job.ProductRaisePeriodEndJob"></bean>
+    <bean id="productRaisePeriodEndTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productRaisePeriodEndJob" />
+        <property name="targetMethod" value="doProductRaisePeriodEndJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productRaisePeriodEndTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productRaisePeriodEndTask" />
+        <property name="cronExpression" value="${PRODUCT_RAISE_PERIOD_END_YW}" />
+    </bean>
+    <!-- yw产品募集期结束JOB end -->
+    
+    <!-- p2p产品募集期结束JOB start -->
+    <bean id="productRaisePeriodEndForP2PJob" class="com.zb.fincore.pms.web.controller.job.ProductRaisePeriodEndForP2PJob"></bean>
+    <bean id="productRaisePeriodEndForP2PTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productRaisePeriodEndForP2PJob" />
+        <property name="targetMethod" value="doProductRaisePeriodEndForP2PJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productRaisePeriodEndForP2PTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productRaisePeriodEndForP2PTask" />
+        <property name="cronExpression" value="${PRODUCT_RAISE_PERIOD_END_ZD}" />
+    </bean>
+    <!-- p2p产品募集期结束JOB end -->
+
+
+    <!-- 产品存续期开始JOB start -->
+    <bean id="productInValueJob" class="com.zb.fincore.pms.web.controller.job.ProductInValueJob"></bean>
+    <bean id="productInValueTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productInValueJob" />
+        <property name="targetMethod" value="doProductInValueJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productInValueTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productInValueTask" />
+        <property name="cronExpression" value="${PRODUCT_IN_VALUE_YW}" />
+    </bean>
+    <!-- 产品存续期开始JOB end -->
+
+
+    <!-- 产品存续期结束JOB start -->
+    <bean id="productOutValueJob" class="com.zb.fincore.pms.web.controller.job.ProductOutValueJob"></bean>
+    <bean id="productOutValueTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productOutValueJob" />
+        <property name="targetMethod" value="doProductOutValueJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productOutValueJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productOutValueTask" />
+        <property name="cronExpression" value="${PRODUCT_OUT_VALUE_YW_ZD}" />
+    </bean>
+    <!-- 产品存续期结束JOB end -->
+
+
+    <!-- 产品阶梯信息更新JOB start -->
+    <bean id="productLadderInfoUpdateJob" class="com.zb.fincore.pms.web.controller.job.ProductLadderInfoUpdateJob"></bean>
+    <bean id="productLadderInfoUpdateTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="productLadderInfoUpdateJob" />
+        <property name="targetMethod" value="doUpdateProductLadderInfoJob" />
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="productLadderInfoUpdateTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="productLadderInfoUpdateTask" />
+        <property name="cronExpression" value="${PRODUCT_LADDER_INFO_UPDATE_YW}" />
+    </bean>
+    <!-- 产品阶梯信息更新JOB end -->
+
+	
+	<bean id="quartzCronBean" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- common start -->
+					<ref bean="productRaisePeriodStartTrigger" />
+					<ref bean="productOutValueJobTrigger" />
+				<!-- common end -->
+				
+				<!-- N阶梯定时任务配置 start -->
+					<!-- <ref bean="productRaisePeriodStartTrigger" />-->
+	                <ref bean="productRaisePeriodEndTrigger" />
+	                <ref bean="productInValueTrigger" />
+	                <!-- <ref bean="productOutValueJobTrigger" /> -->
+	                <ref bean="productLadderInfoUpdateTrigger" /> 
+	            <!-- N阶梯定时任务配置 end -->			
+				
+				<!-- P2P定时任务配置 start -->
+					<!-- <ref bean="productRaisePeriodStartTrigger" /> -->
+	                <ref bean="productRaisePeriodEndForP2PTrigger" />
+	                <!-- <ref bean="productOutValueJobTrigger" /> -->
+	            <!-- P2P定时任务配置 end -->
+			</list>
+		</property>
+	</bean>
+</beans>

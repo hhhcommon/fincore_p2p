@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!-- 封装集群消息生产者 -->
+    <bean id="clusterProducer" class="com.zb.fincore.common.topic.OnsTopicProducer">
+        <!-- 实际消息生产者对象 -->
+        <property name="producerBean" ref="clusterProducerBean"/>
+    </bean>
+
+    <!-- 集群主题消息生产者(多台主机订阅,消息只被消费一次) -->
+    <bean id="clusterProducerBean" class="com.aliyun.openservices.ons.api.bean.ProducerBean"
+          init-method="start" destroy-method="shutdown">
+        <property name="properties">
+            <map>
+                <!-- 生产者ID -->
+                <entry key="ProducerId" value="${config.ons.producer.id}"/>
+                <!-- 阿里云AccessKey -->
+                <entry key="AccessKey" value="${config.ons.accessKey}"/>
+                <!-- 阿里云SecretKey -->
+                <entry key="SecretKey" value="${config.ons.secretKey}"/>
+                <!-- ONS服务地址 -->
+                <entry key="ONSAddr" value="${config.ons.onsAddr}"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 集群主题消息消费者(多台主机订阅,消息只被消费一次) -->
+    <bean id="clusterConsumer" class="com.aliyun.openservices.ons.api.bean.ConsumerBean"
+          init-method="start" destroy-method="shutdown">
+        <property name="properties">
+            <map>
+                <!-- 消费者ID -->
+                <entry key="ConsumerId" value="${config.ons.consumer.id}"/>
+                <!-- 阿里云AccessKey -->
+                <entry key="AccessKey" value="${config.ons.accessKey}"/>
+                <!-- 阿里云SecretKey -->
+                <entry key="SecretKey" value="${config.ons.secretKey}"/>
+                <!-- ONS服务地址 -->
+                <entry key="ONSAddr" value="${config.ons.onsAddr}"/>
+                <!-- 消费模式(集群) -->
+                <entry key="MessageModel" value="CLUSTERING"/>
+            </map>
+        </property>
+
+        <!-- 消息处理规则配置 -->
+        <property name="subscriptionTable">
+            <map>
+                <!-- 产品库存变更主题消息监听 -->
+                <!-- <entry value-ref="changeProductStockListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            消息主题
+                            <property name="topic" value="${config.ons.topic.product.stock}"/>
+                            消息TAG
+                            <property name="expression" value="*"/>
+                        </bean>
+                    </key>
+                </entry> -->
+                <!-- 产品募集状态变更主题消息监听 -->
+                <!-- <entry value-ref="updateProductCollectStatusListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            消息主题
+                            <property name="topic" value="${config.ons.topic.product.status_change}"/>
+                            消息TAG
+                            <property name="expression" value="*"/>
+                        </bean>
+                    </key>
+                </entry> -->
+            </map>
+        </property>
+    </bean>
+
+    <!-- 产品库存变更主题消息监听器 -->
+    <bean id="changeProductStockListener" class="com.zb.fincore.pms.topic.listener.ChangeProductStockListener"/>
+    <!-- 产品募集状态变更主题消息监听器 -->
+    <bean id="updateProductCollectStatusListener" class="com.zb.fincore.pms.topic.listener.UpdateProductCollectStatusListener"/>
+
+
+    <!-- 封装广播消息生产者 -->
+    <bean id="broadcastProducer" class="com.zb.fincore.common.topic.OnsTopicProducer">
+        <property name="producerBean" ref="broadcastProducerBean"/>
+    </bean>
+
+    <!-- 广播主题消息生产者(多台主机订阅,每台主机均消费消息) -->
+    <bean id="broadcastProducerBean" class="com.aliyun.openservices.ons.api.bean.ProducerBean"
+          init-method="start" destroy-method="shutdown">
+        <property name="properties">
+            <map>
+                <!-- 生产者ID -->
+                <entry key="ProducerId" value="${config.ons.broadcast.producer.id}"/>
+                <!-- 阿里云AccessKey -->
+                <entry key="AccessKey" value="${config.ons.accessKey}"/>
+                <!-- 阿里云SecretKey -->
+                <entry key="SecretKey" value="${config.ons.secretKey}"/>
+                <!-- ONS服务地址 -->
+                <entry key="ONSAddr" value="${config.ons.onsAddr}"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 广播主题消息消费者(多台主机订阅,每台主机均消费消息) -->
+    <bean id="broadcastConsumer" class="com.aliyun.openservices.ons.api.bean.ConsumerBean"
+          init-method="start" destroy-method="shutdown">
+        <property name="properties">
+            <map>
+                <!-- 消费者ID -->
+                <entry key="ConsumerId" value="${config.ons.broadcast.consumer.id}"/>
+                <!-- 阿里云AccessKey -->
+                <entry key="AccessKey" value="${config.ons.accessKey}"/>
+                <!-- 阿里云SecretKey -->
+                <entry key="SecretKey" value="${config.ons.secretKey}"/>
+                <!-- ONS服务地址 -->
+                <entry key="ONSAddr" value="${config.ons.onsAddr}"/>
+                <!-- 消费模式(广播) -->
+                <entry key="MessageModel" value="BROADCASTING"/>
+            </map>
+        </property>
+
+        <property name="subscriptionTable">
+            <map>
+                <!-- 刷新产品缓存主题消息监听 -->
+                <!-- <entry value-ref="refreshProductCacheListener">
+                    <key>
+                        <bean class="com.aliyun.openservices.ons.api.bean.Subscription">
+                            <property name="topic" value="${config.ons.topic.product.refresh_cache}"/>
+                            <property name="expression" value="*"/>
+                        </bean>
+                    </key>
+                </entry> -->
+            </map>
+        </property>
+    </bean>
+
+    <!-- 刷新产品缓存主题消息监听器 -->
+    <bean id="refreshProductCacheListener" class="com.zb.fincore.pms.topic.listener.RefreshProductCacheListener"/>
+</beans>

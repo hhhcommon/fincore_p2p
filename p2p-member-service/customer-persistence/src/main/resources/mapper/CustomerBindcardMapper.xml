@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.customer.dao.CustomerBindcardMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    <id column="bind_id" property="bindId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="id_card_type" property="idCardType" jdbcType="VARCHAR" />
+    <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR" />
+    <result column="id_card_name" property="idCardName" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="pre_order_no" property="preOrderNo" jdbcType="VARCHAR" />
+    <result column="pre_order_time" property="preOrderTime" jdbcType="TIMESTAMP" />
+    <result column="confirm_order_no" property="confirmOrderNo" jdbcType="VARCHAR" />
+    <result column="confirm_order_time" property="confirmOrderTime" jdbcType="TIMESTAMP" />
+    <result column="sign_id" property="signId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bind_id, customer_id, bank_card_no, bank_code, bank_name, card_type, status, id_card_type, 
+    id_card_no, id_card_name, mobile, pre_order_no, pre_order_time, confirm_order_no, 
+    confirm_order_time, sign_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_member_customer_bindcard
+    where bind_id = #{bindId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCustUseCard" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_member_customer_bindcard
+    where customer_id = #{customerId,jdbcType=BIGINT} and status = '1' limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p2p_member_customer_bindcard
+    where bind_id = #{bindId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    insert into p2p_member_customer_bindcard (bind_id, customer_id, bank_card_no, 
+      bank_code, bank_name, card_type, 
+      status, id_card_type, id_card_no, 
+      id_card_name, mobile, pre_order_no, 
+      pre_order_time, confirm_order_no, confirm_order_time, 
+      sign_id, create_time, update_time
+      )
+    values (#{bindId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{bankCardNo,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{idCardType,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{idCardName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{preOrderNo,jdbcType=VARCHAR}, 
+      #{preOrderTime,jdbcType=TIMESTAMP}, #{confirmOrderNo,jdbcType=VARCHAR}, #{confirmOrderTime,jdbcType=TIMESTAMP}, 
+      #{signId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    insert into p2p_member_customer_bindcard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bindId != null" >
+        bind_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="bankCardNo != null" >
+        bank_card_no,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="idCardType != null" >
+        id_card_type,
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no,
+      </if>
+      <if test="idCardName != null" >
+        id_card_name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="preOrderNo != null" >
+        pre_order_no,
+      </if>
+      <if test="preOrderTime != null" >
+        pre_order_time,
+      </if>
+      <if test="confirmOrderNo != null" >
+        confirm_order_no,
+      </if>
+      <if test="confirmOrderTime != null" >
+        confirm_order_time,
+      </if>
+      <if test="signId != null" >
+        sign_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bindId != null" >
+        #{bindId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null" >
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="idCardType != null" >
+        #{idCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null" >
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardName != null" >
+        #{idCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="preOrderNo != null" >
+        #{preOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="preOrderTime != null" >
+        #{preOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmOrderNo != null" >
+        #{confirmOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmOrderTime != null" >
+        #{confirmOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signId != null" >
+        #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    update p2p_member_customer_bindcard
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null" >
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="idCardType != null" >
+        id_card_type = #{idCardType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardName != null" >
+        id_card_name = #{idCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="preOrderNo != null" >
+        pre_order_no = #{preOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="preOrderTime != null" >
+        pre_order_time = #{preOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmOrderNo != null" >
+        confirm_order_no = #{confirmOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmOrderTime != null" >
+        confirm_order_time = #{confirmOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signId != null" >
+        sign_id = #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bind_id = #{bindId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    update p2p_member_customer_bindcard
+    set customer_id = #{customerId,jdbcType=BIGINT},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      id_card_type = #{idCardType,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      id_card_name = #{idCardName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=CHAR},
+      pre_order_no = #{preOrderNo,jdbcType=VARCHAR},
+      pre_order_time = #{preOrderTime,jdbcType=TIMESTAMP},
+      confirm_order_no = #{confirmOrderNo,jdbcType=VARCHAR},
+      confirm_order_time = #{confirmOrderTime,jdbcType=TIMESTAMP},
+      sign_id = #{signId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where bind_id = #{bindId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPreBindCard" resultMap="BaseResultMap" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_member_customer_bindcard
+    where 1=1 
+    <if test="customerId != null" >
+      and customer_id = #{customerId,jdbcType=BIGINT}
+    </if>
+    <if test="preOrderNo != null" >
+      and pre_order_no = #{preOrderNo,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=INTEGER}
+    </if>
+    order by update_time desc limit 1
+  </select>
+  
+   <select id="selectCardByCardNo" resultMap="BaseResultMap" parameterType="com.zb.p2p.customer.dao.domain.CustomerBindcard" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_member_customer_bindcard
+    where 1=1  
+      and bank_card_no = #{bankCardNo} and status != '2'
+      
+  </select>
+  
+   <insert id="insertList" parameterType="java.util.List">
+        insert into p2p_member_customer_bindcard (
+         bind_id,
+         customer_id,
+          bank_card_no,
+           bank_code,
+            bank_name,
+             card_type,
+              status,
+               id_card_type,
+                id_card_no,
+                id_card_name,
+                mobile,
+                sign_id 
+        )
+        values
+        
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.bindId},
+            #{item.customerId},  
+            #{item.bankCardNo},
+            #{item.bankCode},
+            #{item.bankName},
+            #{item.cardType},
+            #{item.status},
+            #{item.idCardType},
+            #{item.idCardNo},
+            #{item.idCardName},
+             #{item.mobile},
+              #{item.signId}
+            )
+        </foreach>
+    </insert>
+    
+     
+  
+  
+</mapper>

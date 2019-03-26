@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.DailyIncomeMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.DailyIncomeEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+        <result column="ref_no" property="refNo" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="asset_no" property="assetNo" jdbcType="VARCHAR"/>
+        <result column="interest_amount" property="interestAmount" jdbcType="DECIMAL"/>
+        <result column="interest_date" property="interestDate" jdbcType="DATE"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="asset_no" property="assetNo" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, member_id, ref_no, product_code, asset_no, interest_amount, interest_date, create_time,
+    asset_no, modify_time, modify_by
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_daily_income
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from p2p_daily_income
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.DailyIncomeEntity">
+    insert into p2p_daily_income (member_id, ref_no,
+      product_code, asset_no, interest_amount, interest_date,
+      create_time, repay_type, modify_time,
+      modify_by)
+    values (#{memberId,jdbcType=VARCHAR}, #{refNo,jdbcType=VARCHAR},
+      #{productCode,jdbcType=VARCHAR}, #{assetNo,jdbcType=VARCHAR}, #{interestAmount,jdbcType=DECIMAL}, #{interestDate,jdbcType=DATE},
+      #{createTime,jdbcType=TIMESTAMP}, #{repayType,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP},
+      #{modifyBy,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.DailyIncomeEntity">
+        update p2p_daily_income
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=VARCHAR},
+            </if>
+            <if test="refNo != null">
+                ref_no = #{refNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="interestAmount != null">
+                interest_amount = #{interestAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="interestDate != null">
+                interest_date = #{interestDate,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="assetNo != null">
+                asset_no = #{assetNo,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <insert id="insertList" parameterType="java.util.List">
+        insert into p2p_daily_income (
+        member_id,
+        ref_no,
+        product_code,
+        asset_no,
+        interest_amount,
+        interest_date,
+        repay_type,
+        modify_by
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.memberId},
+            #{item.refNo},
+            #{item.productCode},
+            #{item.assetNo},
+            #{item.interestAmount},
+            #{item.interestDate},
+            #{item.repayType},
+            #{item.modifyBy}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryTotalIncome" resultType="java.math.BigDecimal">
+        select
+        sum(interest_amount) as income_amount
+        from p2p_daily_income
+        where member_id = #{memberId,jdbcType=VARCHAR}
+        <if test="productCode != null">
+        and product_code=#{productCode}
+        </if>
+        and interest_date = #{incomeDate,jdbcType=DATE}
+    </select>
+    
+    <select id="queryYesterdayIncome" resultType="java.math.BigDecimal">
+         select IFNULL( SUM( interest_amount) ,0) incomeAmount
+         from p2p_daily_income
+         where member_id=#{memberId}
+           and interest_date  = #{incomeDate}
+    </select>
+    
+    <select id="queryIncomeByOrderNo" resultType="java.math.BigDecimal">
+         select IFNULL( total_income  ,0) from p2p_order_request where ext_order_no = #{orderNo} 
+    </select>
+    
+</mapper>

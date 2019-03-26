@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.ContractMapper">
+    <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="contract_no" property="contractNo" jdbcType="VARCHAR"/>
+        <result column="creditor_no" property="creditorNo" jdbcType="VARCHAR"/>
+        <result column="invest_order_no" property="investOrderNo" jdbcType="VARCHAR"/>
+        <result column="ext_invest_order_no" property="extInvestOrderNo" jdbcType="VARCHAR"/>
+        <result column="loan_order_no" property="loanOrderNo" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="asset_code" property="assetCode" jdbcType="VARCHAR"/>
+        <result column="asset_name" property="assetName" jdbcType="VARCHAR"/>
+        <result column="loan_amount" property="loanAmount" jdbcType="DECIMAL"/>
+        <result column="invest_year_yield" property="investYearYield" jdbcType="DECIMAL"/>
+        <result column="loan_year_yield" property="loanYearYield" jdbcType="DECIMAL"/>
+        <result column="loan_fee" property="loanFee" jdbcType="DECIMAL"/>
+        <result column="actual_loan_interests" property="actualLoanInterests" jdbcType="DECIMAL"/>
+        <result column="lock_date" property="lockDate" jdbcType="INTEGER"/>
+        <result column="invest_member_id" property="investMemberId" jdbcType="VARCHAR"/>
+        <result column="loan_member_id" property="loanMemberId" jdbcType="VARCHAR"/>
+        <result column="invest_member_name" property="investMemberName" jdbcType="VARCHAR"/>
+        <result column="finance_subject_name" property="financeSubjectName" jdbcType="VARCHAR"/>
+        <result column="invest_identity_card" property="investIdentityCard" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="loan_purpose" property="loanPurpose" jdbcType="VARCHAR"/>
+        <result column="loan_tel_no" property="loanTelNo" jdbcType="VARCHAR"/>
+        <result column="invest_tel_no" property="investTelNo" jdbcType="VARCHAR"/>
+        <result column="finance_subject_address" property="financeSubjectAddress" jdbcType="VARCHAR"/>
+        <result column="loan_withdraw_time" property="loanWithdrawTime" jdbcType="TIMESTAMP"/>
+        <result column="value_time" property="valueTime" jdbcType="DATE"/>
+        <result column="expire_time" property="expireTime" jdbcType="DATE"/>
+        <result column="repayment_type" property="repaymentType" jdbcType="INTEGER"/>
+        <result column="repay_time" property="repayTime" jdbcType="DATE"/>
+        <result column="company_certificate_no" property="companyCertificateNo" jdbcType="VARCHAR"/>
+        <result column="repay_deadline" property="repayDeadline" jdbcType="VARCHAR"/>
+        <result column="overdue_interest_rate" property="overdueInterestRate" jdbcType="VARCHAR"/>
+        <result column="overdue_days_for_terminate_contract" property="overdueDaysForTerminateContract"
+                jdbcType="VARCHAR"/>
+        <result column="document_id" property="documentId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, contract_no, creditor_no, invest_order_no, ext_invest_order_no, loan_order_no,
+        product_code, product_name, asset_code, asset_name, loan_amount, invest_year_yield,
+        loan_year_yield, loan_fee, actual_loan_interests, lock_date, invest_member_id, loan_member_id, invest_member_name,
+        finance_subject_name, invest_identity_card, status, create_time, modify_time, create_by,
+        modify_by, memo, loan_purpose, loan_tel_no, invest_tel_no, finance_subject_address,
+        loan_withdraw_time, value_time, expire_time, repayment_type, repay_time, company_certificate_no
+        ,repay_deadline,overdue_interest_rate,overdue_days_for_terminate_contract,document_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from p2p_contract
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+
+        insert into p2p_contract (id, contract_no, creditor_no,
+        invest_order_no, ext_invest_order_no, loan_order_no,
+        product_code, product_name, asset_code,
+        asset_name, loan_amount, invest_year_yield,
+        loan_year_yield, loan_fee, actual_loan_interests, lock_date,
+        invest_member_id, loan_member_id, invest_member_name,
+        finance_subject_name, invest_identity_card,
+        status, create_time, modify_time,
+        create_by, modify_by, memo,
+        loan_purpose, loan_tel_no, invest_tel_no,
+        finance_subject_address, loan_withdraw_time,
+        value_time, expire_time, repayment_type,
+        repay_time, company_certificate_no,
+        repay_deadline,overdue_interest_rate,overdue_days_for_terminate_contract)
+        values (#{id,jdbcType=BIGINT}, #{contractNo,jdbcType=VARCHAR}, #{creditorNo,jdbcType=VARCHAR},
+        #{investOrderNo,jdbcType=VARCHAR}, #{extInvestOrderNo,jdbcType=VARCHAR}, #{loanOrderNo,jdbcType=VARCHAR},
+        #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{assetCode,jdbcType=VARCHAR},
+        #{assetName,jdbcType=VARCHAR}, #{loanAmount,jdbcType=DECIMAL}, #{investYearYield,jdbcType=DECIMAL},
+        #{loanYearYield,jdbcType=DECIMAL}, #{loanFee,jdbcType=DECIMAL}, #{actualLoanInterests,jdbcType=DECIMAL}, #{lockDate,jdbcType=INTEGER},
+        #{investMemberId,jdbcType=VARCHAR}, #{loanMemberId,jdbcType=VARCHAR}, #{investMemberName,jdbcType=VARCHAR},
+        #{financeSubjectName,jdbcType=VARCHAR}, #{investIdentityCard,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR},
+        #{loanPurpose,jdbcType=VARCHAR}, #{loanTelNo,jdbcType=VARCHAR}, #{investTelNo,jdbcType=VARCHAR},
+        #{financeSubjectAddress,jdbcType=VARCHAR}, #{loanWithdrawTime,jdbcType=TIMESTAMP},
+        #{valueTime,jdbcType=DATE}, #{expireTime,jdbcType=DATE}, #{repaymentType,jdbcType=INTEGER},
+        #{repayTime,jdbcType=DATE}, #{companyCertificateNo,jdbcType=VARCHAR}),
+        #{repayDeadline,jdbcType=VARCHAR}),#{overdueInterestRate,jdbcType=VARCHAR}),#{overdueDaysForTerminateContract,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        insert into p2p_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="contractNo != null">
+                contract_no,
+            </if>
+            <if test="creditorNo != null">
+                creditor_no,
+            </if>
+            <if test="investOrderNo != null">
+                invest_order_no,
+            </if>
+            <if test="extInvestOrderNo != null">
+                ext_invest_order_no,
+            </if>
+            <if test="loanOrderNo != null">
+                loan_order_no,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="assetCode != null">
+                asset_code,
+            </if>
+            <if test="assetName != null">
+                asset_name,
+            </if>
+            <if test="loanAmount != null">
+                loan_amount,
+            </if>
+            <if test="investYearYield != null">
+                invest_year_yield,
+            </if>
+            <if test="loanYearYield != null">
+                loan_year_yield,
+            </if>
+            <if test="loanFee != null">
+                loan_fee,
+            </if>
+            <if test="actualLoanInterests != null">
+                actual_loan_interests,
+            </if>
+            <if test="lockDate != null">
+                lock_date,
+            </if>
+            <if test="investMemberId != null">
+                invest_member_id,
+            </if>
+            <if test="loanMemberId != null">
+                loan_member_id,
+            </if>
+            <if test="investMemberName != null">
+                invest_member_name,
+            </if>
+            <if test="financeSubjectName != null">
+                finance_subject_name,
+            </if>
+            <if test="investIdentityCard != null">
+                invest_identity_card,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="loanPurpose != null">
+                loan_purpose,
+            </if>
+            <if test="loanTelNo != null">
+                loan_tel_no,
+            </if>
+            <if test="investTelNo != null">
+                invest_tel_no,
+            </if>
+            <if test="financeSubjectAddress != null">
+                finance_subject_address,
+            </if>
+            <if test="loanWithdrawTime != null">
+                loan_withdraw_time,
+            </if>
+            <if test="valueTime != null">
+                value_time,
+            </if>
+            <if test="expireTime != null">
+                expire_time,
+            </if>
+            <if test="repaymentType != null">
+                repayment_type,
+            </if>
+            <if test="repayTime != null">
+                repay_time,
+            </if>
+            <if test="companyCertificateNo != null">
+                company_certificate_no,
+            </if>
+            <if test="repayDeadline != null">
+                repay_deadline,
+            </if>
+            <if test="overdueInterestRate != null">
+                overdue_interest_rate,
+            </if>
+            <if test="overdueDaysForTerminateContract != null">
+                overdue_days_for_terminate_contract,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="contractNo != null">
+                #{contractNo,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorNo != null">
+                #{creditorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="investOrderNo != null">
+                #{investOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="extInvestOrderNo != null">
+                #{extInvestOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanOrderNo != null">
+                #{loanOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="assetCode != null">
+                #{assetCode,jdbcType=VARCHAR},
+            </if>
+            <if test="assetName != null">
+                #{assetName,jdbcType=VARCHAR},
+            </if>
+            <if test="loanAmount != null">
+                #{loanAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="investYearYield != null">
+                #{investYearYield,jdbcType=DECIMAL},
+            </if>
+            <if test="loanYearYield != null">
+                #{loanYearYield,jdbcType=DECIMAL},
+            </if>
+            <if test="loanFee != null">
+                #{loanFee,jdbcType=DECIMAL},
+            </if>
+            <if test="actualLoanInterests != null">
+                #{actualLoanInterests,jdbcType=DECIMAL},
+            </if>
+            <if test="lockDate != null">
+                #{lockDate,jdbcType=INTEGER},
+            </if>
+            <if test="investMemberId != null">
+                #{investMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMemberId != null">
+                #{loanMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="investMemberName != null">
+                #{investMemberName,jdbcType=VARCHAR},
+            </if>
+            <if test="financeSubjectName != null">
+                #{financeSubjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="investIdentityCard != null">
+                #{investIdentityCard,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanPurpose != null">
+                #{loanPurpose,jdbcType=VARCHAR},
+            </if>
+            <if test="loanTelNo != null">
+                #{loanTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="investTelNo != null">
+                #{investTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="financeSubjectAddress != null">
+                #{financeSubjectAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="loanWithdrawTime != null">
+                #{loanWithdrawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valueTime != null">
+                #{valueTime,jdbcType=DATE},
+            </if>
+            <if test="expireTime != null">
+                #{expireTime,jdbcType=DATE},
+            </if>
+            <if test="repaymentType != null">
+                #{repaymentType,jdbcType=INTEGER},
+            </if>
+            <if test="repayTime != null">
+                #{repayTime,jdbcType=DATE},
+            </if>
+            <if test="companyCertificateNo != null">
+                #{companyCertificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="repayDeadline != null">
+                #{repayDeadline,jdbcType=VARCHAR},
+            </if>
+            <if test="overdueInterestRate != null">
+                #{overdueInterestRate,jdbcType=VARCHAR},
+            </if>
+            <if test="overdueDaysForTerminateContract != null">
+                #{overdueDaysForTerminateContract,jdbcType=VARCHAR},
+            </if>
+
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        update p2p_contract
+        <set>
+            <if test="contractNo != null">
+                contract_no = #{contractNo,jdbcType=VARCHAR},
+            </if>
+            <if test="creditorNo != null">
+                creditor_no = #{creditorNo,jdbcType=VARCHAR},
+            </if>
+            <if test="investOrderNo != null">
+                invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="extInvestOrderNo != null">
+                ext_invest_order_no = #{extInvestOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanOrderNo != null">
+                loan_order_no = #{loanOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="assetCode != null">
+                asset_code = #{assetCode,jdbcType=VARCHAR},
+            </if>
+            <if test="assetName != null">
+                asset_name = #{assetName,jdbcType=VARCHAR},
+            </if>
+            <if test="loanAmount != null">
+                loan_amount = #{loanAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="investYearYield != null">
+                invest_year_yield = #{investYearYield,jdbcType=DECIMAL},
+            </if>
+            <if test="loanYearYield != null">
+                loan_year_yield = #{loanYearYield,jdbcType=DECIMAL},
+            </if>
+            <if test="loanFee != null">
+                loan_fee = #{loanFee,jdbcType=DECIMAL},
+            </if>
+            <if test="actualLoanInterests != null">
+                actual_loan_interests = #{actualLoanInterests,jdbcType=DECIMAL},
+            </if>
+            <if test="lockDate != null">
+                lock_date = #{lockDate,jdbcType=INTEGER},
+            </if>
+            <if test="investMemberId != null">
+                invest_member_id = #{investMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMemberId != null">
+                loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+            </if>
+            <if test="investMemberName != null">
+                invest_member_name = #{investMemberName,jdbcType=VARCHAR},
+            </if>
+            <if test="financeSubjectName != null">
+                finance_subject_name = #{financeSubjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="investIdentityCard != null">
+                invest_identity_card = #{investIdentityCard,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="loanPurpose != null">
+                loan_purpose = #{loanPurpose,jdbcType=VARCHAR},
+            </if>
+            <if test="loanTelNo != null">
+                loan_tel_no = #{loanTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="investTelNo != null">
+                invest_tel_no = #{investTelNo,jdbcType=VARCHAR},
+            </if>
+            <if test="financeSubjectAddress != null">
+                finance_subject_address = #{financeSubjectAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="loanWithdrawTime != null">
+                loan_withdraw_time = #{loanWithdrawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valueTime != null">
+                value_time = #{valueTime,jdbcType=DATE},
+            </if>
+            <if test="expireTime != null">
+                expire_time = #{expireTime,jdbcType=DATE},
+            </if>
+            <if test="repaymentType != null">
+                repayment_type = #{repaymentType,jdbcType=INTEGER},
+            </if>
+            <if test="repayTime != null">
+                repay_time = #{repayTime,jdbcType=DATE},
+            </if>
+            <if test="companyCertificateNo != null">
+                company_certificate_no = #{companyCertificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="repayDeadline != null">
+                repay_deadline = #{repayDeadline,jdbcType=VARCHAR},
+            </if>
+            <if test="overdueInterestRate != null">
+                overdue_interest_rate = #{overdueInterestRate,jdbcType=VARCHAR},
+            </if>
+            <if test="overdueDaysForTerminateContract != null">
+                overdue_days_for_terminate_contract = #{overdueDaysForTerminateContract,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        update p2p_contract
+        set contract_no = #{contractNo,jdbcType=VARCHAR},
+        creditor_no = #{creditorNo,jdbcType=VARCHAR},
+        invest_order_no = #{investOrderNo,jdbcType=VARCHAR},
+        ext_invest_order_no = #{extInvestOrderNo,jdbcType=VARCHAR},
+        loan_order_no = #{loanOrderNo,jdbcType=VARCHAR},
+        product_code = #{productCode,jdbcType=VARCHAR},
+        product_name = #{productName,jdbcType=VARCHAR},
+        asset_code = #{assetCode,jdbcType=VARCHAR},
+        asset_name = #{assetName,jdbcType=VARCHAR},
+        loan_amount = #{loanAmount,jdbcType=DECIMAL},
+        invest_year_yield = #{investYearYield,jdbcType=DECIMAL},
+        loan_year_yield = #{loanYearYield,jdbcType=DECIMAL},
+        loan_fee = #{loanFee,jdbcType=DECIMAL},
+        actual_loan_interests = #{actualLoanInterests,jdbcType=DECIMAL},
+        lock_date = #{lockDate,jdbcType=INTEGER},
+        invest_member_id = #{investMemberId,jdbcType=VARCHAR},
+        loan_member_id = #{loanMemberId,jdbcType=VARCHAR},
+        invest_member_name = #{investMemberName,jdbcType=VARCHAR},
+        finance_subject_name = #{financeSubjectName,jdbcType=VARCHAR},
+        invest_identity_card = #{investIdentityCard,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+        memo = #{memo,jdbcType=VARCHAR},
+        loan_purpose = #{loanPurpose,jdbcType=VARCHAR},
+        loan_tel_no = #{loanTelNo,jdbcType=VARCHAR},
+        invest_tel_no = #{investTelNo,jdbcType=VARCHAR},
+        finance_subject_address = #{financeSubjectAddress,jdbcType=VARCHAR},
+        loan_withdraw_time = #{loanWithdrawTime,jdbcType=TIMESTAMP},
+        value_time = #{valueTime,jdbcType=DATE},
+        expire_time = #{expireTime,jdbcType=DATE},
+        repayment_type = #{repaymentType,jdbcType=INTEGER},
+        repay_time = #{repayTime,jdbcType=DATE},
+        company_certificate_no = #{companyCertificateNo,jdbcType=VARCHAR},
+        repay_deadline = #{repayDeadline,jdbcType=VARCHAR},
+        overdue_interest_rate = #{overdueInterestRate,jdbcType=VARCHAR},
+        overdue_days_for_terminate_contract = #{overdueDaysForTerminateContract,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByCreditorNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract
+        where creditor_no = #{creditorNo}
+    </select>
+
+    <select id="selectByExtOrderNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract
+        where ext_invest_order_no = #{extOrderNo}
+    </select>
+
+    <select id="queryContractByLoanNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract where loan_order_no = #{loanNo,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateContractDocumentIdByContractNo" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        update p2p_contract
+        set document_id = #{documentId,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR}
+        where contract_no = #{contractNo,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract
+        where status = #{status,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        select
+        COUNT(1)
+        from p2p_contract
+        where loan_order_no = #{loanOrderNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryContractByLoanNoWithPagination" resultMap="BaseResultMap" parameterType="com.zb.p2p.trade.persistence.entity.ContractEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from p2p_contract
+        where loan_order_no = #{loanOrderNo,jdbcType=VARCHAR}
+    </select>
+</mapper>

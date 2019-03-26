@@ -1,0 +1,10 @@
+# 项目结构描述
+###  facade为暴露的接口和DTO、ENUM等
+### service-common为公共组件等（如回调接口，redis配置，zk配置）
+### service-前缀的为各个子模块，依赖facade包,模块间的调用走facade接口,包结构参考如下
+	1. com.zb.p2p.service.子模块名.service
+	2. com.zb.p2p.service.子模块名.dal
+	3. com.zb.p2p.service.子模块名.util
+	4. com.zb.p2p.service.子模块名.facade.impl
+	5. com.zb.p2p.service.子模块名.entity
+### web为http的暴露接口，拦截器，启动函数等

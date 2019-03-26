@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zillionfortune.boss.dal.dao.MenuDao" >
+  <resultMap id="BaseResultMap" type="com.zillionfortune.boss.dal.entity.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="refer_url" property="referUrl" jdbcType="VARCHAR" />
+    <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_by" property="modifyBy" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, parent_id, display_order, memo, refer_url, is_valid, create_time, 
+    create_by, modify_time, modify_by, icon, delete_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zillionfortune.boss.dal.entity.Menu" >
+    insert into menu (id, code, name, 
+      parent_id, display_order, memo, 
+      refer_url, is_valid, create_time, 
+      create_by, modify_time, modify_by, 
+      icon, delete_flag)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{displayOrder,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{referUrl,jdbcType=VARCHAR}, #{isValid,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createBy,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zillionfortune.boss.dal.entity.Menu" >
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="referUrl != null" >
+        refer_url,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="referUrl != null" >
+        #{referUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zillionfortune.boss.dal.entity.Menu" >
+    update menu
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+        display_order = #{displayOrder,jdbcType=INTEGER},
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="referUrl != null" >
+        refer_url = #{referUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zillionfortune.boss.dal.entity.Menu" >
+    update menu
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      display_order = #{displayOrder,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      refer_url = #{referUrl,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_by = #{modifyBy,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- <select id="selectMenuListByUserId"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select distinct  m.name as name, m.code as code, m.parent_id as parentId, m.display_order as displayOrder, 
+    m.refer_url as referUrl,m.id as id,m.icon as icon,m.delete_flag as deleteFlag
+    from menu m, user u, user_role ur, role r, role_power rp, power p
+	where
+	u.id = ur.user_id 
+    and ur.role_id=rp.role_id 
+    and r.id = ur.role_id
+    and rp.power_id=p.id 
+    and p.menu_id=m.id
+	and m.is_valid=1
+	and u.delete_flag = 0
+    and r.delete_flag = 0
+	and p.delete_flag = 0 
+	and m.delete_flag = 0
+  	and ur.user_id=#{userId,jdbcType=INTEGER}
+  	order by m.display_order asc, m.modify_time desc
+  </select> -->
+  
+  <select id="selectMenuListByUserId"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  select pm.name, pm.code, pm.parent_id, pm.display_order, 
+    pm.refer_url,pm.id,pm.icon,pm.delete_flag from (
+	  	select m.*
+	    from menu m
+		where m.id in(
+			select p.menu_id from power p,role_power rp,role r,user_role ur
+			where 
+			p.delete_flag = 0 
+		    and rp.power_id=p.id 
+		    and r.id=rp.role_id 
+			and r.delete_flag = 0
+			and r.id = ur.role_id
+		  	and ur.user_id=#{userId,jdbcType=INTEGER}
+		)
+		
+		and m.is_valid=1
+		and m.delete_flag = 0
+	
+		union
+		
+		select m2.*
+	    from menu m1,menu m2
+		where m1.id in(
+			select p.menu_id from power p,role_power rp,role r,user_role ur
+			where 
+			p.delete_flag = 0 
+		    and rp.power_id=p.id 
+		    and r.id=rp.role_id 
+			and r.delete_flag = 0
+			and r.id = ur.role_id
+		  	and ur.user_id=#{userId,jdbcType=INTEGER}
+		)
+		and m1.parent_id=m2.id
+		and m2.is_valid=1
+		and m2.delete_flag = 0
+	) pm
+	order by pm.display_order asc, pm.modify_time desc
+	
+  </select>
+  
+  <select id="selectBySelective" resultMap="BaseResultMap" parameterType="com.zillionfortune.boss.dal.entity.Menu">
+  	select 
+    <include refid="Base_Column_List" />
+    from menu
+    <trim prefix="WHERE" prefixOverrides="and">
+      <if test="id != null" >
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != ''" >
+        and name like concat(concat('%', #{name}), '%')
+      </if>
+      <if test="parentId != null" >
+        and parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+      <if test="displayOrder != null" >
+        and display_order = #{displayOrder,jdbcType=INTEGER}
+      </if>
+      <if test="memo != null and memo != ''" >
+        and memo = #{v,jdbcType=VARCHAR}
+      </if>
+      <if test="referUrl != null and referUrl != ''" >
+        and refer_url = #{referUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="isValid != null" >
+        and is_valid = #{isValid,jdbcType=TINYINT}
+      </if>
+      <if test="icon != null and icon != ''" >
+        and icon = #{icon,jdbcType=VARCHAR}
+      </if>
+      <if test="deleteFlag != null" >
+        and delete_flag = #{deleteFlag,jdbcType=TINYINT}
+      </if>
+    </trim>
+  </select>
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select distinct  m.id as id,m.name as name, m.code as code, m.parent_id as parentId, m.display_order as displayOrder, 
+    m.memo as memo,m.refer_url as referUrl,m.is_valid as isValid,m.icon as icon,m.create_time as createTime,m.create_by as createBy,
+    m.modify_time as modifyTime,m.modify_by as modifyBy,m.delete_flag as deleteFlag
+    from menu m
+    <trim>
+      <if test="userId != null" >
+        , user u, user_role ur, role r, role_power rp, power p
+      </if>
+    </trim>
+    <trim prefix="WHERE" prefixOverrides="and">
+      <if test="userId != null" >
+        and u.id = ur.user_id 
+        and ur.role_id=rp.role_id 
+        and r.id = ur.role_id
+        and rp.power_id=p.id 
+        and p.menu_id=m.id
+        and u.delete_flag = #{deleteFlag,jdbcType=INTEGER}
+        and r.delete_flag = #{deleteFlag,jdbcType=INTEGER}
+	    and p.delete_flag = #{deleteFlag,jdbcType=INTEGER}
+  	    and u.id=#{userId,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != ''" >
+        and m.name like '%${name}%'
+      </if>
+      <if test="parentId != null" >
+        and m.parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+      and m.delete_flag = #{deleteFlag,jdbcType=INTEGER}
+      order by m.display_order asc, m.modify_time desc
+    </trim>
+  </select>
+</mapper>

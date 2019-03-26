@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.customer.dao.NotifyMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.customer.dao.domain.NotifyInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="notify_key" property="notifyKey" jdbcType="VARCHAR" />
+    <result column="notify_category" property="notifyCategory" jdbcType="INTEGER" />
+      <result column="notify_result" property="notifyResult" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    notify_key, id, notify_category,notify_result, customer_id,create_time, update_time,notify_result
+  </sql>
+ 
+  <insert id="insert" parameterType="com.zb.p2p.customer.dao.domain.NotifyInfo" >
+    insert into p2p_customer_notify (notify_key, 
+      notify_category, customer_id,
+      create_time, update_time,notify_result)
+    values (#{notifyKey,jdbcType=VARCHAR}, 
+      #{notifyCategory,jdbcType=INTEGER}, #{customerId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{notifyResult,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <update id="updateBycustomerId" parameterType="com.zb.p2p.customer.dao.domain.NotifyInfo" >
+  
+    update p2p_customer_notify
+      <set >
+       notify_result=1,
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_id = #{customerId,jdbcType=BIGINT}
+    and notify_result=0
+  
+  </update>
+  
+    <update id="updateBycustomerIdSyn" parameterType="com.zb.p2p.customer.dao.domain.NotifyInfo" >
+  
+    update p2p_customer_notify
+      <set >
+       notify_result=1,
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where customer_id = #{customerId,jdbcType=BIGINT}
+    and notify_result=0
+  
+  </update>
+  
+   <select id="selectNotifyInfo" resultMap="BaseResultMap" parameterType="com.zb.p2p.customer.dao.domain.NotifyInfo"  >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_customer_notify
+    where notify_result=0
+     <if test="createTime != null" >
+       and create_time &lt;= #{createTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+</mapper>

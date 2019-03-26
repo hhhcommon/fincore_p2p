@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zb.p2p</groupId>
+        <artifactId>p2p-trade</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+    <packaging>jar</packaging>
+    <artifactId>trade-api</artifactId>
+    <version>${p2p-trade.tradeApi.version}</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <p2p-trade.tradeApi.version>1.3.0-SNAPSHOT</p2p-trade.tradeApi.version>
+    </properties>
+
+    <dependencies>
+       <dependency>
+            <groupId>com.zb.p2p</groupId>
+            <artifactId>trade-common</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+           <groupId>com.zb.p2p</groupId>
+           <artifactId>trade-persistence</artifactId>
+           <version>1.3.0-SNAPSHOT</version>
+       </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>deployRelease</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.223.7:8081/nexus/content/repositories/fincore_releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>deploySnapshot</id>
+            <name>Nexus Snapshots Repository</name>
+            <url>http://192.168.223.7:8081/nexus/content/repositories/fincore_snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

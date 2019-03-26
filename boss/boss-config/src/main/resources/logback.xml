@@ -1,0 +1,186 @@
+<configuration>
+	<property name="log.base" value="/data1/logs/boss" />
+	<property name="pattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{sessionId}] %-5level [%thread] %logger{80} :%msg%n" />
+	<!-- 控制台输出 -->   
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+       <!-- 日志输出编码 -->  
+       <Encoding>UTF-8</Encoding>   
+        <layout class="ch.qos.logback.classic.PatternLayout">   
+             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n   
+            </pattern>   
+        </layout>   
+    </appender> 
+    <!--boss根 -->
+    <appender name="root"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-root.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-root-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="integration"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-integration.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-integration-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 异常 -->
+    <appender name="exception"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-exception-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--dal -->
+    <appender name="boss-dal" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-dal.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-dal-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+    
+        <!--通过服务 -->
+    <appender name="boss-service" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-service.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-service-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="boss-biz" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-biz.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-biz-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+    
+    
+    <appender name="boss-web" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/boss-web.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/%d{yyyy-MM-dd}/boss-web-%i.%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>30MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+    
+	<logger name="com.zillionfortune.boss.dal" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="boss-dal" />
+	</logger>
+	
+	<logger name="com.zillionfortune.boss.integration" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="boss-integration" />
+	</logger>
+	
+	<logger name="com.zillionfortune.boss.service" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="boss-service" />
+	</logger>
+    
+    <logger name="com.zillionfortune.boss.biz" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="boss-biz" />
+    </logger>
+    
+    <logger name="com.zillionfortune.boss.web" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="boss-web" />
+    </logger>
+    
+	<!-- 日志过滤 -->
+    <!-- log filter-->
+    <logger name="org.jdbcdslog.ConnectionLogger" level="debug" additivity="false">
+       <appender-ref ref="root"/>
+    </logger>
+    <!-- 上线初期建议lever=info，正常运行后建以lever=error,测试时lever=error-->
+    <logger name="org.jdbcdslog.StatementLogger" level="debug" additivity="false">
+       <appender-ref ref="root"/>
+    </logger>
+    <logger name="org.jdbcdslog.SlowQueryLogger" level="debug" additivity="false">
+       <appender-ref ref="root"/>
+    </logger>
+    <logger name="org.jdbcdslog.ResultSetLogger" level="debug" additivity="false">
+        <appender-ref ref="root"/>
+    </logger>
+	<logger name="org.apache.ibatis.logging.slf4j" level="debug" additivity="false">
+		<appender-ref ref="boss-dal" />
+	</logger>
+	<logger name="org.springframework.jdbc.datasource" level="debug" additivity="false">
+		<appender-ref ref="root"/>
+	</logger>
+	<logger name="org.mybatis.spring.transaction" level="debug" additivity="false">
+		<appender-ref ref="root"/>
+	</logger>
+	<logger name="com.zillionfortune.boss.common.exception">
+		<appender-ref ref="exception"/>
+	</logger>
+	<logger name="org.springframework">
+		<level value="info" />
+	</logger>
+	<logger name="org.apache">
+		<level value="info" />
+	</logger>
+
+	<!-- root级别控制 -->
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="root" />
+	</root>
+
+</configuration>  

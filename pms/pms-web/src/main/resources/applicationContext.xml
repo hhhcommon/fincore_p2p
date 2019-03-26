@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <import resource="spring-aspect.xml"/>
+    <import resource="spring-dubbo.xml"/>
+    <import resource="spring-mybatis.xml"/>
+    <!--<import resource="spring-ons-topic.xml"/>-->
+    <import resource="spring-redis.xml"/>
+    <import resource="spring-dubbo-consumer.xml"/>
+    <import resource="spring-schedule.xml"/>
+
+    <!--开启注解功能 -->
+    <context:annotation-config/>
+
+    <!-- 扫描package，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.zb.fincore.pms,com.zb.fincore.common"/>
+
+    <!--加载配置文件 -->
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:${ENV_PMS}/env.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertiesUtil" class="com.zb.fincore.common.utils.PropertiesUtil" init-method="load">
+        <property name="fileNames">
+            <array>
+                <value>file:${ENV_PMS}/env.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="productCacheService" class="com.zb.fincore.pms.service.product.impl.ProductCacheServiceImpl"
+          init-method="refreshProductCache"/>
+
+    <bean id="productCacheForP2PService" class="com.zb.fincore.pms.service.product.impl.ProductCacheForP2PServiceImpl"
+          init-method="refreshOnSaleProductListForP2PCache"/>
+
+    <bean id="productCacheForP2PService2" class="com.zb.fincore.pms.service.product.impl.ProductCacheForP2PServiceImpl"
+          init-method="refreshSoldOutProductListForP2PCache"/>
+
+    <bean id="aesEncoder" class="com.zb.fincore.common.encrypt.AesEncoder">
+        <property name="key" value="${config.aes.key}"/>
+    </bean>
+
+    <bean id="aesHttpClientUtils" class="com.zb.fincore.common.utils.AesHttpClientUtils">
+        <property name="aesEncoder" ref="aesEncoder"/>
+        <property name="encode" value="${config.http.client.encode}"/>
+    </bean>
+</beans>

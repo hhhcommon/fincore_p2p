@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.p2p.trade.persistence.dao.TransferRequestMapper" >
+  <resultMap id="BaseResultMap" type="com.zb.p2p.trade.persistence.entity.TransferRequestEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="request_no" property="requestNo" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="principle" property="principle" jdbcType="DECIMAL" />
+    <result column="promise_interest" property="promiseInterest" jdbcType="VARCHAR" />
+    <result column="actual_interest" property="actualInterest" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="request_time" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="finished_time" property="finishedTime" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, request_no, member_id, product_code, order_no, principle, promise_interest, actual_interest, 
+    status, request_time, finished_time, memo, version, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p2p_transfer_request
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p2p_transfer_request
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zb.p2p.trade.persistence.entity.TransferRequestEntity" >
+    insert into p2p_transfer_request (id, request_no, member_id, 
+      product_code, order_no, principle, 
+      promise_interest, actual_interest, status, 
+      request_time, finished_time, memo, 
+      version, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{requestNo,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR},
+      #{productCode,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{principle,jdbcType=DECIMAL}, 
+      #{promiseInterest,jdbcType=VARCHAR}, #{actualInterest,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{requestTime,jdbcType=TIMESTAMP}, #{finishedTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zb.p2p.trade.persistence.entity.TransferRequestEntity" >
+    insert into p2p_transfer_request
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="requestNo != null" >
+        request_no,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="principle != null" >
+        principle,
+      </if>
+      <if test="promiseInterest != null" >
+        promise_interest,
+      </if>
+      <if test="actualInterest != null" >
+        actual_interest,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="requestTime != null" >
+        request_time,
+      </if>
+      <if test="finishedTime != null" >
+        finished_time,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="requestNo != null" >
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="principle != null" >
+        #{principle,jdbcType=DECIMAL},
+      </if>
+      <if test="promiseInterest != null" >
+        #{promiseInterest,jdbcType=VARCHAR},
+      </if>
+      <if test="actualInterest != null" >
+        #{actualInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedTime != null" >
+        #{finishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zb.p2p.trade.persistence.entity.TransferRequestEntity" >
+    update p2p_transfer_request
+    <set >
+      <if test="requestNo != null" >
+        request_no = #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="principle != null" >
+        principle = #{principle,jdbcType=DECIMAL},
+      </if>
+      <if test="promiseInterest != null" >
+        promise_interest = #{promiseInterest,jdbcType=VARCHAR},
+      </if>
+      <if test="actualInterest != null" >
+        actual_interest = #{actualInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        request_time = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedTime != null" >
+        finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zb.p2p.trade.persistence.entity.TransferRequestEntity" >
+    update p2p_transfer_request
+    set request_no = #{requestNo,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      principle = #{principle,jdbcType=DECIMAL},
+      promise_interest = #{promiseInterest,jdbcType=VARCHAR},
+      actual_interest = #{actualInterest,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      finished_time = #{finishedTime,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

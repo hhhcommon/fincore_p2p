@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans	xmlns="http://www.springframework.org/schema/beans"  
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    	xsi:schemaLocation="http://www.springframework.org/schema/beans      
+      		http://www.springframework.org/schema/beans/spring-beans.xsd        
+      		http://code.alibabatech.com/schema/dubbo      
+      		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    
+   <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+   
+   <!-- 资产服务接口  -->
+   <dubbo:reference id="assetServiceFacade" interface="com.zb.fincore.ams.facade.AssetServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <!-- 资产池服务接口  -->
+   <dubbo:reference id="poolServiceFacade" interface="com.zb.fincore.ams.facade.PoolServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <dubbo:reference id="assetPoolRelationServiceFacade" interface="com.zb.fincore.ams.facade.AssetPoolRelationServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <dubbo:reference id="loanRepayPlanServiceFacade" interface="com.zb.fincore.ams.facade.LoanRepayPlanServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <dubbo:reference id="assetRepayPlanForP2P3ServiceFacade" interface="com.zb.fincore.ams.facade.AssetRepayPlanForP2P3ServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <dubbo:reference id="debtRightInfoFacade" interface="com.zb.fincore.ams.facade.DebtRightInfoFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <!-- 发行方服务接口  -->
+   <dubbo:reference id="financeSubjectServiceFacade" interface="com.zb.fincore.ams.facade.FinanceSubjectServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <!-- 受托方服务接口  -->
+   <dubbo:reference id="trusteeServiceFacade" interface="com.zb.fincore.ams.facade.TrusteeServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <!-- 资产审核服务接口  -->
+   <dubbo:reference id="approvalServiceFacade" interface="com.zb.fincore.ams.facade.AssetApprovalServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <!-- 产品线服务接口  -->
+   <dubbo:reference id="productLineServiceFacade" interface="com.zb.fincore.pms.facade.line.ProductLineServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+   <dubbo:reference id="fileInfoFacade" interface="com.zb.fincore.ams.facade.FileInfoFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+     <dubbo:reference id="contractSignFacade" interface="com.zb.fincore.ams.facade.ContractSignFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+    <!-- 资产审核服务接口  -->
+    <dubbo:reference id="batchAssetFacade" interface="com.zb.fincore.ams.facade.BatchAssetFacade" timeout="${dubbo.consumer.timeout}">
+    </dubbo:reference>
+    <!-- 资产清算服务接口 -->
+    <dubbo:reference id="assetCheckServiceFacade" interface="com.zb.fincore.ams.facade.AssetCheckServiceFacade" timeout="${dubbo.consumer.timeout}">
+   </dubbo:reference>
+</beans>

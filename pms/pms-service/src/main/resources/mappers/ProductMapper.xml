@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.ProductDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.Product">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_display_name" property="productDisplayName" jdbcType="VARCHAR"/>
+        <result column="product_line_id" property="productLineId" jdbcType="BIGINT"/>
+        <result column="product_line_code" property="productLineId" jdbcType="VARCHAR"/>
+        <result column="product_line_name" property="productLineName" jdbcType="VARCHAR"/>
+        <result column="asset_pool_type" property="assetPoolType" jdbcType="TINYINT"/>
+        <result column="asset_pool_code" property="assetPoolCode" jdbcType="VARCHAR"/>
+        <result column="asset_pool_name" property="assetPoolName" jdbcType="VARCHAR"/>
+        <result column="loan_order_no_set" property="loanOrderNoSet" jdbcType="LONGVARCHAR"/>
+        <result column="collect_mode" property="collectMode" jdbcType="VARCHAR"/>
+        <result column="pattern_code" property="patternCode" jdbcType="VARCHAR"/>
+        <result column="sale_channel_code" property="saleChannelCode" jdbcType="VARCHAR"/>
+        <result column="join_channel_code" property="joinChannelCode" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="sale_status" property="saleStatus" jdbcType="TINYINT"/>
+        <result column="collect_status" property="collectStatus" jdbcType="TINYINT"/>
+        <result column="display_status" property="displayStatus" jdbcType="TINYINT"/>
+        <result column="risk_level" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="fund_settle_party" property="fundSettleParty" jdbcType="VARCHAR"/>
+        <result column="is_open_hmt" property="isOpenHmt" jdbcType="TINYINT"/>
+        <result column="calendar_mode" property="calendarMode" jdbcType="TINYINT"/>
+        <result column="approval_require_sign" property="approvalRequireSign" jdbcType="VARCHAR"/>
+        <result column="approval_sign" property="approvalSign" jdbcType="VARCHAR"/>
+        <result column="approval_status" property="approvalStatus" jdbcType="TINYINT"/>
+        <result column="last_approval_time" property="lastApprovalTime" jdbcType="TIMESTAMP"/>
+        <result column="introduction" property="introduction" jdbcType="LONGVARCHAR"/>
+        <result column="archive_time" property="archiveTime" jdbcType="TIMESTAMP"/>
+        <result column="sync_status" property="syncStatus" jdbcType="TINYINT"/>
+        <result column="register_type" property="registerType" jdbcType="VARCHAR"/>
+        <result column="open_type" property="openType" jdbcType="VARCHAR"/>
+        <result column="pay_channel" property="payChannel" jdbcType="VARCHAR"/>
+        <result column="buyWays" property="buyWays" jdbcType="VARCHAR"/>
+        <result column="numberPeriod" property="numberPeriod" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ProductDetailResultMap" type="com.zb.fincore.pms.service.dal.model.Product">
+        <id column="product_id" property="id" jdbcType="BIGINT"/>
+        <result column="product_product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_display_name" property="productDisplayName" jdbcType="VARCHAR"/>
+        <result column="product_line_id" property="productLineId" jdbcType="BIGINT"/>
+        <result column="product_line_code" property="productLineCode" jdbcType="VARCHAR"/>
+        <result column="product_line_name" property="productLineName" jdbcType="VARCHAR"/>
+        <result column="asset_pool_type" property="assetPoolType" jdbcType="TINYINT"/>
+        <result column="asset_pool_code" property="assetPoolCode" jdbcType="VARCHAR"/>
+        <result column="asset_pool_name" property="assetPoolName" jdbcType="VARCHAR"/>
+        <result column="loan_order_no_set" property="loanOrderNoSet" jdbcType="LONGVARCHAR"/>
+	    <result column="collect_mode" property="collectMode" jdbcType="VARCHAR"/>
+        <result column="pattern_code" property="patternCode" jdbcType="VARCHAR"/>
+        <result column="sale_channel_code" property="saleChannelCode" jdbcType="VARCHAR"/>
+        <result column="join_channel_code" property="joinChannelCode" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="sale_status" property="saleStatus" jdbcType="TINYINT"/>
+        <result column="collect_status" property="collectStatus" jdbcType="TINYINT"/>
+        <result column="display_status" property="displayStatus" jdbcType="TINYINT"/>
+        <result column="risk_level" property="riskLevel" jdbcType="VARCHAR"/>
+        <result column="fund_settle_party" property="fundSettleParty" jdbcType="VARCHAR"/>
+        <result column="is_open_hmt" property="isOpenHmt" jdbcType="TINYINT"/>
+        <result column="calendar_mode" property="calendarMode" jdbcType="TINYINT"/>
+        <result column="approval_require_sign" property="approvalRequireSign" jdbcType="VARCHAR"/>
+        <result column="approval_sign" property="approvalSign" jdbcType="VARCHAR"/>
+        <result column="product_approval_status" property="approvalStatus" jdbcType="TINYINT"/>
+        <result column="last_approval_time" property="lastApprovalTime" jdbcType="TIMESTAMP"/>
+        <result column="introduction" property="introduction" jdbcType="LONGVARCHAR"/>
+        <result column="archive_time" property="archiveTime" jdbcType="TIMESTAMP"/>
+        <result column="sync_status" property="syncStatus" jdbcType="TINYINT"/>
+        <result column="register_type" property="registerType" jdbcType="VARCHAR"/>
+        <result column="open_type" property="openType" jdbcType="VARCHAR"/>
+        <result column="pay_channel" property="payChannel" jdbcType="VARCHAR"/>
+        <result column="buyWays" property="buyWays" jdbcType="VARCHAR"/>
+		<result column="numberPeriod" property="numberPeriod" jdbcType="VARCHAR"/>
+        <result column="product_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="product_create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="product_modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="product_modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <association property="productPeriod" javaType="com.zb.fincore.pms.service.dal.model.ProductPeriod">
+            <id column="period_id" property="id" jdbcType="BIGINT" />
+            <result column="period_product_id" property="productId" jdbcType="BIGINT" />
+            <result column="period_product_code" property="productCode" jdbcType="VARCHAR" />
+            <result column="expect_online_time" property="expectOnlineTime" jdbcType="TIMESTAMP" />
+            <result column="online_time" property="onlineTime" jdbcType="TIMESTAMP" />
+            <result column="expect_offline_time" property="expectOfflineTime" jdbcType="TIMESTAMP" />
+            <result column="offline_time" property="offlineTime" jdbcType="TIMESTAMP" />
+            <result column="sale_start_time" property="saleStartTime" jdbcType="TIMESTAMP" />
+            <result column="sale_end_time" property="saleEndTime" jdbcType="TIMESTAMP" />
+            <result column="sale_out_time" property="saleOutTime" jdbcType="TIMESTAMP" />
+            <result column="expect_establish_time" property="expectEstablishTime" jdbcType="TIMESTAMP" />
+            <result column="establish_time" property="establishTime" jdbcType="TIMESTAMP" />
+            <result column="value_time" property="valueTime" jdbcType="TIMESTAMP" />
+            <result column="cease_time" property="ceaseTime" jdbcType="TIMESTAMP" />
+            <result column="expect_expire_time" property="expectExpireTime" jdbcType="TIMESTAMP" />
+            <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+            <result column="expect_clear_time" property="expectClearTime" jdbcType="TIMESTAMP" />
+            <result column="clear_time" property="clearTime" jdbcType="TIMESTAMP" />
+            <result column="invest_period" property="investPeriod" jdbcType="INTEGER" />
+            <result column="invest_period_unit" property="investPeriodUnit" jdbcType="TINYINT" />
+            <result column="invest_period_description" property="investPeriodDescription" jdbcType="VARCHAR" />
+            <result column="invest_period_loop_unit" property="investPeriodLoopUnit" jdbcType="INTEGER" />
+            <result column="invest_period_loop_count" property="investPeriodLoopCount" jdbcType="INTEGER" />
+            <result column="invest_period_loop_index" property="investPeriodLoopIndex" jdbcType="INTEGER" />
+            <result column="next_redeem_time" property="nextRedeemTime" jdbcType="TIMESTAMP" />
+            <result column="next_repay_time" property="nextRepayTime" jdbcType="TIMESTAMP" />
+            <result column="lock_period" property="lockPeriod" jdbcType="INTEGER"/>
+            <result column="lock_period_unit" property="lockPeriodUnit" jdbcType="TINYINT"/>
+            <result column="period_create_time" property="createTime" jdbcType="TIMESTAMP" />
+            <result column="period_create_by" property="createBy" jdbcType="VARCHAR" />
+            <result column="period_modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+            <result column="period_modify_by" property="modifyBy" jdbcType="VARCHAR" />
+        </association>
+        <association property="productProfit" javaType="com.zb.fincore.pms.service.dal.model.ProductProfit">
+            <id column="profit_id" property="id" jdbcType="BIGINT" />
+            <result column="profit_product_id" property="productId" jdbcType="BIGINT" />
+            <result column="profit_product_code" property="productCode" jdbcType="VARCHAR" />
+            <result column="min_invest_amount" property="minInvestAmount" jdbcType="DECIMAL" />
+            <result column="single_max_invest_amount" property="singleMaxInvestAmount" jdbcType="DECIMAL" />
+            <result column="max_invest_amount" property="maxInvestAmount" jdbcType="DECIMAL" />
+            <result column="min_hold_amount" property="minHoldAmount" jdbcType="DECIMAL"/>
+            <result column="increase_amount" property="increaseAmount" jdbcType="DECIMAL" />
+            <result column="basic_interests_period" property="basicInterestsPeriod" jdbcType="INTEGER" />
+            <result column="establish_condition" property="establishCondition" jdbcType="VARCHAR" />
+            <result column="unit" property="unit" jdbcType="TINYINT" />
+            <result column="profit_type" property="profitType" jdbcType="TINYINT" />
+            <result column="calculate_invest_type" property="calculateInvestType" jdbcType="TINYINT" />
+            <result column="min_yield_rate" property="minYieldRate" jdbcType="DECIMAL" />
+            <result column="max_yield_rate" property="maxYieldRate" jdbcType="DECIMAL" />
+            <result column="current_yield_rate" property="currentYieldRate" jdbcType="DECIMAL" />
+            <result column="add_yield_rate" property="addYieldRate" jdbcType="DECIMAL" />
+            <result column="floating_yield_rate" property="floatingYieldRate" jdbcType="DECIMAL"/>
+            <result column="profit_create_time" property="createTime" jdbcType="TIMESTAMP" />
+            <result column="profit_create_by" property="createBy" jdbcType="VARCHAR" />
+            <result column="profit_modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+            <result column="profit_modify_by" property="modifyBy" jdbcType="VARCHAR" />
+        </association>
+        <association property="productStock" javaType="com.zb.fincore.pms.service.dal.model.ProductStock">
+            <id column="stock_id" property="id" jdbcType="BIGINT"/>
+            <result column="stock_product_id" property="productId" jdbcType="BIGINT"/>
+            <result column="stock_product_code" property="productCode" jdbcType="VARCHAR"/>
+            <result column="frozen_amount" property="frozenAmount" jdbcType="DECIMAL"/>
+            <result column="sale_amount" property="saleAmount" jdbcType="DECIMAL"/>
+            <result column="stock_amount" property="stockAmount" jdbcType="DECIMAL"/>
+            <result column="redeem_amount" property="redeemAmount" jdbcType="DECIMAL"/>
+            <result column="stock_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="stock_create_by" property="createBy" jdbcType="VARCHAR"/>
+            <result column="stock_modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+            <result column="stock_modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="productContractList" ofType="com.zb.fincore.pms.service.dal.model.ProductContract">
+            <id column="contract_id" property="id" jdbcType="BIGINT"/>
+            <result column="contract_product_id" property="productId" jdbcType="BIGINT"/>
+            <result column="contract_product_code" property="productCode" jdbcType="VARCHAR"/>
+            <result column="contract_type" property="contractType" jdbcType="TINYINT"/>
+            <result column="contract_name" property="contractName" jdbcType="VARCHAR"/>
+            <result column="contract_display_name" property="contractDisplayName" jdbcType="VARCHAR"/>
+            <result column="contract_file_url" property="contractFileUrl" jdbcType="VARCHAR"/>
+            <result column="contract_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="contract_create_by" property="createBy" jdbcType="VARCHAR"/>
+            <result column="contract_modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+            <result column="contract_modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="productLadderList" ofType="com.zb.fincore.pms.service.dal.model.ProductLadder">
+            <id column="ladder_id" property="id" jdbcType="BIGINT"/>
+            <result column="ladder_product_id" property="productId" jdbcType="BIGINT"/>
+            <result column="ladder_product_code" property="productCode" jdbcType="VARCHAR"/>
+            <result column="ladder_invest_period" property="investPeriod" jdbcType="INTEGER"/>
+            <result column="ladder_invest_period_loop_unit" property="investPeriodLoopUnit" jdbcType="INTEGER"/>
+            <result column="ladder_invest_period_loop_count" property="investPeriodLoopCount" jdbcType="INTEGER"/>
+            <result column="ladder_invest_period_loop_index" property="investPeriodLoopIndex" jdbcType="INTEGER"/>
+            <result column="ladder_yield_rate" property="yieldRate" jdbcType="DECIMAL"/>
+            <result column="poundage" property="poundage" jdbcType="DECIMAL"/>
+            <result column="ladder_value_start_time" property="valueStartTime" jdbcType="TIMESTAMP"/>
+            <result column="ladder_value_end_time" property="valueEndTime" jdbcType="TIMESTAMP"/>
+            <result column="ladder_next_redeem_time" property="nextRedeemTime" jdbcType="TIMESTAMP"/>
+            <result column="ladder_next_repay_time" property="nextRepayTime" jdbcType="TIMESTAMP"/>
+            <result column="ladder_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="ladder_create_by" property="createBy" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, product_code, product_name, product_display_name, product_line_id,product_line_code,product_line_name, asset_pool_type, asset_pool_code, asset_pool_name,
+        loan_order_no_set, collect_mode, pattern_code, sale_channel_code, join_channel_code, total_amount, sale_status, collect_status, display_status, risk_level,
+        fund_settle_party, is_open_hmt, calendar_mode, introduction, approval_require_sign, approval_sign,
+        approval_status, last_approval_time,archive_time, sync_status, register_type, open_type, pay_channel, buyWays, numberPeriod, create_time, create_by, modify_time, modify_by
+    </sql>
+
+    <sql id="Product_Detail_Column">
+          product.id as product_id, product.product_code as product_product_code, product.product_name,
+        product.product_display_name, product.product_line_id, product.product_line_code, product.product_line_name,product.asset_pool_type, product.asset_pool_code, product.asset_pool_name,
+        product.loan_order_no_set, product.collect_mode, product.pattern_code, product.sale_channel_code, product.join_channel_code, product.total_amount,
+        product.sale_status, product.collect_status, product.display_status, product.risk_level,
+        product.fund_settle_party, product.is_open_hmt, product.calendar_mode, product.introduction, product.approval_require_sign,
+        product.approval_sign,product.approval_status as product_approval_status, product.last_approval_time, product.archive_time, product.sync_status,
+        product.register_type, product.open_type, product.pay_channel, product.buyWays, product.numberPeriod,
+        product.create_time as product_create_time,product.create_by as product_create_by,
+        product.modify_time as product_modify_time, product.modify_by as product_modify_by,
+          period.id as period_id, period.product_id as period_product_id, period.product_code period_product_code,
+        period.expect_online_time, period.online_time, period.expect_offline_time,
+        period.offline_time, period.sale_start_time, period.sale_end_time, period.sale_out_time, period.expect_establish_time,
+        period.establish_time, period.value_time, period.cease_time, period.expect_expire_time, period.expire_time, period.expect_clear_time,
+        period.clear_time,period.invest_period, period.invest_period_unit, period.invest_period_description, period.invest_period_loop_unit,
+        period.invest_period_loop_count, period.invest_period_loop_index, period.next_redeem_time, period.next_repay_time,
+        period.lock_period, period.lock_period_unit,
+        period.create_time as period_create_time, period.create_by as period_create_by,period.modify_time as period_modify_time,
+        period.modify_by as period_modify_by,
+           profit.id as profit_id, profit.product_id as profit_product_id, profit.product_code as profit_product_code,
+        profit.min_invest_amount, profit.single_max_invest_amount, profit.max_invest_amount, profit.min_hold_amount,
+        profit.increase_amount, profit.basic_interests_period, profit.establish_condition, profit.unit, profit.profit_type,
+        profit.calculate_invest_type, profit.min_yield_rate, profit.max_yield_rate, profit.current_yield_rate,
+        profit.add_yield_rate,profit.floating_yield_rate,profit.create_time as profit_create_time,
+        profit.create_by as profit_create_by,profit.modify_time as profit_modify_time,profit.modify_by as profit_modify_by,
+           stock.id as stock_id, stock.product_id as stock_product_id, stock.product_code as stock_product_code,
+        stock.frozen_amount, stock.sale_amount, stock.stock_amount, stock.redeem_amount,
+        stock.create_time as stock_create_time, stock.create_by as stock_create_by, stock.modify_time as stock_modify_time,
+        stock.modify_by as stock_modify_by,
+           contract.id as contract_id, contract.product_id as contract_product_id, contract.product_code as contract_product_code,
+        contract_type, contract_name, contract_display_name,contract_file_url,
+        contract.create_time as contract_create_time, contract.create_by as contract_create_by,
+        contract.modify_time as contract_modify_time, contract.modify_by as contract_modify_by,
+           ladder.id as ladder_id, ladder.product_id as ladder_product_id, ladder.product_code as ladder_product_code,
+        ladder.invest_period as ladder_invest_period, ladder.invest_period_loop_unit as ladder_invest_period_loop_unit, ladder.invest_period_loop_count as ladder_invest_period_loop_count,
+        ladder.invest_period_loop_index as ladder_invest_period_loop_index, ladder.yield_rate as ladder_yield_rate, ladder.poundage as poundage,
+        ladder.value_start_time as ladder_value_start_time, ladder.value_end_time as ladder_value_end_time,
+        ladder.next_redeem_time as ladder_next_redeem_time, ladder.next_repay_time as ladder_next_repay_time,
+        ladder.create_time as ladder_create_time, ladder.create_by as ladder_create_by
+    </sql>
+
+    <sql id="Product_Detail_Column_Without_Contract">
+        product.id as product_id, product.product_code as product_product_code, product.product_name,
+        product.product_display_name, product.product_line_id, product.product_line_code, product.product_line_name,product.asset_pool_type, product.asset_pool_code, product.asset_pool_name,
+        product.loan_order_no_set, product.collect_mode, product.pattern_code, product.sale_channel_code, product.join_channel_code, product.total_amount,
+        product.sale_status, product.collect_status, product.display_status, product.risk_level,
+        product.fund_settle_party, product.is_open_hmt, product.calendar_mode, product.introduction, product.approval_require_sign,
+        product.approval_sign,product.approval_status as product_approval_status, product.last_approval_time, product.archive_time, product.sync_status,
+        product.register_type, product.open_type, product.pay_channel, product.buyWays, product.numberPeriod,
+        product.create_time as product_create_time,product.create_by as product_create_by,
+        product.modify_time as product_modify_time, product.modify_by as product_modify_by,
+        period.id as period_id, period.product_id as period_product_id, period.product_code period_product_code,
+        period.expect_online_time, period.online_time, period.expect_offline_time,
+        period.offline_time, period.sale_start_time, period.sale_end_time, period.sale_out_time, period.expect_establish_time,
+        period.establish_time, period.value_time, period.cease_time, period.expect_expire_time, period.expire_time, period.expect_clear_time,
+        period.clear_time,period.invest_period, period.invest_period_unit, period.invest_period_description, period.invest_period_loop_unit,
+        period.invest_period_loop_count, period.invest_period_loop_index, period.next_redeem_time, period.next_repay_time,
+        period.lock_period, period.lock_period_unit,
+        period.create_time as period_create_time, period.create_by as period_create_by,period.modify_time as period_modify_time,
+        period.modify_by as period_modify_by,
+        profit.id as profit_id, profit.product_id as profit_product_id, profit.product_code as profit_product_code,
+        profit.min_invest_amount, profit.single_max_invest_amount, profit.max_invest_amount, profit.min_hold_amount,
+        profit.increase_amount, profit.basic_interests_period, profit.establish_condition, profit.unit, profit.profit_type,
+        profit.calculate_invest_type, profit.min_yield_rate, profit.max_yield_rate, profit.current_yield_rate,
+        profit.floating_yield_rate,profit.add_yield_rate,profit.create_time as profit_create_time,
+        profit.create_by as profit_create_by,profit.modify_time as profit_modify_time,profit.modify_by as profit_modify_by,
+        stock.id as stock_id, stock.product_id as stock_product_id, stock.product_code as stock_product_code,
+        stock.frozen_amount, stock.sale_amount, stock.stock_amount, stock.redeem_amount,
+        stock.create_time as stock_create_time, stock.create_by as stock_create_by, stock.modify_time as stock_modify_time,
+        stock.modify_by as stock_modify_by
+    </sql>
+
+    <sql id="Product_Detail_Table">
+            pms_product product left join pms_product_period period on period.product_code = product.product_code
+          left join pms_product_profit profit on profit.product_code = product.product_code
+          left join pms_product_stock stock on stock.product_code = product.product_code
+          left join pms_product_contract contract on contract.product_code = product.product_code
+          left join pms_product_ladder ladder on ladder.product_code = product.product_code
+    </sql>
+
+    <sql id="Product_Detail_Table_Without_Contract">
+        pms_product product left join pms_product_period period on period.product_code = product.product_code
+        left join pms_product_profit profit on profit.product_code = product.product_code
+        left join pms_product_stock stock on stock.product_code = product.product_code
+    </sql>
+
+    <sql id="Product_Count_Table">
+        pms_product product left join pms_product_period period on period.product_code = product.product_code
+        left join pms_product_profit profit on profit.product_code = product.product_code
+        left join pms_product_stock stock on stock.product_code = product.product_code
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.Product">
+    insert into pms_product (id, product_code, product_name,
+      product_display_name, product_line_id, product_line_code, product_line_name, asset_pool_type, asset_pool_code, asset_pool_name,
+      loan_order_no_set, collect_mode, pattern_code, sale_channel_code, join_channel_code, total_amount,
+      sale_status, collect_status, display_status, risk_level,
+      fund_settle_party, is_open_hmt, calendar_mode,
+      approval_require_sign, approval_sign, approval_status,last_approval_time
+      archive_time, sync_status, register_type, open_type, pay_channel, buyWays, numberPeriod, create_time, create_by,
+      modify_time, modify_by, introduction
+      )
+    values (#{id,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+      #{productDisplayName,jdbcType=VARCHAR}, #{productLineId,jdbcType=BIGINT},#{productLineCode,jdbcType=VARCHAR}, #{productLineName,jdbcType=VARCHAR}, #{assetPoolType,jdbcType=TINYINT}, #{assetPoolCode,jdbcType=VARCHAR}, #{assetPoolName,jdbcType=VARCHAR},
+      #{loanOrderNoSet,jdbcType=LONGVARCHAR},#{collectMode,jdbcType=VARCHAR}, #{patternCode,jdbcType=VARCHAR}, #{saleChannelCode,jdbcType=VARCHAR}, #{joinChannelCode,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL},
+      #{saleStatus,jdbcType=TINYINT}, #{collectStatus,jdbcType=TINYINT}, #{displayStatus,jdbcType=TINYINT}, #{riskLevel,jdbcType=VARCHAR},
+      #{fundSettleParty,jdbcType=VARCHAR}, #{isOpenHmt,jdbcType=TINYINT}, #{calendarMode,jdbcType=TINYINT},
+      #{approvalRequireSign,jdbcType=VARCHAR}, #{approvalSign,jdbcType=VARCHAR}, #{approvalStatus,jdbcType=TINYINT},#{lastApprovalTime,jdbcType=TIMESTAMP},
+      #{archiveTime,jdbcType=TIMESTAMP}, #{syncStatus,jdbcType=TINYINT},
+      #{registerType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, #{payChannel,jdbcType=VARCHAR}, #{buyWays,jdbcType=VARCHAR}, #{numberPeriod,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR},#{modifyBy,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.Product" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="productName != null">
+                product_name,
+            </if>
+            <if test="productDisplayName != null">
+                product_display_name,
+            </if>
+            <if test="productLineId != null">
+                product_line_id,
+            </if>
+            <if test="productLineCode != null">
+                product_line_code,
+            </if>
+            <if test="productLineName != null">
+                product_line_name,
+            </if>
+            <if test="assetPoolType != null">
+                asset_pool_type,
+            </if>
+            <if test="assetPoolCode != null">
+                asset_pool_code,
+            </if>
+            <if test="assetPoolName != null">
+                asset_pool_name,
+            </if>
+            <if test="loanOrderNoSet != null">
+                loan_order_no_set,
+            </if>
+            <if test="collectMode != null">
+                collect_mode,
+            </if>
+            <if test="patternCode != null">
+                pattern_code,
+            </if>
+            <if test="saleChannelCode != null">
+                sale_channel_code,
+            </if>
+            <if test="joinChannelCode != null">
+                join_channel_code,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="saleStatus != null">
+                sale_status,
+            </if>
+            <if test="collectStatus != null">
+                collect_status,
+            </if>
+            <if test="displayStatus != null">
+                display_status,
+            </if>
+            <if test="riskLevel != null">
+                risk_level,
+            </if>
+            <if test="fundSettleParty != null">
+                fund_settle_party,
+            </if>
+            <if test="isOpenHmt != null">
+                is_open_hmt,
+            </if>
+            <if test="calendarMode != null">
+                calendar_mode,
+            </if>
+            <if test="approvalRequireSign != null">
+                approval_require_sign,
+            </if>
+            <if test="approvalSign != null">
+                approval_sign,
+            </if>
+            <if test="approvalStatus != null">
+                approval_status,
+            </if>
+            <if test="lastApprovalTime != null">
+                last_approval_time,
+            </if>
+            <if test="archiveTime != null">
+                archive_time,
+            </if>
+            <if test="syncStatus != null">
+                sync_status,
+            </if>
+            <if test="registerType!=null and registerType!='' ">
+                register_type,
+            </if>
+            <if test="openType!=null and openType!='' ">
+                open_type,
+            </if>
+            <if test="payChannel!=null and payChannel!='' ">
+                pay_channel,
+            </if>
+            <if test="buyWays!=null and buyWays!='' ">
+                buyWays,
+            </if>
+			<if test="numberPeriod!=null and numberPeriod!='' ">
+                numberPeriod,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDisplayName != null">
+                #{productDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="productLineId != null">
+                #{productLineId,jdbcType=BIGINT},
+            </if>
+            <if test="productLineCode != null">
+                #{productLineCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productLineName != null">
+                #{productLineName,jdbcType=VARCHAR},
+            </if>
+            <if test="assetPoolType != null">
+                #{assetPoolType,jdbcType=TINYINT},
+            </if>
+            <if test="assetPoolCode != null">
+                #{assetPoolCode,jdbcType=VARCHAR},
+            </if>
+            <if test="assetPoolName != null">
+                #{assetPoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="loanOrderNoSet != null">
+                #{loanOrderNoSet,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="collectMode != null">
+                #{collectMode,jdbcType=VARCHAR},
+            </if>
+            <if test="patternCode != null">
+                #{patternCode,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannelCode != null">
+                #{saleChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="joinChannelCode != null">
+                #{joinChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleStatus != null">
+                #{saleStatus,jdbcType=TINYINT},
+            </if>
+            <if test="collectStatus != null">
+                #{collectStatus,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="riskLevel != null">
+                #{riskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundSettleParty != null">
+                #{fundSettleParty,jdbcType=VARCHAR},
+            </if>
+            <if test="isOpenHmt != null">
+                #{isOpenHmt,jdbcType=TINYINT},
+            </if>
+            <if test="calendarMode != null">
+                #{calendarMode,jdbcType=TINYINT},
+            </if>
+            <if test="approvalRequireSign != null">
+                #{approvalRequireSign,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalSign != null">
+                #{approvalSign,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalStatus != null">
+                #{approvalStatus,jdbcType=TINYINT},
+            </if>
+            <if test="lastApprovalTime != null">
+                #{lastApprovalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="archiveTime != null">
+                #{archiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="syncStatus != null">
+                #{syncStatus,jdbcType=TINYINT},
+            </if>
+            <if test="registerType!=null and registerType!='' ">
+                #{registerType,jdbcType=VARCHAR},
+            </if>
+            <if test="openType!=null and openType!='' ">
+                #{openType,jdbcType=VARCHAR},
+            </if>
+            <if test="payChannel!=null and payChannel!='' ">
+                #{payChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="buyWays!=null and buyWays!='' ">
+                #{buyWays,jdbcType=VARCHAR},
+            </if>
+            <if test="numberPeriod!=null and numberPeriod!='' ">
+                #{numberPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                #{introduction,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.Product">
+        update pms_product
+        <set>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDisplayName != null">
+                product_display_name = #{productDisplayName,jdbcType=VARCHAR},
+            </if>
+            <if test="productLineId != null">
+                product_line_id = #{productLineId,jdbcType=BIGINT},
+            </if>
+            <if test="productLineCode != null">
+                product_line_code = #{productLineCode,jdbcType=VARCHAR},
+            </if>
+            <if test="assetPoolCode != null">
+                asset_pool_code = #{assetPoolCode,jdbcType=VARCHAR},
+            </if>
+            <if test="patternCode != null">
+                pattern_code = #{patternCode,jdbcType=VARCHAR},
+            </if>
+            <if test="saleChannelCode != null">
+                sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="joinChannelCode != null">
+                join_channel_code = #{joinChannelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="saleStatus != null">
+                sale_status = #{saleStatus,jdbcType=TINYINT},
+            </if>
+            <if test="collectStatus != null">
+                collect_status = #{collectStatus,jdbcType=TINYINT},
+            </if>
+            <if test="displayStatus != null">
+                display_status = #{displayStatus,jdbcType=TINYINT},
+            </if>
+            <if test="riskLevel != null">
+                risk_level = #{riskLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="fundSettleParty != null">
+                fund_settle_party = #{fundSettleParty,jdbcType=VARCHAR},
+            </if>
+            <if test="isOpenHmt != null">
+                is_open_hmt = #{isOpenHmt,jdbcType=TINYINT},
+            </if>
+            <if test="calendarMode != null">
+                calendar_mode = #{calendarMode,jdbcType=TINYINT},
+            </if>
+            <if test="approvalRequireSign != null">
+                approval_require_sign = #{approvalRequireSign,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalSign != null">
+                approval_sign = #{approvalSign,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalStatus != null">
+                approval_status = #{approvalStatus,jdbcType=TINYINT},
+            </if>
+            <if test="archiveTime != null">
+                archive_time = #{archiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerType!=null and registerType!='' ">
+                #{register_type,jdbcType=VARCHAR},
+            </if>
+            <if test="openType!=null and openType!='' ">
+                #{open_type,jdbcType=VARCHAR},
+            </if>
+            <if test="payChannel!=null and payChannel!='' ">
+				#{payChannel,jdbcType=VARCHAR},
+			</if>
+			<if test="buyWays!=null and buyWays!='' ">
+				#{buyWays,jdbcType=VARCHAR},
+			</if>
+			<if test="numberPeriod!=null and numberPeriod!='' ">
+				#{numberPeriod,jdbcType=VARCHAR},
+			</if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.Product">
+        update pms_product
+        set product_code = #{productCode,jdbcType=VARCHAR},
+          product_name = #{productName,jdbcType=VARCHAR},
+          product_display_name = #{productDisplayName,jdbcType=VARCHAR},
+          product_line_id = #{productLineId,jdbcType=BIGINT},
+          product_line_code = #{productLineCode,jdbcType=VARCHAR},
+          asset_pool_code = #{assetPoolCode,jdbcType=VARCHAR},
+          pattern_code = #{patternCode,jdbcType=VARCHAR},
+          sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR},
+          join_channel_code = #{joinChannelCode,jdbcType=VARCHAR},
+          total_amount = #{totalAmount,jdbcType=DECIMAL},
+          sale_status = #{saleStatus,jdbcType=TINYINT},
+          collect_status = #{collectStatus,jdbcType=TINYINT},
+          display_status = #{displayStatus,jdbcType=TINYINT},
+          risk_level = #{riskLevel,jdbcType=VARCHAR},
+          fund_settle_party = #{fundSettleParty,jdbcType=VARCHAR},
+          is_open_hmt = #{isOpenHmt,jdbcType=TINYINT},
+          calendar_mode = #{calendarMode,jdbcType=TINYINT},
+          approval_require_sign = #{approvalRequireSign,jdbcType=VARCHAR},
+          approval_sign = #{approvalSign,jdbcType=VARCHAR},
+          approval_status = #{approvalStatus,jdbcType=TINYINT},
+          archive_time = #{archiveTime,jdbcType=TIMESTAMP},
+          register_type = #{registerType,jdbcType=VARCHAR},
+          open_type = #{openType,jdbcType=VARCHAR},
+          pay_channel = #{payChannel,jdbcType=VARCHAR},
+          buyWays = #{buyWays,jdbcType=VARCHAR},
+		  numberPeriod = #{numberPeriod,jdbcType=VARCHAR},
+          create_by = #{createBy,jdbcType=VARCHAR},
+          modify_by = #{modifyBy,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--根据产品线code查询未归档产品-->
+    <select id="selectUnArchiveProductListByLineId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select count(1)
+        from pms_product
+        where product_line_id = #{0,jdbcType=VARCHAR}
+        and sale_status != '4'
+    </select>
+
+    <!--根据产品线code查询产品-->
+    <select id="selectProductByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from pms_product
+        where product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+
+     <!--根据产品线code查询产品获取锁-->
+    <select id="selectProductByCodeForUpdate" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from pms_product
+        where product_code = #{productCode,jdbcType=VARCHAR} for update
+    </select>
+
+    <!--根据产品线id更新产品销售状态-->
+    <update id="updateProductSaleStatusById" parameterType="java.util.Map">
+        update pms_product
+        set sale_status = #{saleStatus, jdbcType=INTEGER}
+        where id = #{id, jdbcType=INTEGER}
+        <if test="originalStatus != null">
+            and sale_status = #{originalStatus, jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <!--根据产品id更新产品募集状态-->
+    <update id="updateProductCollectStatusById" parameterType="java.util.Map">
+        update pms_product
+        <set>
+            <if test="collectStatus != null">
+                collect_status = #{collectStatus, jdbcType=INTEGER},
+            </if>
+            <if test="saleStatus != null">
+                sale_status = #{saleStatus, jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+        <if test="originalStatus != null">
+            and collect_status = #{originalStatus, jdbcType=INTEGER}
+        </if>
+        <if test="saleOriginalStatus != null">
+            and sale_status = #{saleOriginalStatus, jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <!--根据产品id更新产品显示状态-->
+    <update id="updateProductDisplayStatusById" parameterType="java.util.Map">
+        update pms_product
+        set display_status = #{displayStatus, jdbcType=INTEGER}
+        where id = #{id, jdbcType=INTEGER}
+        <if test="originalStatus != null">
+            and display_status = #{originalStatus, jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <!--根据产品id更新产品审核状态-->
+    <update id="updateProductApprovalStatusById" parameterType="java.util.Map">
+        update pms_product
+        <set>
+            <if test="approvalStatus != null">
+                approval_status = #{approvalStatus, jdbcType=INTEGER},
+            </if>
+            <if test="approvalRequireSign != null">
+                approval_require_sign = #{approvalRequireSign,jdbcType=VARCHAR},
+            </if>
+            <if test="saleStatus != null">
+                sale_status = #{saleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="approvalSign != null">
+                approval_sign = #{approvalSign,jdbcType=VARCHAR},
+            </if>
+            <if test="lastApprovalTime != null">
+                last_approval_time = #{lastApprovalTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+        <if test="originalStatus != null">
+            and approval_status = #{originalStatus, jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <!--查询是否存在相同产品名称或产品展示名-->
+    <select id="selectProductCountByNames" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.Product">
+        select
+        	count(1)
+        from
+        	pms_product
+        where
+        	(product_name = #{productName, jdbcType=VARCHAR} or product_display_name = #{productDisplayName, jdbcType=VARCHAR})
+    </select>
+    <select id="selectProductCountByNamesMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select
+        	count(1)
+        from
+        	pms_product
+        where
+        	(product_name = #{productName, jdbcType=VARCHAR} or product_display_name = #{productDisplayName, jdbcType=VARCHAR})
+        <if test="approvalStatusList != null and approvalStatusList.size()>0" >
+            and approval_status in
+            <foreach collection="approvalStatusList" item="approvalStatusItem" index="index" open="(" close=")" separator=",">
+                #{approvalStatusItem}
+            </foreach>
+        </if>
+    </select>
+    <select id="selectProductCountByNumberPeriodMap" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select
+        	count(1)
+        from
+        	pms_product
+        where
+        	numberPeriod = #{numberPeriod, jdbcType=VARCHAR}
+        <if test="approvalStatusList != null and approvalStatusList.size()>0" >
+            and approval_status in
+            <foreach collection="approvalStatusList" item="approvalStatusItem" index="index" open="(" close=")" separator=",">
+                #{approvalStatusItem}
+            </foreach>
+        </if>
+    </select>
+
+    <!--查询产品详情-->
+    <select id="queryProductDetailByProductCode" resultMap="ProductDetailResultMap" parameterType="java.lang.String">
+        select <include refid="Product_Detail_Column"/>
+          from <include refid="Product_Detail_Table"/>
+        where product.product_code = #{productCode,jdbcType=VARCHAR}
+    </select>
+
+    <!--产品列表查询条件-->
+    <sql id="filterSql">
+        <where>
+            <if test="productCode != null and productCode != ''">
+                AND product.product_code = #{productCode,jdbcType=VARCHAR}
+            </if>
+            <if test="productName != null and productName != ''">
+                AND product.product_name like concat(concat('%', #{productName}), '%')
+            </if>
+            <if test="productDisplayName != null and productDisplayName != ''">
+                AND product.product_display_name like concat(concat('%', #{productDisplayName}), '%')
+            </if>
+            <if test="productLineId != null and productLineId != ''">
+                AND product.product_line_id = #{productLineId, jdbcType=BIGINT}
+            </if>
+            <if test="productLineCode != null and productLineCode != ''">
+                AND product.product_line_code = #{productLineCode,jdbcType=VARCHAR}
+            </if>
+            <if test="assetPoolCode != null and assetPoolCode != ''">
+                AND product.asset_pool_code = #{assetPoolCode, jdbcType=VARCHAR}
+            </if>
+            <if test="patternCode != null and patternCode != ''">
+                AND product.pattern_code = #{patternCode,jdbcType=VARCHAR}
+            </if>
+            <if test="saleChannelCode != null and saleChannelCode != ''">
+                AND product.sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR}
+            </if>
+            <if test="joinChannelCode != null and joinChannelCode != ''">
+                AND product.join_channel_code = #{joinChannelCode,jdbcType=VARCHAR}
+            </if>
+            <if test="totalAmount != null">
+                AND product.total_amount = #{totalAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="saleStatus != null">
+                AND product.sale_status = #{saleStatus, jdbcType=INTEGER}
+            </if>
+            <if test="collectStatus != null">
+                AND product.collect_status = #{collectStatus, jdbcType=INTEGER}
+            </if>
+            <if test="displayStatus != null">
+                AND product.display_status = #{displayStatus, jdbcType=INTEGER}
+            </if>
+            <if test="syncStatus != null">
+                AND product.sync_status = #{syncStatus, jdbcType=INTEGER}
+            </if>
+            <if test="riskLevel != null and riskLevel != ''">
+                AND product.risk_level = #{riskLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="approvalStatus != null">
+                AND product.approval_status = #{approvalStatus, jdbcType=INTEGER}
+            </if>
+            <if test="beginCreateTime != null and beginCreateTime != ''">
+                AND product.create_time >= '${beginCreateTime}'
+            </if>
+            <if test="endCreateTime != null and endCreateTime != ''">
+                AND '${endCreateTime} 23:59:59' >= product.create_time
+            </if>
+            <if test="approvalStartTime != null and approvalStartTime != ''">
+                AND product.last_approval_time >= '${approvalStartTime}'
+            </if>
+            <if test="approvalEndTime != null and approvalEndTime != ''">
+                AND '${approvalEndTime} 23:59:59' >= product.last_approval_time
+            </if>
+            <if test="saleEndTime != null">
+                AND period.sale_end_time >= #{saleEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <!-- 交易日切用（募集截止日==交易日切用募集截止日） -->
+            <if test="saleEndTimeForDailyCut != null" >
+                AND DATE_FORMAT(period.sale_end_time,'%Y%m%d') = DATE_FORMAT(#{saleEndTimeForDailyCut,jdbcType=TIMESTAMP},'%Y%m%d')
+            </if>
+            <if test="valueTime != null" >
+                AND DATE_FORMAT(period.value_time,'%Y%m%d') = DATE_FORMAT(#{valueTime,jdbcType=TIMESTAMP},'%Y%m%d')
+            </if>
+            <if test="investPeriod != null">
+                AND period.invest_period = #{investPeriod, jdbcType=INTEGER}
+            </if>
+            <if test="collectMode != null and collectMode != ''">
+                AND product.collect_mode = #{collectMode,jdbcType=VARCHAR}
+            </if>
+            <if test="loanOrderNo != null and loanOrderNo != ''">
+                AND (
+                    LOCATE(';${loanOrderNo};',product.loan_order_no_set) > 0
+                    OR
+                    '${loanOrderNo}' = SUBSTRING_INDEX(product.loan_order_no_set,';',1)
+                    OR
+                    '${loanOrderNo}' = SUBSTRING_INDEX(product.loan_order_no_set,';',-1)
+                )
+            </if>
+            <if test="openType != null and openType != ''">
+                AND product.open_type = #{openType, jdbcType=VARCHAR}
+            </if>
+            <if test="payChannel!=null and payChannel!='' ">
+				AND product.pay_channel = #{payChannel,jdbcType=VARCHAR},
+			</if>
+			<if test="buyWays!=null and buyWays!='' ">
+				AND product.buyWays = #{buyWays,jdbcType=VARCHAR},
+			</if>
+			<if test="numberPeriod!=null and numberPeriod!='' ">
+				AND product.numberPeriod = #{numberPeriod,jdbcType=VARCHAR},
+			</if>
+        </where>
+    </sql>
+
+    <!--查询产品列表数量-->
+    <select id="queryProductListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(1)
+            from <include refid="Product_Count_Table"/>
+        <include refid="filterSql"/>
+    </select>
+
+    <!--查询产品列表-->
+    <select id="queryProductListByCondition" resultMap="ProductDetailResultMap" parameterType="java.util.Map">
+        select <include refid="Product_Detail_Column_Without_Contract"/>
+        from <include refid="Product_Detail_Table_Without_Contract"/>
+        <include refid="filterSql"/>
+        <if test="orderByOnlineTime == null or orderByOnlineTime == ''">
+            order by product.create_time asc
+        </if>
+        <!--按上线时间排序-->
+        <if test="orderByOnlineTime == 'ASC'" >
+            order by period.online_time asc
+        </if>
+        <if test="orderByOnlineTime == 'DESC'" >
+            order by product.collect_status asc, period.online_time desc
+        </if>
+        <!--按上线时间排序-->
+
+    </select>
+
+    <!--查询产品列表数量ByBean-->
+    <select id="queryProductListCountByBean" resultType="java.lang.Integer" parameterType="com.zb.fincore.pms.service.dal.model.Product">
+        select count(1)
+        from <include refid="Product_Count_Table"/>
+        <include refid="filterSqlByBean"/>
+    </select>
+
+    <!--查询产品列表ByBean 刷新缓存使用到-->
+    <select id="queryProductListByBean" resultMap="ProductDetailResultMap" parameterType="com.zb.fincore.pms.service.dal.model.Product">
+        select <include refid="Product_Detail_Column"/>
+        from <include refid="Product_Detail_Table"/>
+        <include refid="filterSqlByBean"/>
+        order by product.create_time desc
+    </select>
+
+    <!--产品列表查询条件-->
+    <sql id="filterSqlByBean">
+        <where>
+            <if test="productCode != null and productCode != ''">
+                AND product.product_code = #{productCode,jdbcType=VARCHAR}
+            </if>
+            <if test="productName != null and productName != ''">
+                AND product.product_name like concat(concat('%', #{productName}), '%')
+            </if>
+            <if test="productDisplayName != null and productDisplayName != ''">
+                AND product.product_display_name like concat(concat('%', #{productDisplayName}), '%')
+            </if>
+            <if test="productLineId != null and productLineId != ''">
+                AND product.product_line_id = #{productLineId, jdbcType=BIGINT}
+            </if>
+            <if test="productLineCode != null and productLineCode != ''">
+                AND product.product_line_code = #{productLineCode, jdbcType=VARCHAR}
+            </if>
+            <if test="assetPoolCode != null and assetPoolCode != ''">
+                AND product.asset_pool_code = #{assetPoolCode, jdbcType=BIGINT}
+            </if>
+            <if test="patternCode != null and patternCode != ''">
+                AND product.pattern_code = #{patternCode,jdbcType=VARCHAR}
+            </if>
+            <if test="saleChannelCode != null and saleChannelCode != ''">
+                AND product.sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR}
+            </if>
+            <if test="joinChannelCode != null and joinChannelCode != ''">
+                AND product.join_channel_code = #{joinChannelCode,jdbcType=VARCHAR}
+            </if>
+            <if test="totalAmount != null">
+                AND product.total_amount = #{totalAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="saleStatus != null">
+                AND product.sale_status = #{saleStatus, jdbcType=INTEGER}
+            </if>
+            <if test="collectStatus != null">
+                AND product.collect_status = #{collectStatus, jdbcType=INTEGER}
+            </if>
+            <if test="displayStatus != null">
+                AND product.display_status = #{displayStatus, jdbcType=INTEGER}
+            </if>
+            <if test="riskLevel != null">
+                AND product.risk_level = #{riskLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="approvalStatus != null">
+                AND product.approval_status = #{approvalStatus, jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <!--查询是否存在产品展示名-->
+    <select id="selectProductCountByDisplayName" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        select count(1)
+        from pms_product where product_display_name = #{productDisplayName, jdbcType=VARCHAR}
+    </select>
+
+    <!--产品基础信息列表 用于JOB查询  更新产品的募集状态等-->
+    <select id="queryProductListForUpdateStatus" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_product p
+        <where>
+        	<if test="saleChannelCode != null" >
+                and p.sale_channel_code = #{saleChannelCode, jdbcType=VARCHAR}
+            </if>
+            <if test="approvalStatus != null" >
+                and p.approval_status = #{approvalStatus, jdbcType=INTEGER}
+            </if>
+            <if test="collectStatus != null" >
+                and p.collect_status = #{collectStatus, jdbcType=INTEGER}
+            </if>
+            <if test="saleStatus != null" >
+                and p.sale_status = #{saleStatus, jdbcType=INTEGER}
+            </if>
+            <if test="patternCode != null" >
+                and p.pattern_code == #{patternCode, jdbcType=INTEGER}
+            </if>
+            <if test="saleStatusList != null and saleStatusList.size()>0" >
+                and p.sale_status in
+                <foreach collection="saleStatusList" item="saleStatusItem" index="index" open="(" close=")" separator=",">
+                    #{saleStatusItem}
+                </foreach>
+            </if>
+            <!-- 募集期开始 -->
+            <if test="querySaleUnStartProduct != null and querySaleUnStartProduct == 1" >
+                and (select pr.sale_start_time from pms_product_period pr where p.id = pr.product_id) &lt;= #{curTime,jdbcType=TIMESTAMP}
+            </if>
+            <!-- 募集期结束 -->
+            <if test="querySaleTimeOutProduct != null and querySaleTimeOutProduct == 1" >
+                and (select pr.sale_end_time from pms_product_period pr where p.id = pr.product_id) &lt;= #{curTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="queryUnValueStartProduct != null and queryUnValueStartProduct == 1" >
+                and (select pr.value_time from pms_product_period pr where p.id = pr.product_id) &lt;= #{curTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="queryOutValueProduct != null and queryOutValueProduct == 1" >
+                and (select pr.expect_expire_time from pms_product_period pr where p.id = pr.product_id) &lt;= #{curTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--根据产品id更新产品同步状态-->
+    <update id="updateProductSyncStatusById" parameterType="java.util.Map">
+        update pms_product
+        set sync_status = #{syncStatus, jdbcType=INTEGER}
+        where id = #{id, jdbcType=INTEGER}
+        <if test="originalStatus != null">
+            and sync_status = #{originalStatus, jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <!--根据产品Id更新产品归档时间-->
+    <update id="updateProductArchiveTimeById" parameterType="java.util.Map">
+        update pms_product
+        set archive_time = #{archiveTime,jdbcType=TIMESTAMP}
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <!--在售产品列表查询 P2P-->
+    <select id="queryOnSaleProductListForP2P" resultMap="ProductDetailResultMap" parameterType="java.util.Map">
+        (
+            select
+            <include refid="Product_Detail_Column_Without_Contract"/>
+            from <include refid="Product_Detail_Table_Without_Contract"/>
+            <where>
+                product.sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR}
+                <if test="patternCode!=null and patternCode!=''">
+                    AND product.pattern_code = #{patternCode,jdbcType=VARCHAR}
+                </if>
+                <if test="openType!=null and openType!=''">
+                    AND product.open_type = #{openType,jdbcType=VARCHAR}
+                </if>
+                AND period.sale_end_time >= #{curTime,jdbcType=TIMESTAMP}
+                AND #{curTime,jdbcType=TIMESTAMP} >= period.sale_start_time
+                AND product.sale_status = #{saleStatus, jdbcType=INTEGER}
+                AND product.collect_status = #{collectStatus, jdbcType=INTEGER}
+                AND product.total_amount > stock.sale_amount
+                <if test="testProductSwitch == 'off'">
+                    and product.product_display_name not LIKE concat(concat('%', '线上测试'),'%')
+                </if>
+            </where>
+            <if test="(orderByYieldRate == null or orderByYieldRate == '')
+            and (orderByInvestPeriod == null or orderByInvestPeriod == '')
+            and (orderByMinInvestAmount == null or orderByMinInvestAmount == '')
+            ">
+                order by period.sale_end_time asc,profit.min_yield_rate asc,period.online_time asc
+            </if>
+            <!--按最低预期收益率排序-->
+            <if test="orderByYieldRate == 'ASC'">
+                order by profit.min_yield_rate asc
+            </if>
+            <if test="orderByYieldRate == 'DESC'">
+                order by profit.min_yield_rate desc
+            </if>
+            <!--按最低预期收益率排序-->
+
+            <!--按投资期限排序-->
+            <if test="orderByInvestPeriod == 'ASC'">
+                order by period.invest_period asc
+            </if>
+            <if test="orderByInvestPeriod == 'DESC'">
+                order by period.invest_period desc
+            </if>
+            <!--按投资期限排序-->
+
+            <!--按起投金额排序-->
+            <if test="orderByMinInvestAmount == 'ASC'">
+                order by profit.min_invest_amount asc
+            </if>
+            <if test="orderByMinInvestAmount == 'DESC'">
+                order by profit.min_invest_amount desc
+            </if>
+            <!--按起投金额排序-->
+        )
+    </select>
+
+    <!--售罄产品列表查询 P2P-->
+    <select id="querySoldOutProductListForP2P" resultMap="ProductDetailResultMap" parameterType="java.util.Map">
+        (
+            select
+            <include refid="Product_Detail_Column_Without_Contract"/>
+            from <include refid="Product_Detail_Table_Without_Contract"/>
+            <where>
+                <if test="saleChannelCode != null and saleChannelCode != ''">
+                    AND product.sale_channel_code = #{saleChannelCode,jdbcType=VARCHAR}
+                </if>
+                <if test="patternCode!=null and patternCode!=''">
+                    AND product.pattern_code = #{patternCode,jdbcType=VARCHAR}
+                </if>
+                <if test="openType!=null and openType!=''">
+                    AND product.open_type = #{openType,jdbcType=VARCHAR}
+                </if>
+                <!-- 过滤测试数据 -->
+                AND period.invest_period > 1
+                <!-- 过滤测试数据 -->
+                AND #{curTime,jdbcType=TIMESTAMP} >= period.sale_start_time
+                <if test="saleStatusList != null and saleStatusList.size()>0">
+                    AND product.sale_status in
+                    <foreach collection="saleStatusList" item="saleStatusItem" index="index" open="(" close=")"
+                             separator=",">
+                        #{saleStatusItem}
+                    </foreach>
+                </if>
+                <!-- 只显示已成立的产品 -->
+                AND product.collect_status not in
+                <foreach collection="notEstablishCollectStatusList" item="collectStatusItem" index="index" open="("
+                         close=")" separator=",">
+                    #{collectStatusItem}
+                </foreach>
+                <!-- 只显示已成立的产品 -->
+                <if test="testProductSwitch == 'off'">
+                    and product.product_display_name not LIKE concat(concat('%', '线上测试'),'%')
+                </if>
+            </where>
+            order by period.offline_time desc
+        )
+    </select>
+</mapper>

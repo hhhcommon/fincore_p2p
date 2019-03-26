@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="pms"/>
+
+    <dubbo:registry protocol="zookeeper" address="${config.zk.address}" check="false"/>
+
+    <dubbo:protocol name="dubbo" port="${config.dubbo.port}" accesslog="false"/>
+
+    <bean id="productLineServiceFacade" class="com.zb.fincore.pms.facade.line.impl.ProductLineServiceFacadeImpl"/>
+    <dubbo:service interface="com.zb.fincore.pms.facade.line.ProductLineServiceFacade"
+                   ref="productLineServiceFacade" timeout="120000"/>
+
+    <bean id="productServiceFacade" class="com.zb.fincore.pms.facade.product.impl.ProductServiceFacadeImpl"/>
+    <dubbo:service interface="com.zb.fincore.pms.facade.product.ProductServiceFacade"
+                   ref="productServiceFacade" timeout="120000"/>
+    
+    <bean id="productCacheServiceFacade" class="com.zb.fincore.pms.facade.product.impl.ProductCacheServiceFacadeImpl"/>
+    <dubbo:service interface="com.zb.fincore.pms.facade.product.ProductCacheServiceFacade"
+                   ref="productCacheServiceFacade" timeout="120000"/>
+    
+    
+    <bean id="productServiceForP2PFacade" class="com.zb.fincore.pms.facade.product.impl.ProductServiceForP2PFacadeImpl"/>
+    <dubbo:service interface="com.zb.fincore.pms.facade.product.ProductServiceForP2PFacade"
+                   ref="productServiceForP2PFacade" timeout="120000"/>
+                   
+    <bean id="productCacheServiceForP2PFacade" class="com.zb.fincore.pms.facade.product.impl.ProductCacheServiceForP2PFacadeImpl"/>
+    <dubbo:service interface="com.zb.fincore.pms.facade.product.ProductCacheServiceForP2PFacade"
+                   ref="productCacheServiceForP2PFacade" timeout="120000"/>
+    
+</beans>

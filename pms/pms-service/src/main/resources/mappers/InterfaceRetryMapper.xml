@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zb.fincore.pms.service.dal.dao.InterfaceRetryDao">
+    <resultMap id="BaseResultMap" type="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="business_type" property="businessType" jdbcType="VARCHAR"/>
+        <result column="business_no" property="businessNo" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="retry_times" property="retryTimes" jdbcType="INTEGER"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ResultMapWithBLOBs" type="com.zb.fincore.pms.service.dal.model.InterfaceRetry" extends="BaseResultMap">
+        <result column="request_param" property="requestParam" jdbcType="LONGVARCHAR"/>
+        <result column="response_param" property="responseParam" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, business_type, business_no, status, retry_times, memo, product_code, create_time, modify_time,
+    create_by, modify_by
+  </sql>
+    <sql id="Blob_Column_List">
+    response_param, request_param
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByBusinessNo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where business_no = #{businessNo,jdbcType=VARCHAR} AND business_type=#{businessType,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByProductCodes" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pms_interface_retry
+        where product_code = #{ProductCode,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pms_interface_retry
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+    insert into pms_interface_retry (id, business_type, business_no, response_param,
+      status, retry_times, memo, product_code, create_time,
+      modify_time, create_by, modify_by, 
+      request_param)
+    values (#{id,jdbcType=BIGINT}, #{businessType,jdbcType=VARCHAR}, #{businessNo,jdbcType=VARCHAR}, #{responseParam,jdbcType=LONGVARCHAR},
+      #{status,jdbcType=VARCHAR}, #{retryTimes,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{modifyTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR}, 
+      #{requestParam,jdbcType=LONGVARCHAR})
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        insert into pms_interface_retry
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="businessNo != null">
+                business_no,
+            </if>
+            <if test="responseParam != null">
+                response_param,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="retryTimes != null">
+                retry_times,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="requestParam != null">
+                request_param,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="businessType != null">
+                #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNo != null">
+                #{businessNo,jdbcType=VARCHAR},
+            </if>
+            <if test="responseParam != null">
+                #{responseParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="retryTimes != null">
+                #{retryTimes,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="requestParam != null">
+                #{requestParam,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        update pms_interface_retry
+        <set>
+            <if test="businessType != null">
+                business_type = #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNo != null">
+                business_no = #{businessNo,jdbcType=VARCHAR},
+            </if>
+            <if test="responseParam != null">
+                response_param = #{responseParam,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="retryTimes != null">
+                retry_times = #{retryTimes,jdbcType=INTEGER},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                product_code = #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="requestParam != null">
+                request_param = #{requestParam,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+    update pms_interface_retry
+    set business_type = #{businessType,jdbcType=VARCHAR},
+      business_no = #{businessNo,jdbcType=VARCHAR},
+      response_param = #{responseParam,jdbcType=LONGVARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      retry_times = #{retryTimes,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      modify_by = #{modifyBy,jdbcType=VARCHAR},
+      request_param = #{requestParam,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateRetryTimesAndStatusByKey" parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        update pms_interface_retry
+        set
+        <if test="responseParam != null and responseParam != ''">
+              response_param = #{responseParam,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status != ''">
+             ,status = #{status,jdbcType=VARCHAR}
+        </if> 
+        <!--retry_times = retry_times+1-->
+        <if test="retryTimes != null and retryTimes != ''">
+              ,retry_times = #{retryTimes,jdbcType=INTEGER}
+        </if>
+        where id = #{id,jdbcType=BIGINT}
+        <!--<if test="retryTimes != null and retryTimes != ''">
+              and retry_times = #{retryTimes,jdbcType=INTEGER}
+        </if>-->
+    </update>
+
+    <select id="queryWaitRetryRecordListByType" resultMap="ResultMapWithBLOBs"
+            parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where status in ('INIT','FAILURE') and retry_times &lt; 5
+        <if test="businessType != null and businessType != ''">
+            AND business_type = #{businessType,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="queryWaitRetryRecordListByParams" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where status in ('INIT','FAILURE') and retry_times &lt; 5
+        <if test="businessTypeList != null and businessTypeList.size()>0">
+            and business_type in
+            <foreach collection="businessTypeList" item="businessType" index="index" open="(" close=")"
+                     separator=",">
+                #{businessType}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryWaitRetryRecordListByBizType" resultMap="ResultMapWithBLOBs"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where status in ('INIT','FAILURE') and retry_times &lt; 5 AND business_type in
+        (${businessType})
+    </select>
+
+    <select id="queryWaitRetryRecordListByBizTypeEnd" resultMap="ResultMapWithBLOBs"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from pms_interface_retry
+        where status in ('FAILURE') and retry_times = 5 AND business_type in
+        (${bizList})
+    </select>
+
+    <select id="queryRetryFailureCountByProdCodeForDayCut" resultType="java.lang.Integer"
+            parameterType="com.zb.fincore.pms.service.dal.model.InterfaceRetry">
+        select count(1)
+        from pms_interface_retry
+        where status != 'SUCCESS' AND product_code = #{productCode,jdbcType=VARCHAR} AND business_type = #{businessType,jdbcType=VARCHAR}
+    </select>
+</mapper>
